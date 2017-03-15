@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.2.0
-Release  : 1
+Release  : 2
 URL      : https://download.gimp.org/pub/gegl/0.2/gegl-0.2.0.tar.bz2
 Source0  : https://download.gimp.org/pub/gegl/0.2/gegl-0.2.0.tar.bz2
 Summary  : Generic Graphics Library
@@ -13,13 +13,8 @@ License  : GPL-3.0 LGPL-3.0
 Requires: gegl-bin
 Requires: gegl-lib
 Requires: gegl-locales
-BuildRequires : asciidoc
 BuildRequires : docbook-xml
 BuildRequires : gettext
-BuildRequires : gobject-introspection-dev
-BuildRequires : graphviz
-BuildRequires : gtk-doc
-BuildRequires : gtk-doc-dev
 BuildRequires : intltool
 BuildRequires : libjpeg-turbo-dev
 BuildRequires : libxslt-bin
@@ -35,7 +30,6 @@ BuildRequires : pkgconfig(librsvg-2.0)
 BuildRequires : pkgconfig(lua)
 BuildRequires : pkgconfig(pango)
 BuildRequires : pkgconfig(pangocairo)
-BuildRequires : ruby
 
 %description
 GEGL-0.2.0
@@ -83,12 +77,12 @@ locales components for the gegl package.
 
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1488560780
-%configure --disable-static --without-jasper --without-tiff --disable-docs
+export SOURCE_DATE_EPOCH=1489597455
+%configure --disable-static --without-jasper --without-tiff --disable-docs --enable-introspection=no PYTHON=/usr/bin/python2
 make V=1  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1488560780
+export SOURCE_DATE_EPOCH=1489597455
 rm -rf %{buildroot}
 %make_install
 %find_lang gegl-0.2

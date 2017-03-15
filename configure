@@ -1,1 +1,1 @@
---without-jasper --without-tiff --disable-docs
+--without-jasper --without-tiff --disable-docs --enable-introspection=no PYTHON=/usr/bin/python2
