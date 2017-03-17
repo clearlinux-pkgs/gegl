@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.2.0
-Release  : 3
+Release  : 4
 URL      : https://download.gimp.org/pub/gegl/0.2/gegl-0.2.0.tar.bz2
 Source0  : https://download.gimp.org/pub/gegl/0.2/gegl-0.2.0.tar.bz2
 Summary  : Generic Graphics Library
@@ -13,8 +13,11 @@ License  : GPL-3.0 LGPL-3.0
 Requires: gegl-bin
 Requires: gegl-lib
 Requires: gegl-locales
+BuildRequires : ImageMagick
 BuildRequires : docbook-xml
 BuildRequires : gettext
+BuildRequires : gobject-introspection-dev
+BuildRequires : graphviz
 BuildRequires : intltool
 BuildRequires : libjpeg-turbo-dev
 BuildRequires : libxslt-bin
@@ -77,12 +80,23 @@ locales components for the gegl package.
 
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1489597455
-%configure --disable-static --without-jasper --without-tiff --disable-docs --enable-introspection=no PYTHON=/usr/bin/python2
+export SOURCE_DATE_EPOCH=1489766227
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
+export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
+export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
+%configure --disable-static --without-jasper --without-tiff --disable-docs --enable-introspection=no PYTHON=/usr/bin/python2 --without-vala
 make V=1  %{?_smp_mflags}
 
+%check
+export LANG=C
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost
+make VERBOSE=1 V=1 %{?_smp_mflags} check || :
+
 %install
-export SOURCE_DATE_EPOCH=1489597455
+export SOURCE_DATE_EPOCH=1489766227
 rm -rf %{buildroot}
 %make_install
 %find_lang gegl-0.2

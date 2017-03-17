@@ -2,8 +2,6 @@
 # undesirable. One entry per line, no whitespace.
 asciidoc
 dockbook-xml
-gobject-introspection-dev
-graphviz
 gtk-doc
 gtk-doc-dev
 ruby
