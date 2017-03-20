@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.2.0
-Release  : 4
+Release  : 5
 URL      : https://download.gimp.org/pub/gegl/0.2/gegl-0.2.0.tar.bz2
 Source0  : https://download.gimp.org/pub/gegl/0.2/gegl-0.2.0.tar.bz2
 Summary  : Generic Graphics Library
@@ -33,6 +33,7 @@ BuildRequires : pkgconfig(librsvg-2.0)
 BuildRequires : pkgconfig(lua)
 BuildRequires : pkgconfig(pango)
 BuildRequires : pkgconfig(pangocairo)
+Patch1: cve-2012-4433.patch
 
 %description
 GEGL-0.2.0
@@ -77,10 +78,11 @@ locales components for the gegl package.
 
 %prep
 %setup -q -n gegl-0.2.0
+%patch1 -p1
 
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1489766227
+export SOURCE_DATE_EPOCH=1490039025
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
 export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
@@ -96,7 +98,7 @@ export no_proxy=localhost
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1489766227
+export SOURCE_DATE_EPOCH=1490039025
 rm -rf %{buildroot}
 %make_install
 %find_lang gegl-0.2
