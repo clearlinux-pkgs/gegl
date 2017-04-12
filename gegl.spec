@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.2.0
-Release  : 7
+Release  : 8
 URL      : https://download.gimp.org/pub/gegl/0.2/gegl-0.2.0.tar.bz2
 Source0  : https://download.gimp.org/pub/gegl/0.2/gegl-0.2.0.tar.bz2
 Summary  : Generic Graphics Library
@@ -83,7 +83,7 @@ locales components for the gegl package.
 %build
 export LANG=C
 export SOURCE_DATE_EPOCH=1490039695
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition -mfma -mavx2"
 export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
 export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
