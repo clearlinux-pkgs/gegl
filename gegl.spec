@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.2.0
-Release  : 8
+Release  : 9
 URL      : https://download.gimp.org/pub/gegl/0.2/gegl-0.2.0.tar.bz2
 Source0  : https://download.gimp.org/pub/gegl/0.2/gegl-0.2.0.tar.bz2
 Summary  : Generic Graphics Library
