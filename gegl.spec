@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.2.0
-Release  : 10
+Release  : 11
 URL      : https://download.gimp.org/pub/gegl/0.2/gegl-0.2.0.tar.bz2
 Source0  : https://download.gimp.org/pub/gegl/0.2/gegl-0.2.0.tar.bz2
 Summary  : Generic Graphics Library
@@ -13,7 +13,6 @@ License  : GPL-3.0 LGPL-3.0
 Requires: gegl-bin
 Requires: gegl-lib
 Requires: gegl-locales
-BuildRequires : ImageMagick
 BuildRequires : docbook-xml
 BuildRequires : gettext
 BuildRequires : gobject-introspection-dev
@@ -81,12 +80,18 @@ locales components for the gegl package.
 %patch1 -p1
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1490039695
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition -mfma -mavx2"
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
+export SOURCE_DATE_EPOCH=1503166670
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-semantic-interposition -fstack-protector-strong "
+export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-semantic-interposition -fstack-protector-strong "
+export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-semantic-interposition -fstack-protector-strong "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-semantic-interposition -fstack-protector-strong "
 %configure --disable-static --without-jasper --without-tiff --disable-docs --enable-introspection=no PYTHON=/usr/bin/python2 --without-vala
 make V=1  %{?_smp_mflags}
 
@@ -94,11 +99,11 @@ make V=1  %{?_smp_mflags}
 export LANG=C
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
-export no_proxy=localhost
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1490039695
+export SOURCE_DATE_EPOCH=1503166670
 rm -rf %{buildroot}
 %make_install
 %find_lang gegl-0.2
