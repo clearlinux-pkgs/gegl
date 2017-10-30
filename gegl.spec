@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.2.0
-Release  : 13
+Release  : 14
 URL      : https://download.gimp.org/pub/gegl/0.2/gegl-0.2.0.tar.bz2
 Source0  : https://download.gimp.org/pub/gegl/0.2/gegl-0.2.0.tar.bz2
 Summary  : Generic Graphics Library
@@ -32,6 +32,8 @@ BuildRequires : pkgconfig(librsvg-2.0)
 BuildRequires : pkgconfig(lua)
 BuildRequires : pkgconfig(pango)
 BuildRequires : pkgconfig(pangocairo)
+BuildRequires : python
+BuildRequires : ruby-dev
 Patch1: cve-2012-4433.patch
 
 %description
@@ -87,7 +89,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1506272377
+export SOURCE_DATE_EPOCH=1509390975
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -113,7 +115,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1506272377
+export SOURCE_DATE_EPOCH=1509390975
 rm -rf %{buildroot}
 pushd ../buildavx2/
 %make_install

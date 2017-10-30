@@ -4,7 +4,6 @@ Configure miss: some Darwin platform
 Configure miss: gtkdoc-check
 Configure miss: gtkdoc-rebase
 Configure miss: gtkdoc-mkpdf
-Configure miss: ruby
 Configure miss: enscript
 Configure miss: asciidoc
 Configure miss: OPENEXR
@@ -24,7 +23,6 @@ Configure miss: some Darwin platform
 Configure miss: gtkdoc-check
 Configure miss: gtkdoc-rebase
 Configure miss: gtkdoc-mkpdf
-Configure miss: ruby
 Configure miss: enscript
 Configure miss: asciidoc
 Configure miss: OPENEXR
