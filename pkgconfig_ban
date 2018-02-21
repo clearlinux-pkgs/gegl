@@ -5,5 +5,11 @@ jasper
 libavcodec
 libavformat
 libopenraw-1.0
+libswscale
+mrg
+poly2tri-c
+vapigen
+libwebp
+libtiff-4
+lcms2
 pygobject-2.0
-

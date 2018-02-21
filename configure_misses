@@ -6,15 +6,15 @@ Configure miss: gtkdoc-rebase
 Configure miss: gtkdoc-mkpdf
 Configure miss: enscript
 Configure miss: asciidoc
+Configure miss: MRG
 Configure miss: OPENEXR
 Configure miss: sdl-config
-Configure miss: OPENRAW
 Configure miss: AVFORMAT
-Configure miss: linux/videodev.h usability
-Configure miss: linux/videodev.h presence
-Configure miss: linux/videodev.h
 Configure miss: run_spiro in -lspiro
 Configure miss: umfpack_dl_solve in -lumfpack
+Configure miss: TIFF
+Configure miss: WEBP
+Configure miss: P2TC
 Configure miss: w3m
 Configure miss: rint
 Configure miss: whether to turn on debugging
@@ -25,14 +25,14 @@ Configure miss: gtkdoc-rebase
 Configure miss: gtkdoc-mkpdf
 Configure miss: enscript
 Configure miss: asciidoc
+Configure miss: MRG
 Configure miss: OPENEXR
 Configure miss: sdl-config
-Configure miss: OPENRAW
 Configure miss: AVFORMAT
-Configure miss: linux/videodev.h usability
-Configure miss: linux/videodev.h presence
-Configure miss: linux/videodev.h
 Configure miss: run_spiro in -lspiro
 Configure miss: umfpack_dl_solve in -lumfpack
+Configure miss: TIFF
+Configure miss: WEBP
+Configure miss: P2TC
 Configure miss: w3m
 Configure miss: rint
