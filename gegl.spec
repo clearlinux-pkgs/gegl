@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.3.28
-Release  : 18
+Release  : 19
 URL      : https://download.gimp.org/pub/gegl/0.3/gegl-0.3.28.tar.bz2
 Source0  : https://download.gimp.org/pub/gegl/0.3/gegl-0.3.28.tar.bz2
 Summary  : Generic Graphics Library
@@ -106,17 +106,18 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1519252401
+export SOURCE_DATE_EPOCH=1522963273
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs "
+export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs "
+export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs "
 %configure --disable-static --without-jasper --without-tiff --disable-docs PYTHON=/usr/bin/python3 --without-vala
 make  %{?_smp_mflags}
 
+unset PKG_CONFIG_PATH
 pushd ../buildavx2/
 export CFLAGS="$CFLAGS -m64 -march=haswell"
 export CXXFLAGS="$CXXFLAGS -m64 -march=haswell"
@@ -132,7 +133,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1519252401
+export SOURCE_DATE_EPOCH=1522963273
 rm -rf %{buildroot}
 pushd ../buildavx2/
 %make_install
@@ -277,28 +278,13 @@ popd
 /usr/lib64/haswell/gegl-0.3/gegl-common.so
 /usr/lib64/haswell/gegl-0.3/gegl-core.so
 /usr/lib64/haswell/gegl-0.3/gegl-generated.so
-/usr/lib64/haswell/gegl-0.3/jpg-load.so
-/usr/lib64/haswell/gegl-0.3/jpg-save.so
-/usr/lib64/haswell/gegl-0.3/lcms-from-profile.so
 /usr/lib64/haswell/gegl-0.3/npd.so
-/usr/lib64/haswell/gegl-0.3/npy-save.so
 /usr/lib64/haswell/gegl-0.3/path.so
-/usr/lib64/haswell/gegl-0.3/pixbuf.so
-/usr/lib64/haswell/gegl-0.3/png-load.so
-/usr/lib64/haswell/gegl-0.3/png-save.so
 /usr/lib64/haswell/gegl-0.3/ppm-load.so
 /usr/lib64/haswell/gegl-0.3/ppm-save.so
-/usr/lib64/haswell/gegl-0.3/raw-load.so
 /usr/lib64/haswell/gegl-0.3/rgbe-load.so
 /usr/lib64/haswell/gegl-0.3/rgbe-save.so
-/usr/lib64/haswell/gegl-0.3/save-pixbuf.so
-/usr/lib64/haswell/gegl-0.3/seamless-clone-compose.so
-/usr/lib64/haswell/gegl-0.3/seamless-clone.so
-/usr/lib64/haswell/gegl-0.3/svg-load.so
-/usr/lib64/haswell/gegl-0.3/text.so
 /usr/lib64/haswell/gegl-0.3/transformops.so
-/usr/lib64/haswell/gegl-0.3/v4l.so
-/usr/lib64/haswell/gegl-0.3/vector-fill.so
 /usr/lib64/haswell/gegl-0.3/vector-stroke.so
 /usr/lib64/haswell/libgegl-0.3.so.0
 /usr/lib64/haswell/libgegl-0.3.so.0.328.0
