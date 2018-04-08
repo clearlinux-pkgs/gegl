@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.3.28
-Release  : 19
+Release  : 20
 URL      : https://download.gimp.org/pub/gegl/0.3/gegl-0.3.28.tar.bz2
 Source0  : https://download.gimp.org/pub/gegl/0.3/gegl-0.3.28.tar.bz2
 Summary  : Generic Graphics Library
@@ -18,6 +18,7 @@ BuildRequires : docbook-xml
 BuildRequires : gettext
 BuildRequires : gobject-introspection-dev
 BuildRequires : graphviz
+BuildRequires : lcms2-dev
 BuildRequires : libjpeg-turbo-dev
 BuildRequires : libxslt-bin
 BuildRequires : perl(XML::Parser)
@@ -106,7 +107,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1522963273
+export SOURCE_DATE_EPOCH=1523211665
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -133,7 +134,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1522963273
+export SOURCE_DATE_EPOCH=1523211665
 rm -rf %{buildroot}
 pushd ../buildavx2/
 %make_install
@@ -236,12 +237,6 @@ popd
 /usr/include/gegl-0.3/sc/sc-context.h
 /usr/include/gegl-0.3/sc/sc-outline.h
 /usr/include/gegl-0.3/sc/sc-sample.h
-/usr/lib64/haswell/libgegl-0.3.so
-/usr/lib64/haswell/libgegl-npd-0.3.so
-/usr/lib64/haswell/libgegl-sc-0.3.so
-/usr/lib64/libgegl-0.3.so
-/usr/lib64/libgegl-npd-0.3.so
-/usr/lib64/libgegl-sc-0.3.so
 /usr/lib64/pkgconfig/gegl-0.3.pc
 /usr/lib64/pkgconfig/gegl-sc-0.3.pc
 
@@ -286,10 +281,16 @@ popd
 /usr/lib64/haswell/gegl-0.3/rgbe-save.so
 /usr/lib64/haswell/gegl-0.3/transformops.so
 /usr/lib64/haswell/gegl-0.3/vector-stroke.so
+/usr/lib64/haswell/libgegl-0.3.so
 /usr/lib64/haswell/libgegl-0.3.so.0
 /usr/lib64/haswell/libgegl-0.3.so.0.328.0
+/usr/lib64/haswell/libgegl-npd-0.3.so
+/usr/lib64/haswell/libgegl-sc-0.3.so
+/usr/lib64/libgegl-0.3.so
 /usr/lib64/libgegl-0.3.so.0
 /usr/lib64/libgegl-0.3.so.0.328.0
+/usr/lib64/libgegl-npd-0.3.so
+/usr/lib64/libgegl-sc-0.3.so
 
 %files locales -f gegl-0.3.lang
 %defattr(-,root,root,-)
