@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.4.0
-Release  : 24
+Release  : 25
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.0.tar.bz2
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.0.tar.bz2
 Summary  : Generic Graphics Library
