@@ -2,3 +2,7 @@ ruby
 ruby-dev
 python
 lcms2-dev
+libwebp-dev
+libjpeg-turbo-dev
+graphviz
+gobject-introspection-dev

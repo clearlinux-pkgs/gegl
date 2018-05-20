@@ -13,7 +13,24 @@ Configure miss: AVFORMAT
 Configure miss: run_spiro in -lspiro
 Configure miss: umfpack_dl_solve in -lumfpack
 Configure miss: TIFF
-Configure miss: WEBP
+Configure miss: P2TC
+Configure miss: w3m
+Configure miss: rint
+Configure miss: whether to turn on debugging
+Configure miss: whether to turn on profiling
+Configure miss: some Darwin platform
+Configure miss: gtkdoc-check
+Configure miss: gtkdoc-rebase
+Configure miss: gtkdoc-mkpdf
+Configure miss: enscript
+Configure miss: asciidoc
+Configure miss: MRG
+Configure miss: OPENEXR
+Configure miss: sdl-config
+Configure miss: AVFORMAT
+Configure miss: run_spiro in -lspiro
+Configure miss: umfpack_dl_solve in -lumfpack
+Configure miss: TIFF
 Configure miss: P2TC
 Configure miss: w3m
 Configure miss: rint

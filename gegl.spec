@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.4.2
-Release  : 26
+Release  : 28
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.2.tar.bz2
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.2.tar.bz2
 Summary  : Generic Graphics Library
@@ -20,6 +20,7 @@ BuildRequires : gobject-introspection-dev
 BuildRequires : graphviz
 BuildRequires : lcms2-dev
 BuildRequires : libjpeg-turbo-dev
+BuildRequires : libwebp-dev
 BuildRequires : libxslt-bin
 BuildRequires : perl(XML::Parser)
 BuildRequires : pkgconfig(babl)
@@ -40,6 +41,7 @@ BuildRequires : pkgconfig(pangocairo)
 BuildRequires : pkgconfig(pygobject-3.0)
 BuildRequires : python
 BuildRequires : ruby-dev
+Patch1: avx2module.patch
 
 %description
 GEGL-0.4.2
@@ -98,13 +100,17 @@ locales components for the gegl package.
 
 %prep
 %setup -q -n gegl-0.4.2
+%patch1 -p1
+pushd ..
+cp -a gegl-0.4.2 buildavx2
+popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1526851228
+export SOURCE_DATE_EPOCH=1526853101
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -115,6 +121,14 @@ export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -f
 %configure --disable-static --without-jasper --without-tiff --disable-docs PYTHON=/usr/bin/python3 --without-vala
 make  %{?_smp_mflags}
 
+unset PKG_CONFIG_PATH
+pushd ../buildavx2/
+export CFLAGS="$CFLAGS -m64 -march=haswell"
+export CXXFLAGS="$CXXFLAGS -m64 -march=haswell"
+export LDFLAGS="$LDFLAGS -m64 -march=haswell"
+%configure --disable-static --without-jasper --without-tiff --disable-docs PYTHON=/usr/bin/python3 --without-vala   --libdir=/usr/lib64/haswell
+make  %{?_smp_mflags}
+popd
 %check
 export LANG=C
 export http_proxy=http://127.0.0.1:9/
@@ -123,10 +137,21 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1526851228
+export SOURCE_DATE_EPOCH=1526853101
 rm -rf %{buildroot}
+pushd ../buildavx2/
+%make_install
+popd
 %make_install
 %find_lang gegl-0.4
+## make_install_append content
+pushd %{buildroot}/usr/lib64/haswell/gegl-0.4/
+for i in *so ; do
+mv $i ../../gegl-0.4/$i.avx2
+done
+popd
+rm -rf %{buildroot}/usr/lib64/haswell
+## make_install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -224,32 +249,46 @@ rm -rf %{buildroot}
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/gegl-0.4/gegl-common-gpl3.so
+/usr/lib64/gegl-0.4/gegl-common-gpl3.so.avx2
 /usr/lib64/gegl-0.4/gegl-common.so
+/usr/lib64/gegl-0.4/gegl-common.so.avx2
 /usr/lib64/gegl-0.4/gegl-core.so
+/usr/lib64/gegl-0.4/gegl-core.so.avx2
 /usr/lib64/gegl-0.4/gegl-generated.so
+/usr/lib64/gegl-0.4/gegl-generated.so.avx2
 /usr/lib64/gegl-0.4/jpg-load.so
 /usr/lib64/gegl-0.4/jpg-save.so
 /usr/lib64/gegl-0.4/lcms-from-profile.so
 /usr/lib64/gegl-0.4/npd.so
+/usr/lib64/gegl-0.4/npd.so.avx2
 /usr/lib64/gegl-0.4/npy-save.so
 /usr/lib64/gegl-0.4/path.so
+/usr/lib64/gegl-0.4/path.so.avx2
 /usr/lib64/gegl-0.4/pixbuf.so
 /usr/lib64/gegl-0.4/png-load.so
 /usr/lib64/gegl-0.4/png-save.so
 /usr/lib64/gegl-0.4/ppm-load.so
+/usr/lib64/gegl-0.4/ppm-load.so.avx2
 /usr/lib64/gegl-0.4/ppm-save.so
+/usr/lib64/gegl-0.4/ppm-save.so.avx2
 /usr/lib64/gegl-0.4/raw-load.so
 /usr/lib64/gegl-0.4/rgbe-load.so
+/usr/lib64/gegl-0.4/rgbe-load.so.avx2
 /usr/lib64/gegl-0.4/rgbe-save.so
+/usr/lib64/gegl-0.4/rgbe-save.so.avx2
 /usr/lib64/gegl-0.4/save-pixbuf.so
 /usr/lib64/gegl-0.4/seamless-clone-compose.so
 /usr/lib64/gegl-0.4/seamless-clone.so
 /usr/lib64/gegl-0.4/svg-load.so
 /usr/lib64/gegl-0.4/text.so
 /usr/lib64/gegl-0.4/transformops.so
+/usr/lib64/gegl-0.4/transformops.so.avx2
 /usr/lib64/gegl-0.4/v4l.so
 /usr/lib64/gegl-0.4/vector-fill.so
 /usr/lib64/gegl-0.4/vector-stroke.so
+/usr/lib64/gegl-0.4/vector-stroke.so.avx2
+/usr/lib64/gegl-0.4/webp-load.so
+/usr/lib64/gegl-0.4/webp-save.so
 /usr/lib64/libgegl-0.4.so
 /usr/lib64/libgegl-0.4.so.0
 /usr/lib64/libgegl-0.4.so.0.402.0
