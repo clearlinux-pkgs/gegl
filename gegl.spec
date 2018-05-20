@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.4.2
-Release  : 29
+Release  : 30
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.2.tar.bz2
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.2.tar.bz2
 Summary  : Generic Graphics Library
@@ -41,7 +41,6 @@ BuildRequires : pkgconfig(pangocairo)
 BuildRequires : pkgconfig(pygobject-3.0)
 BuildRequires : python
 BuildRequires : ruby-dev
-Patch1: avx2module.patch
 
 %description
 GEGL-0.4.2
@@ -100,14 +99,13 @@ locales components for the gegl package.
 
 %prep
 %setup -q -n gegl-0.4.2
-%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1526854179
+export SOURCE_DATE_EPOCH=1526854703
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -126,7 +124,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1526854179
+export SOURCE_DATE_EPOCH=1526854703
 rm -rf %{buildroot}
 %make_install
 %find_lang gegl-0.4
