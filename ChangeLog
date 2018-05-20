@@ -1,3 +1,569 @@
+commit b16c1641126fd1ac0363845e1fc30c1f3c50fa1b
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed May 16 13:32:57 2018 +0200
+
+    release 0.4.2
+
+ configure.ac |   2 +-
+ perf/joblist | 126
+ -----------------------------------------------------------
+ 2 files changed, 1 insertion(+), 127 deletions(-)
+
+commit c994b32ebc82d75966c4503bd29e3cbecaf548a5
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed May 16 13:25:31 2018 +0200
+
+    perf: Makefile-tests fix for building with 0.4
+
+ perf/Makefile-tests | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+commit 8f6e74c85635e22f00a8ce0009def5cc93bca4b0
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed May 16 00:25:04 2018 +0200
+
+    NEWS: mention performance improvement to panorama-projection
+
+ docs/NEWS.txt | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
+
+commit 865c85096e5f1e93604cc59775c88250e446afe8
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed May 16 00:06:32 2018 +0200
+
+    NEWS: update
+
+ docs/NEWS.txt | 42 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
+
+commit d11becf349658ea6bd50ac9e8f6f3bc6bde91a64
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue May 15 21:45:31 2018 +0200
+
+    configure: default CFLAGS to -Ofast
+
+ configure.ac | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 4bbb77183333b5a701a5f99f01faa11a03d57c23
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue May 15 21:44:37 2018 +0200
+
+    configure: depend on babl 0.1.48
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 1e2f7cbba76a478ef7bb8286e38fd8f25600995f
+Author: Ell <ell_se@yahoo.com>
+Date:   Tue May 15 14:11:01 2018 -0400
+
+    buffer: improve thread-safety of tile-storage hot-tile manipulation
+
+    When inspecting the tile-storage's hot-tile, during a 1x1
+    gegl_buffer_{get,set}(), there is a window during which another
+    thread can replace the storage's hot-tile, dropping the current
+    hot-tile's reference, allowing it to be trimmed out from the
+    cache and freed, leaving us we a dangling pointer.
+
+    Add gegl_tile_storage_{steal,try_steal}_hot_tile(), which
+    atomically swap the storage's hot-tile with NULL, returning the
+    original tile, and gegl_tile_storage_take_hot_tile(), which
+    atomically sets the storage's hot-tile if it's NULL, and use these
+    functions to safely query and replace the storage's hot-tile.
+
+    This change does have a negative impact on the performance of 1x1
+    gegl_buffer_{get,set}() (as well as NEAREST gegl_buffer_sample()),
+    although it doesn't affect independent NEAREST samplers, since they
+    maintain a local hot-tile.
+
+ gegl/buffer/gegl-buffer-access.c      | 20 ++++++----
+ gegl/buffer/gegl-buffer.c             | 14 ++-----
+ gegl/buffer/gegl-tile-handler-cache.c | 17 ++-------
+ gegl/buffer/gegl-tile-storage.c       | 71
+ +++++++++++++++++++++++++++++++++++
+ gegl/buffer/gegl-tile-storage.h       |  6 +++
+ 5 files changed, 97 insertions(+), 31 deletions(-)
+
+commit c8eb73eb761ee3b7a393fbb785117db0c96f98f8
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue May 15 11:36:53 2018 +0200
+
+    buffer: speed up NEAREST gegl_buffer_sample
+
+    For the nearest neighbor case, use gegl_buffer_get with a 1x1
+    rectangle instead
+    of a temporary sampler.
+
+ gegl/buffer/gegl-sampler.c | 47
+ +++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 36 insertions(+), 11 deletions(-)
+
+commit 662619ff34e0bb094eba656df15f52705a8f9dc5
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon May 14 12:06:27 2018 +0200
+
+    workshop/gluas: use samplers for aux/in buffer sampling
+
+ operations/workshop/external/gluas.c | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
+
+commit 1a27e46d30f04ad9a8e37f63e893ce688f6230be
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon May 14 10:59:39 2018 +0200
+
+    workshop: make more use of GeglSampler in inpainting ops
+
+ operations/workshop/enlarge.c      | 15 +++++------
+ operations/workshop/enlarge2.c     | 16 ++++++------
+ operations/workshop/pixel-duster.h | 51
+ +++++++++++++++++++++-----------------
+ 3 files changed, 45 insertions(+), 37 deletions(-)
+
+commit fa702369ad30bafe82a86b171776e3e24a276675
+Author: Ell <ell_se@yahoo.com>
+Date:   Mon May 14 02:47:14 2018 -0400
+
+    plasma: don't use a sampler + fix + speedup
+
+    gegl:plasma uses a sampler, created at the start of the operation,
+    to sample the output buffer, after having written to it.  This
+    should be avoided, since the sampler may return outdated cached
+    data (at least in theory).  Use gegl_buffer_get() instead.
+
+    When the subdivided region is small enough, the op switches to use
+    a linear buffer, instead of directly using the output buffer, to
+    speed processing up.  However, the op only writes to the linear
+    buffer, while still reading from the output buffer, which both
+    produces (subtly) wrong results, and is slower than necessary.  Fix
+    this by reading from the linear buffer, when in use.
+
+    Update reference hash.
+
+ operations/common-gpl3+/plasma.c | 66
+ ++++++++++++++++++++++++++++------------
+ 1 file changed, 47 insertions(+), 19 deletions(-)
+
+commit 3a0872de4d1419718f1488c178c6ec9864bf0456
+Author: Ell <ell_se@yahoo.com>
+Date:   Sun May 13 18:18:12 2018 -0400
+
+    lens-distortion: use sampler object instead of gegl_buffer_sample()
+
+ operations/common-gpl3+/lens-distortion.c | 26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
+
+commit 5eff6d66ddd1c6ed4fd9cadd800b61e4135095ba
+Author: Ell <ell_se@yahoo.com>
+Date:   Sun May 13 17:55:20 2018 -0400
+
+    plasma: use sampler object instead of gegl_buffer_sample()
+
+ operations/common-gpl3+/plasma.c | 27 +++++++++++----------------
+ 1 file changed, 11 insertions(+), 16 deletions(-)
+
+commit db77965496059868499286461cbffbbe4a779afd
+Author: Ell <ell_se@yahoo.com>
+Date:   Sun May 13 18:09:26 2018 -0400
+
+    cubism: use sampler object instead of gegl_buffer_sample()
+
+ operations/common-gpl3+/cubism.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+commit 26f13cbfe9aaaa8c176162e54fdbb8af6876538e
+Author: Ell <ell_se@yahoo.com>
+Date:   Sun May 13 17:05:19 2018 -0400
+
+    buffer: don't use cached sampler for gegl_buffer_sample[_at_level]()
+
+    The use of a per-buffer cached sampler is problematic, especially
+    since the cached sampler may cache stale data after the buffer is
+    modified.  Avoiding this requires careful use of
+    gegl_buffer_sample_cleanup().  On the one hand, when using
+    gegl_buffer_sample[_at_level]() for one-off samples in loosely-
+    coupled code, this effectively means calling
+    gegl_buffer_sample_cleanup() before/after each sample, defeating
+    the purpose of caching the sampler in the first place.  On the
+    other hand, when performing multiple samples in performance-
+    critical code, using a sampler object is much more efficient
+    anyway.
+
+    Remove the per-buffer cached sampler, and simply use a per-call
+    temporary sampler in gegl_buffer_sample[_at_level]().  Advise users
+    to use gegl_buffer_sampler_new[_at_level]() to create a sampler
+    object instead when performance is a concern.
+
+    Deprecate gegl_buffer_sample_cleanup(), which is not necessary
+    anymore, and keep it as a NOP for now.
+
+ gegl/buffer/gegl-buffer-private.h |  7 ----
+ gegl/buffer/gegl-buffer.c         |  2 --
+ gegl/buffer/gegl-buffer.h         | 23 +++++++-----
+ gegl/buffer/gegl-sampler.c        | 74
+ +++++----------------------------------
+ 4 files changed, 24 insertions(+), 82 deletions(-)
+
+commit 4982977a70002b6de5e51db63b09caafcad49c39
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Sun May 13 21:20:30 2018 +0200
+
+    Update Catalan translation
+
+ po/ca.po | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 53e0672121a77249f32db16c96c837ba7bf19e73
+Author: Sebastian Pipping <sebastian@pipping.org>
+Date:   Sun May 13 18:32:33 2018 +0200
+
+    Run ff-load-save image tests only when gegl-video is around
+
+ tests/ff-load-save/Makefile.am | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 9d93353541e4acca1a2a1e7eda1cc72612869a9f
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Sat May 12 19:20:51 2018 +0200
+
+    Update Catalan translation
+
+ po/ca.po | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+commit b577b2e2784ad600536107586bd6dffb079e7c01
+Author: Daniel Korostil <ted.korostiled@gmail.com>
+Date:   Fri May 11 18:47:37 2018 +0000
+
+    Update Ukrainian translation
+
+ po/uk.po | 401
+ ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 216 insertions(+), 185 deletions(-)
+
+commit c3b9eca35241b43f86429b022562bba5d5b328d6
+Author: Debarshi Ray <debarshir@gnome.org>
+Date:   Wed May 9 15:07:31 2018 +0200
+
+    build: Abort as soon as autoreconf fails
+
+    ... as suggested in the autogen.sh template given in:
+    https://wiki.gnome.org/Projects/GnomeCommon/Migration
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=795901
+
+ autogen.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 6a96ca56dca372616c91e29881bb142351864b6f
+Author: Jehan <jehan@girinstud.io>
+Date:   Tue May 8 00:38:31 2018 +0200
+
+    configure: remove some obsolete autoconf variables.
+
+    Not sure when these OPENRAW_(LIBS|CFLAGS) date from, but these are not
+    referencing any useful value anymore, neither is this used in any way.
+
+ configure.ac | 4 ----
+ 1 file changed, 4 deletions(-)
+
+commit 2896800b5e7d0c656710c70fdea57098032f3ccc
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Sun May 6 15:09:03 2018 +0200
+
+    ff-save: update another occurance of CODEC_FLAG_GLOBAL_HEADER
+
+ operations/external/ff-save.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit a2dd56d3200aeafdecbc40c58eeef3d43a5fadcc
+Author: Franz Brausse <brausse@informatik.uni-trier.de>
+Date:   Sun May 6 13:40:30 2018 +0200
+
+    operations/external/ff-save: ffmpeg-2.3-2.7 compat; minimum lav{f,c}
+    versions configure.ac mandates
+
+ operations/external/ff-save.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 8f2545886ce3be8f1b1229bddcfa5af3216110d3
+Author: Franz Brausse <brausse@informatik.uni-trier.de>
+Date:   Sun May 6 13:38:09 2018 +0200
+
+    operations/external/ff-save: ffmpeg-4.0 compat; fixes #795625
+
+ operations/external/ff-save.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+commit 1263d1e8dba0c8f4da8665bc3fbfc9f35c303c65
+Author: Ell <ell_se@yahoo.com>
+Date:   Sat May 5 02:29:24 2018 -0400
+
+    buffer: emit "changed" signal upon GeglTileBackendBuffer VOID command
+
+    When voiding a buffer tile through a GeglTileBackendBuffer, in
+    response to a GEGL_TILE_VOID command, emit an appropriate "changed"
+    signal on the underlying buffer.
+
+ gegl/buffer/gegl-tile-backend-buffer.c | 116
+ ++++++++++++++++++++-------------
+ 1 file changed, 71 insertions(+), 45 deletions(-)
+
+commit 8681bf105e683aa41bbf132f3ac0989f1d5a6a22
+Author: Ell <ell_se@yahoo.com>
+Date:   Fri May 4 12:40:31 2018 -0400
+
+    noise-rgb: gummify + fix
+
+    When the op's "independent" property is FALSE, only the value of
+    the "red" property (and not "green" and "blue") affects the output,
+    using the same noise value for all channels.  Use GUM to hide the
+    "green" and "blue" properties in this case, and to change the label
+    of the "red" property to "value".
+
+    Fix output when "independent" is FALSE, and "green" or "blue" are
+    0 (previously, there would be no noise applied to the green/blue
+    channels, respectively.)
+
+ operations/common/noise-rgb.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+commit 1008a506a8c9e43eb9bc0415c3612bbe50c840f6
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu May 3 22:39:55 2018 +0200
+
+    panorama-projection: re-enable autothreading
+
+    The on demand COW of tiles from preceding commit makes auto-
+    threading faster than single threaded rendering.
+
+ operations/common/panorama-projection.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+commit 417221a05e59fc857a2dee07f6bafe49af5ecd6d
+Author: Ell <ell_se@yahoo.com>
+Date:   Thu May 3 16:12:44 2018 -0400
+
+    operation: use GeglTileBackendBuffer in
+    gegl_operation_context_dup_input_maybe_copy()
+
+    In gegl_operation_context_dup_input_maybe_copy(), use a
+    GeglTileBackendBuffer, backed by the input buffer, as the backend
+    for the local-copy buffer, instead of copying the required portion
+    of the input buffer into the local-copy buffer.  This allows input-
+    buffer tiles to be COWed on-demand, instead of upfront, into the
+    local-copy, which can significantly improve performance if the op's
+    get_required_for_output() returns a larger region than actually
+    necessary (in particular, if it always returns the entire input
+    extents).  This also allows using the local-copy optimization when
+    processing a level > 0.
+
+    Leave the original version #if 0-ed, since it may be useful for
+    testing.
+
+ gegl/operation/gegl-operation-context.c | 169
+ +++++++++++++++++++-------------
+ 1 file changed, 101 insertions(+), 68 deletions(-)
+
+commit d67dc06639df55eb2f8cd9bb64e20608b5421d27
+Author: Ell <ell_se@yahoo.com>
+Date:   Thu May 3 16:06:26 2018 -0400
+
+    buffer: add GeglTileBackendBuffer
+
+    GeglTileBackendBuffer is a tile backend that loads/stores its tiles
+    from/to an underlying GeglBuffer.
+
+ gegl/buffer/Makefile.am                |   2 +
+ gegl/buffer/gegl-tile-backend-buffer.c | 299
+ +++++++++++++++++++++++++++++++++
+ gegl/buffer/gegl-tile-backend-buffer.h |  56 ++++++
+ 3 files changed, 357 insertions(+)
+
+commit e751ab33b2d95c43c5b2e8482049b9ad09669520
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu May 3 12:11:54 2018 +0200
+
+    panorama-projection: opt out of base-class multi-threading
+
+    The base class duplicates the input buffers, which for a
+    panorama is expensive.
+
+    Even avoiding copies is not enough to make it fast, we
+    need to make multiple samplers on the same buffer fast.
+
+ operations/common/panorama-projection.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 3557811a5527bccbfef2006046a05047b6edd480
+Author: Ell <ell_se@yahoo.com>
+Date:   Wed May 2 15:03:04 2018 -0400
+
+    buffer: prevent mipmapped tiles from being voided during
+    reconstruction
+
+    While fetching a partially damaged mipmapped tile, make sure that
+    fetching its lower-level tiles, during the mipmapped tile's
+    reconstruction, doesn't cause the tile to be voided and dropped
+    from the cache.  This can happen if the tile handler responsible
+    for the lower-level tile rewrites its contents (as can happen, for
+    example, with a GimpTileHandlerValidate), causing the corresponding
+    porition of the pyramid to be voided.
+
+    We prevent the mipmapped tile from being voided by clearing its
+    damaged region before fetching each lower-level tile, so that any
+    damage to the lower-level tile can never cause the entire mipmapped
+    tile to be damaged.
+
+ gegl/buffer/gegl-tile-handler-zoom.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+commit 03956f66fd8c03adb226179c13844ad3b73010d5
+Author: Dimitris Spingos (Δημήτρης Σπίγγος)
+<dmtrs32@gmail.com>
+Date:   Mon Apr 30 12:31:22 2018 +0300
+
+    Update Greek translation
+
+ po/el.po | 338
+ ++++++++++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 203 insertions(+), 135 deletions(-)
+
+commit 8b3e333b74fdf0ae00ab55a1e40f3452540de911
+Author: Marco Ciampa <ciampix@posteo.net>
+Date:   Sun Apr 29 15:47:05 2018 +0200
+
+    Updated Italian translation
+
+ po/it.po | 459
+ ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 246 insertions(+), 213 deletions(-)
+
+commit 60ae8750710f308d857fcc3cc0d6c04657e90f5b
+Author: Ell <ell_se@yahoo.com>
+Date:   Fri Apr 27 10:26:13 2018 -0400
+
+    Bug 795597 - gegl crashes for a race ...
+
+    ... between disposing a GeglTileHandlerChain and storing a tile
+    (trimming the cache)
+
+    Add gegl_tile_handler_cache_{connect,disconnect}(), which add/
+    remove the cache to the global cache queue.  Cache handlers are
+    connected upon construction, and disconnected upon destruction.
+    While a cache is disconnected, it may not be accessed while
+    trimming unrelated caches.
+
+    In GeglTileStore, disconnect the cache before destroying the
+    storage, so that other threads trimming an unrelated cache
+    concurrently may not interfere with destruction.
+
+ gegl/buffer/gegl-tile-handler-cache.c | 36
+ +++++++++++++++++++++++++++++------
+ gegl/buffer/gegl-tile-handler-cache.h |  3 +++
+ gegl/buffer/gegl-tile-storage.c       | 15 +++++++++++++++
+ 3 files changed, 48 insertions(+), 6 deletions(-)
+
+commit 2e6f34798918167797e7287d9501d0cd6cd1dd0d
+Author: Ell <ell_se@yahoo.com>
+Date:   Thu Apr 26 15:23:58 2018 -0400
+
+    gegl: handle UINT properties in gegl-xml and gegl-serialize
+
+    Commit 1d6e841d78b3634fa186e6dde87b6fec126fed9f changed the type of
+    seed properties from INT to UINT, so we need to add UINT handling
+    in XML and chain strings.
+
+ gegl/gegl-serialize.c | 41 +++++++++++++++++++++++++++++++++++------
+ gegl/gegl-xml.c       | 12 ++++++++++++
+ 2 files changed, 47 insertions(+), 6 deletions(-)
+
+commit b1b7ee0e742fab0a4a42438530c200b43030692c
+Author: Ell <ell_se@yahoo.com>
+Date:   Thu Apr 26 14:18:49 2018 -0400
+
+    operations: implement GeglOperationAreaFilter::get_abyss_policy() ...
+
+    ... in various operations
+
+    This guarantees that their required/invalidated rectangles are
+    calculated correctly regardless of the used abyss policy.  See the
+    previous commit.
+
+ operations/common-gpl3+/edge.c         | 16 ++++++++++++++--
+ operations/common-gpl3+/ripple.c       | 21 ++++++++++++++++-----
+ operations/common-gpl3+/waves.c        | 22 +++++++++++++++++-----
+ operations/common/convolution-matrix.c | 17 +++++++++++++++--
+ 4 files changed, 62 insertions(+), 14 deletions(-)
+
+commit ad9790d6d28b0ac6ccf481260aca27f4dded74fe
+Author: Ell <ell_se@yahoo.com>
+Date:   Thu Apr 26 14:09:40 2018 -0400
+
+    operation: add GeglOperationAreaFilter::get_abyss_policy() vfunc
+
+    Add a GeglOperationAreaFilter::get_abyss_policy() virtual function,
+    which subclasses can override to specify which abyss policy is used
+    when reading the input buffer.
+
+    Modify get_required_for_output() and get_invalidated_by_change() to
+    take the abyss policy into account.  In particular, when using the
+    LOOP abyss policy, wrap the rectangle around the input bounds, so
+    that the correct input area is processed, and the correct output
+    area is invalidated.
+
+ gegl/operation/gegl-operation-area-filter.c | 89
+ +++++++++++++++++++++++++++--
+ gegl/operation/gegl-operation-area-filter.h | 11 +++-
+ 2 files changed, 92 insertions(+), 8 deletions(-)
+
+commit 3655f18bb2330059f47105561c332fad13edd1d0
+Author: Ell <ell_se@yahoo.com>
+Date:   Thu Apr 26 13:43:22 2018 -0400
+
+    operation: fix area-filter bounding-box and invlidated-by-change calc.
+
+    In GeglOperationAreaFilter, reverse the use of the left/right and
+    top/bottom area parameters in get_bounding_box() and
+    get_invalidated_by_change(), since these parameters specify the
+    extra area needed when transforming an output region to an input
+    region, while the above functions transform an input region to an
+    output region.
+
+ gegl/operation/gegl-operation-area-filter.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
+
+commit 58c917f830a6c06c4670d29d87d7f511af00073b
+Author: Ell <ell_se@yahoo.com>
+Date:   Thu Apr 26 09:10:50 2018 -0400
+
+    spherize: fix license notice
+
+    GPL => LGPL
+
+ operations/common/spherize.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
+
+commit de242a85344ed5ef2c28db693c76a5d8add7cf81
+Author: Ell <ell_se@yahoo.com>
+Date:   Thu Apr 26 09:07:28 2018 -0400
+
+    color-overlay: fix license notice
+
+    GPL => LGPL
+
+ operations/common/color-overlay.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
+
+commit 8a39e80bcdbd66e64daaef26daea4134b34e4b5d
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Apr 26 14:41:24 2018 +0200
+
+    post release version bump
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 commit f6caafacf3d8c176049de5c6680f8065bcfe9af9
 Author: Øyvind Kolås <pippin@gimp.org>
 Date:   Wed Apr 25 03:10:09 2018 +0200
