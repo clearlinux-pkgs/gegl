@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.4.2
-Release  : 32
+Release  : 33
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.2.tar.bz2
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.2.tar.bz2
 Summary  : Generic Graphics Library
@@ -13,6 +13,7 @@ License  : BSD-3-Clause GPL-3.0 LGPL-3.0
 Requires: gegl-bin
 Requires: gegl-lib
 Requires: gegl-data
+Requires: gegl-license
 Requires: gegl-locales
 BuildRequires : docbook-xml
 BuildRequires : gettext
@@ -55,6 +56,7 @@ other projects (imgflo, GNOME Photos, gcut, iconographer, â¦)
 Summary: bin components for the gegl package.
 Group: Binaries
 Requires: gegl-data
+Requires: gegl-license
 
 %description bin
 bin components for the gegl package.
@@ -84,9 +86,18 @@ dev components for the gegl package.
 Summary: lib components for the gegl package.
 Group: Libraries
 Requires: gegl-data
+Requires: gegl-license
 
 %description lib
 lib components for the gegl package.
+
+
+%package license
+Summary: license components for the gegl package.
+Group: Default
+
+%description license
+license components for the gegl package.
 
 
 %package locales
@@ -108,7 +119,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1527391649
+export SOURCE_DATE_EPOCH=1530284692
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -135,8 +146,12 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1527391649
+export SOURCE_DATE_EPOCH=1530284692
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/doc/gegl
+cp COPYING.LESSER %{buildroot}/usr/share/doc/gegl/COPYING.LESSER
+cp COPYING %{buildroot}/usr/share/doc/gegl/COPYING
+cp libs/poly2tri-c/COPYING %{buildroot}/usr/share/doc/gegl/libs_poly2tri-c_COPYING
 pushd ../buildavx2/
 %make_install
 popd
@@ -251,14 +266,12 @@ rm -rf %{buildroot}/usr/lib64/haswell
 /usr/lib64/gegl-0.4/gegl-common.so
 /usr/lib64/gegl-0.4/gegl-common.so.avx2
 /usr/lib64/gegl-0.4/gegl-core.so
-/usr/lib64/gegl-0.4/gegl-core.so.avx2
 /usr/lib64/gegl-0.4/gegl-generated.so
 /usr/lib64/gegl-0.4/gegl-generated.so.avx2
 /usr/lib64/gegl-0.4/jpg-load.so
 /usr/lib64/gegl-0.4/jpg-save.so
 /usr/lib64/gegl-0.4/lcms-from-profile.so
 /usr/lib64/gegl-0.4/npd.so
-/usr/lib64/gegl-0.4/npd.so.avx2
 /usr/lib64/gegl-0.4/npy-save.so
 /usr/lib64/gegl-0.4/path.so
 /usr/lib64/gegl-0.4/path.so.avx2
@@ -284,7 +297,6 @@ rm -rf %{buildroot}/usr/lib64/haswell
 /usr/lib64/gegl-0.4/v4l.so
 /usr/lib64/gegl-0.4/vector-fill.so
 /usr/lib64/gegl-0.4/vector-stroke.so
-/usr/lib64/gegl-0.4/vector-stroke.so.avx2
 /usr/lib64/gegl-0.4/webp-load.so
 /usr/lib64/gegl-0.4/webp-save.so
 /usr/lib64/libgegl-0.4.so
@@ -292,6 +304,12 @@ rm -rf %{buildroot}/usr/lib64/haswell
 /usr/lib64/libgegl-0.4.so.0.402.0
 /usr/lib64/libgegl-npd-0.4.so
 /usr/lib64/libgegl-sc-0.4.so
+
+%files license
+%defattr(-,root,root,-)
+/usr/share/doc/gegl/COPYING
+/usr/share/doc/gegl/COPYING.LESSER
+/usr/share/doc/gegl/libs_poly2tri-c_COPYING
 
 %files locales -f gegl-0.4.lang
 %defattr(-,root,root,-)
