@@ -1,5 +1,5 @@
 PKG_NAME := gegl
-URL = https://download.gimp.org/pub/gegl/0.4/gegl-0.4.2.tar.bz2
+URL = https://download.gimp.org/pub/gegl/0.4/gegl-0.4.4.tar.bz2
 ARCHIVES = 
 
 include ../common/Makefile.common

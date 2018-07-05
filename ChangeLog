@@ -1,3 +1,815 @@
+commit 690699bf61e0842ddea576b21121f88895f014a7
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 01:56:49 2018 +0200
+
+    unsharp-mask: merge in changes from unsharp-mask-plus
+
+ operations/common/unsharp-mask.c        |  77 +++++++++++++-
+ operations/workshop/Makefile.am         |   1 -
+ operations/workshop/unsharp-mask-plus.c | 171
+ --------------------------------
+ po/POTFILES.in                          |   1 -
+ 4 files changed, 72 insertions(+), 178 deletions(-)
+
+commit 85d1b72d9b2cfc1cf9e81bd1e940b9b52badf7ef
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 01:35:19 2018 +0200
+
+    unsharp-mask-plus: improved default values
+
+ operations/workshop/unsharp-mask-plus.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+commit 18fa8fe54a21bcc67b9d2b9a711dbb89e70ae691
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 01:12:04 2018 +0200
+
+    unsharp-mask-plus: disable parts of graph when threhold=0
+
+ operations/workshop/unsharp-mask-plus.c | 66
+ +++++++++++++++++++++++++++++++++
+ 1 file changed, 66 insertions(+)
+
+commit 09bdd95849268954c6357e692281d68a8304de60
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Jul 3 23:19:36 2018 +0200
+
+    workshop: add unsharp-mask-plus in workshop
+
+    Improvement to unsharp mask that slightly blurs thresholding mask
+    of threhold property, this improves visual fidelity of many
+    results for high values of thresholding, relevant for #82.
+
+ operations/workshop/Makefile.am         |   1 +
+ operations/workshop/unsharp-mask-plus.c | 105
+ ++++++++++++++++++++++++++++++++
+ po/POTFILES.in                          |   1 +
+ 3 files changed, 107 insertions(+)
+
+commit b1b2cc8553a41eaf9bb63a5c57ca6e9b5338f8d3
+Author: Ell <ell_se@yahoo.com>
+Date:   Tue Jul 3 09:18:11 2018 -0400
+
+    buffer: in swap backend, mark returned queued tiles as stored
+
+    In GeglTileBackendSwap, when returning a tile that's still queued
+    for writing in response to a GET command (in which case the
+    returned tile is a duplicate of the queued tile), mark the tile as
+    stored before returning it.  Duplicate tiles are initially
+    considered dirty.
+
+ gegl/buffer/gegl-tile-backend-swap.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 30e6ac769d8e73146dd95b6e77af6df647cfca8c
+Author: Andrea Veri <andrea.veri@gmail.com>
+Date:   Tue Jul 3 09:57:16 2018 +0000
+
+    Drop newlines between tags
+
+ gegl.doap | 20 +++++---------------
+ 1 file changed, 5 insertions(+), 15 deletions(-)
+
+commit 1a4e00ff9f73c59621f2d21a3eae2c3ad4f2ae60
+Author: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>
+Date:   Mon Jul 2 18:52:01 2018 +0000
+
+    Typo + syntax fix
+
+ docs/NEWS.txt | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+commit b1a6e94ed420d8620ec0721f996b0f1d24c7758d
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 2 20:25:05 2018 +0200
+
+    workshop: fix babl format in pixel-duster.h
+
+ operations/workshop/pixel-duster.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 866a67b67b9b962d45d9d50d415a4f3128b8fb68
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 2 15:58:53 2018 +0200
+
+    depend on babl-0.1.52
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 02992ca8a749eac4aa2d6885e64e865104976052
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 2 15:57:36 2018 +0200
+
+    NEWS: update
+
+ docs/NEWS.txt | 39 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
+
+commit c884049d2835f60ed216a09362ec9740225bfce4
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 2 10:14:24 2018 +0200
+
+    workshop: remove discardable protoype op enlarge2
+
+    It consumes too much time during build of docs/operations when
+    workshop is
+    enabled.
+
+ operations/workshop/Makefile.am |   1 -
+ operations/workshop/enlarge2.c  | 278
+ ----------------------------------------
+ 2 files changed, 279 deletions(-)
+
+commit efb5e5059bc5d9a6b3bfe4a2abd3d5caf22a8427
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 2 09:27:52 2018 +0200
+
+    tests: update clones reference
+
+ tests/compositions/reference/clones.png | Bin 723387 -> 724878 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit ff8278f674763b9d31ed0dcba7321cdd46296d0c
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 2 09:27:40 2018 +0200
+
+    tests: update contrast curve reference
+
+ tests/compositions/reference/contrast-curve.png | Bin 265342 ->
+ 265335 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 7fe8beabedf82d83565d1eb66dfe14d65d5e16c2
+Author: Ell <ell_se@yahoo.com>
+Date:   Sat Jun 30 17:29:21 2018 -0400
+
+    buffer: use gegl_tile_read_{lock,unlock}() when reading tiles
+
+    Use the new gegl_tile_read_lock() and gegl_tile_read_unlock()
+    functions, added in the previous commit, before/after reading from
+    a tile in a potentially-multithreaded context.
+
+    See the previous commit for an explanation of why this is
+    necessary.
+
+    Note, in particular, that this may make 1x1 gegl_buffer_get()s
+    (and NEAREST gegl_buffer_sample()) more expensive, however, NEAREST
+    sampler objects amortize the cost of these functions by only
+    locking/unlocking the sampler's hot-tile when switching tiles.  As
+    a result, a concurrent write to the same buffer may block while the
+    sampler object is alive.  We assume that buffers may not be
+    written-to while there are active sampler objects constructed for
+    them (which can already lead to stale data in the samplers).
+
+ gegl/buffer/gegl-buffer-access.c     | 14 ++++++++++++--
+ gegl/buffer/gegl-buffer-iterator.c   |  8 ++++++++
+ gegl/buffer/gegl-sampler-nearest.c   | 20 +++++++++++++++++---
+ gegl/buffer/gegl-tile-handler-zoom.c | 16 +++++++++++++---
+ 4 files changed, 50 insertions(+), 8 deletions(-)
+
+commit 301b798b4b2d4a113a547df7ba29e6621a06357a
+Author: Ell <ell_se@yahoo.com>
+Date:   Sat Jun 30 17:02:34 2018 -0400
+
+    buffer: add gegl_tile_read_{lock,unlock}()
+
+    Currently, we don't manage read access to tile data -- code that
+    reads from a tile simply calls gegl_tile_get_data(), and assumes
+    the returned pointer is valid throghout.  This, however, might not
+    be the case in general, in a multithreaded context:
+
+    Suppose tiles A and B share the same data.  Thread 1 begins reading
+    tile A through the pointer returned by gegl_tile_get_data().
+    Thread 2 then locks tile A for writing (intending to write to a
+    portion of the tile that doesn't overlap the portion thread 1 is
+    reading).  Since the tile's data is shared, thread 2 unclones the
+    data before writing, and so the data thread 1 is reading is now
+    solely owned by tile B.  At this point, two things can go wrong:
+    a concurrent write operation to tile B can overwrite the data
+    thread 1 is reading (which supposedly belongs to tile A), or,
+    tile B can be destroyed, freeing the data thread 1 is reading.
+
+    To fix this, we add the gegl_tile_read_lock() and
+    gegl_tile_read_unlock() functions, which "lock" the tile for read
+    access.  Code that reads tile data should call these functions
+    before/after reading from the tile, if the read may happen in a
+    multithreaded context.  Note that in spite of the functions' names,
+    they don't actually block execution in general.  Instead, they make
+    sure that if gegl_tile_lock() is called on a cloned tile while it's
+    being read, the function will block until reading is done before
+    uncloning the tile.
+
+    One exception to the above are clones of the global empty tile, for
+    which we avoid the said blocking altogether, since their data may
+    never end up being owned by a single, mutable tile.
+
+    Using gegl_tile_lock/unlock() before/after writing, and
+    gegl_tile_read_lock/unlock() before/after reading, guarantees that
+    the following combinations of concurrent tile operations are safe:
+
+      - Read/read.
+
+      - Read/duplicate.
+
+      - Duplicate/duplicate.
+
+      - Non-overlapping read/write.
+
+      - Non-overlapping write/write.
+
+ gegl/buffer/gegl-buffer-private.h     | 15 ++++--
+ gegl/buffer/gegl-tile-handler-empty.c |  5 +-
+ gegl/buffer/gegl-tile.c               | 88
+ ++++++++++++++++++++++++++---------
+ gegl/buffer/gegl-tile.h               | 10 ++++
+ 4 files changed, 89 insertions(+), 29 deletions(-)
+
+commit 199bf87a2e4e9cc1b33bfa4b1657b03bc718cbd7
+Author: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>
+Date:   Mon Jul 2 02:56:03 2018 +0300
+
+    Update Russian translation
+
+ po/ru.po | 680
+ ++++++++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 386 insertions(+), 294 deletions(-)
+
+commit e03bfba6cfe19898dcf6d12dd1d59594e701980d
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Sun Jul 1 19:18:08 2018 +0200
+
+    Update Polish translation
+
+ po/pl.po | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
+
+commit d89034395bbf2db03722ee7589daf6f963f8b528
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Sun Jul 1 18:35:05 2018 +0200
+
+    POTFILES.in: add absolute.c
+
+ po/POTFILES.in | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit b8751cee227a1cab6569070d861d4a2a93874670
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Sun Jul 1 18:29:59 2018 +0200
+
+    unsharp-mask: issue #82 add threshold property
+
+    Add the neccesary internal nodes to do also do threshold, and
+    improvement to
+    this would be to detect the threshold=0.0 case and skip doing
+    per-pixel
+    processing for that case.
+
+    This does the same math as the legacy GIMP unsharp-mask plugin:
+
+        {
+          gint value;
+          gint diff = *s - *d;
+
+          /* do thresholding */
+          if (abs (2 * diff) < threshold)
+            diff = 0;
+
+          value = *s++ + amount * diff;
+          *d++ = CLAMP (value, 0, 255);
+        }
+
+ operations/common/unsharp-mask.c | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
+
+commit 20e41737feb9a94b09add25d9d7b19fce3232084
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Sun Jul 1 17:52:07 2018 +0200
+
+    threshold: change format from linear to perceptual
+
+    When used as parameters in UIs and scripts it is natural to treat
+    0.5 as gray,
+    this prepares for use of gegl:threshold in gegl:unsharp-mask
+
+ operations/common/threshold.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 98ed1d61cb6f59298765d9ff80e8f1a9ec353169
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Sun Jul 1 17:51:54 2018 +0200
+
+    absolute: add new op gegl:abs
+
+ operations/common/Makefile.am |  1 +
+ operations/common/absolute.c  | 87
+ +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 88 insertions(+)
+
+commit 4af8785a8a343e0395e2caa373126a1476c52638
+Author: Ell <ell_se@yahoo.com>
+Date:   Sun Jul 1 07:28:28 2018 -0400
+
+    buffer: eliminate empty mipmapped tile generation; fix potential leak
+
+    When all the lower-level tiles of a mipmapped tile are NULL *or*
+    empty, avoid generating the mipmapped tile altogether, and let the
+    empty tile handler return an empty tile (previously, this would
+    only happen when all lower-level tiles were NULL.)  If the
+    mipmapped tile already exists, make sure to unref it before
+    returning NULL, to avoid leaking it.
+
+ gegl/buffer/gegl-tile-handler-zoom.c | 25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
+
+commit 4161757959f656399f7be1ef505174e81e27d12c
+Author: Ell <ell_se@yahoo.com>
+Date:   Sun Jul 1 06:56:41 2018 -0400
+
+    buffer: fix empty tile uncloning rollback
+
+    When uncloning an empty tile, make sure to always mark it as non-
+    empty, even if we end up rolling-back to the original buffer, since
+    it may subsequently be written to.
+
+    Also, add description for the GeglTile::is_zero_tile member.
+
+ gegl/buffer/gegl-buffer-private.h | 5 ++++-
+ gegl/buffer/gegl-tile.c           | 3 ++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
+
+commit bfc3283fdab386165c7e962c4a5fbd3cfca882f6
+Author: Michael Schumacher <schumaml@gmx.net>
+Date:   Sat Jun 30 14:27:30 2018 +0000
+
+    tests: Prevent parallel make check
+
+ tests/Makefile.am | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 1770ec6128a84c6f8ec44121947600849c8b682e
+Author: Ell <ell_se@yahoo.com>
+Date:   Sat Jun 30 04:54:44 2018 -0400
+
+    buffer: fix gegl-tile-source.h when included in C++ files
+
+ gegl/buffer/gegl-tile-source.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 90a2dce87e3e961c444b44f0d902222a4a4ce2de
+Author: Ell <ell_se@yahoo.com>
+Date:   Sat Jun 30 03:44:04 2018 -0400
+
+    perf: disable non-nearest gegl_buffer_sample() tests
+
+    Since commit 26f13cbfe9aaaa8c176162e54fdbb8af6876538e,
+    gegl_buffer_sample() has gotten much slower for non-nearest
+    samplers; the corresponding tests in perf/test-samplers take
+    forever as a result.  Let's simply disable them (note that the
+    tests for gegl_sampler_get() and gegl_sampler_get_fun(), which is
+    what performance-critical code should use anyway, are still enabled
+    for all samplers.)
+
+ perf/test-samplers.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+commit 8c23828022dd7051225c1f013a0cf667ecbf5b5a
+Author: Daniel Korostil <ted.korostiled@gmail.com>
+Date:   Tue Jun 26 21:01:14 2018 +0000
+
+    Update Ukrainian translation
+
+ po/uk.po | 1952
+ +++++++++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 1173 insertions(+), 779 deletions(-)
+
+commit a541d7dba15fe82ecf5f9f62cd7eb0aa5c09fbcb
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Sun Jun 24 18:48:13 2018 +0200
+
+    Update Polish translation
+
+ po/pl.po | 105
+ ++++++++++++++++++++++++++-------------------------------------
+ 1 file changed, 44 insertions(+), 61 deletions(-)
+
+commit ebeede51d86244ad80478684331201a61dae9bcb
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jun 21 14:10:51 2018 +0200
+
+    unsharp-mask: rename human readable name to "Sharpen (Unsharp Mask)"
+
+    For some relevant discussion, see gimp#1671
+
+ operations/common/unsharp-mask.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 7604cdf910c8f330c49b77f72232f9b0ae2d1556
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jun 21 12:36:11 2018 +0200
+
+    unsharp-mask: change UI labels
+
+    Make the UI labels read 'Radius' and 'Amount' like the legacy
+    unsharp-mask
+    plug-ins parameters. The meaning of this radius is still a
+    standard-deviation
+    of the underlying gaussian blur and not a perceptual radius of
+    influence in
+    pixels. gimp#1671
+
+ operations/common/unsharp-mask.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+commit be9fffff9ad6fa8b5c4aebeb541261ff30975bd4
+Author: Ell <ell_se@yahoo.com>
+Date:   Thu Jun 21 03:43:24 2018 -0400
+
+    gegl-stats: add read/write swap stats
+
+    Add boolean "swap-reading" and "swap-writing" properties to
+    GeglStats, indicating whether data is currently being read-from/
+    written-to the tile swap, respectively.
+
+    Add "swap-read-total" and "swap-write-total" properties to
+    GeglStats, indicating the total amount of data read-from/written-to
+    the tile swap, respectively.  These values are reset when calling
+    gegl_stats_reset().
+
+ gegl/buffer/gegl-tile-backend-swap.c | 67
+ +++++++++++++++++++++++++++++++-----
+ gegl/buffer/gegl-tile-backend-swap.h | 12 +++++--
+ gegl/gegl-stats.c                    | 51 +++++++++++++++++++++++++++
+ 3 files changed, 118 insertions(+), 12 deletions(-)
+
+commit e08b3e0376c0e44dbe1bd68d34615d22122e5cb1
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Jun 19 17:32:46 2018 +0200
+
+    pixelize: fix portability of integer overflow casting
+
+    Use gint64 instead of long, since on windows long still means 32bit,
+    ref comment from massimo in issue #78
+
+ operations/common/pixelize.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit fa819748659360fd5e10155a787e6fca31d77bbb
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Jun 19 17:05:01 2018 +0200
+
+    pixelize: avoid integer overflow when choosing code paths
+
+    For block sizes larger than 65535 the wrong code paths get chosen
+    since the squared size is larger than 32bit. Casting the values
+    compared to longs fixes issue #78 -
+    https://gitlab.gnome.org/GNOME/gegl/issues/78
+
+ operations/common/pixelize.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 6be0a86583f9c10c7710c96c21c261e4227c4727
+Author: Ell <ell_se@yahoo.com>
+Date:   Sun Jun 17 14:44:11 2018 -0400
+
+    recursive-transform: merge back recursive-transform-plus changes
+
+    ... which add support for applying multiple transformations
+    simultaneously, by specifiying a semicolon-separated list of
+    matrices through the "transform" property.
+
+    Note that, currently, the "fade-color" and "fade-opacity" properties
+    are applied to all transforms; in the future, we might want to add
+    per-transform fade properties.  This can be done without breaking
+    backward-compatibility, and the global fade properties can still be
+    useful.
+
+ operations/common/recursive-transform.c        | 286 ++++++++++++------
+ operations/workshop/Makefile.am                |   1 -
+ operations/workshop/recursive-transform-plus.c | 392
+ -------------------------
+ po/POTFILES.in                                 |   1 -
+ 4 files changed, 203 insertions(+), 477 deletions(-)
+
+commit ba2635c6f2362963470a95098bc910a10d695767
+Author: Ell <ell_se@yahoo.com>
+Date:   Sun Jun 17 00:45:41 2018 -0400
+
+    transform: don't leak sampler object when using a NEAREST sampler
+
+ operations/transform/transform-core.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 46e6588dcd5d270234b4d39bd0abd2bbc4a00c7f
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jun 15 12:48:34 2018 +0200
+
+    svg-luminancetoalpha: add "needs-alpha" metadata
+
+ operations/common/svg-luminancetoalpha.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 674e83d7d71776381b1423b0debc14d3d09a13f9
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jun 15 12:45:57 2018 +0200
+
+    color-to-alpha: add "needs-alpha" meta-data
+
+    As a hint that can be checked for in GIMP and other
+    applications. Always making
+    sure that the layer has alpha before running ops with this meta-data
+    key set
+    should remove the possibility of running the filter without adding
+    alpha for
+    ops where doing so clearly would be non-sensical.
+
+ operations/common-gpl3+/color-to-alpha.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 6184ce430f04180eb2e9f245a3b8b8b618f1471e
+Author: Marco Ciampa <ciampix@posteo.net>
+Date:   Tue Jun 12 11:40:33 2018 +0200
+
+    Updated Italian translation
+
+ po/it.po | 124
+ ++++++++++++++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 92 insertions(+), 32 deletions(-)
+
+commit 80f9a22ee3efd9ebbcf91b950d09d0957709dceb
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Sun Jun 10 16:06:02 2018 +0200
+
+    Update Polish translation
+
+ po/pl.po | 37 +++++++++++++++++++++++++++++++++++--
+ 1 file changed, 35 insertions(+), 2 deletions(-)
+
+commit 30e4c7e3262100791b6fc9f68ae7f54b17f97c94
+Author: Ell <ell_se@yahoo.com>
+Date:   Wed Jun 6 01:55:17 2018 -0400
+
+    workshop: fix Makefile.am
+
+ operations/workshop/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 5bddaf64b8ed353c0fce91e88c23e2628e8c3ec3
+Author: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>
+Date:   Wed Jun 6 02:12:27 2018 +0300
+
+    po: add selective-hue-saturation
+
+ po/POTFILES.in | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit afdfb6124b7c588028aa860d92dd6425e984d284
+Author: Miroslav Talasek <miroslav.talasek@seznam.cz>
+Date:   Wed Jun 6 02:03:49 2018 +0300
+
+    Add Selective Hue-Saturation operation to the workshop
+
+ operations/workshop/Makefile.am                |   3 +-
+ operations/workshop/selective-hue-saturation.c | 177
+ +++++++++++++++++++++++++
+ 2 files changed, 179 insertions(+), 1 deletion(-)
+
+commit 3efcb8496e299f30443edae6059a82b58483b102
+Author: Ell <ell_se@yahoo.com>
+Date:   Tue Jun 5 11:35:30 2018 -0400
+
+    recursive-transform: reverse node disconnection order
+
+    When updating the graph, reverse the node disconnection order, to
+    minimize the number of invalidations.
+
+ operations/common/recursive-transform.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 52a5da6526e89c7b7167dce9db2060bb7287b65e
+Author: Ell <ell_se@yahoo.com>
+Date:   Tue Jun 5 11:14:45 2018 -0400
+
+    recursive-transform-plus: fix gegl:over node count; reverse
+    disconnection
+
+    Fix the number of gegl:over nodes per iteration.  There was
+    accidentally one less than necessary, breaking the op when using
+    the maximal number of transformations.
+
+    Reverse the order in which nodes are disconnected when updating the
+    graph, to reduce the number of invalidations.
+
+ operations/workshop/recursive-transform-plus.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
+
+commit 694264a59c3d1906c8eade2c2e0b9a67d4d51c43
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Tue Jun 5 15:32:55 2018 +0200
+
+    Update Polish translation
+
+ po/pl.po | 34 ++++++++++++++++++++++++++++++----
+ 1 file changed, 30 insertions(+), 4 deletions(-)
+
+commit 9829bc22e85526d789c4e80c05949d4c6202a207
+Author: Ell <ell_se@yahoo.com>
+Date:   Tue Jun 5 03:41:19 2018 -0400
+
+    recursive-transform-plus: new operation in workshop
+
+    gegl:recursive-transform-plus is an extension of
+    gegl:recursive-transform, allowing multiple transformations to be
+    applied simultaneously.  The transformation matrices are specified
+    through the "transform" property, as before, separated by
+    semicolons.
+
+    The intent is to eventually merge this back into
+    gegl:recursive-transform.
+
+ operations/workshop/Makefile.am                |   1 +
+ operations/workshop/recursive-transform-plus.c | 392
+ +++++++++++++++++++++++++
+ po/POTFILES.in                                 |   1 +
+ 3 files changed, 394 insertions(+)
+
+commit fa5a637d24ff1ad68639f5ab6d0444704ca86863
+Author: Dimitris Spingos (Δημήτρης Σπίγγος)
+<dmtrs32@gmail.com>
+Date:   Mon Jun 4 17:41:00 2018 +0300
+
+    Update Greek translation
+
+ po/el.po | 434
+ +++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 214 insertions(+), 220 deletions(-)
+
+commit 190a81b4a7c70c208ec624bdc5187b003d2e4774
+Author: Ell <ell_se@yahoo.com>
+Date:   Sun Jun 3 17:57:07 2018 -0400
+
+    recursive-transform: watch gegl:opacity child nodes
+
+ operations/common/recursive-transform.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 6931adcd7cb5474c2c00e6086b00f0c7fa4b7e5c
+Author: orbea <orbea@fredslev.dk>
+Date:   Fri Jun 1 14:05:34 2018 -0700
+
+    Fix build with slibtool.
+
+    When building gegl with slibtool instead of libtool the build fails.
+
+      /usr/bin/ld: cannot find -lpoly2tri-c
+
+    I bisected this issue to the follow commit and it appears to be a gegl
+    issue.
+
+    https://gitlab.gnome.org/GNOME/gegl/commit/73c5eba7ce11beba0e164fd27156ee224774da18
+
+ operations/seamless-clone/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 27bacf33130df6cce645c5bb66162e4ada3797e0
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Wed May 30 10:52:36 2018 +0200
+
+    Update Polish translation
+
+ po/pl.po | 424
+ +++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 209 insertions(+), 215 deletions(-)
+
+commit 6412075f6acd3dc2ad78ae888f02684b509553b7
+Author: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>
+Date:   Mon May 28 14:03:34 2018 +0000
+
+    Tweak operation's name to make it more specific, since domain
+    transform has multiple applications in computer graphics
+
+ operations/workshop/domain-transform.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 41d857ad8001230b274bf76a29b5ffef958fa767
+Author: Tobias <tobias.jakobs@gmail.com>
+Date:   Fri May 25 14:34:42 2018 +0000
+
+    Update test-gegl-node.py: fight http and replace it with https
+
+ tests/python/test-gegl-node.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 60fdc06ec81a46c4a0df311ddab1a8881d5e2ddc
+Author: Ell <ell_se@yahoo.com>
+Date:   Thu May 24 10:45:32 2018 -0400
+
+    buffer: trim cache when changing cache size
+
+    When the GeglConfig::tile-cache-size property is changed, trim the
+    tile cache, so that any excess data is moved to the swap.
+
+ gegl/buffer/gegl-tile-handler-cache.c | 15 ++++++++++++++-
+ gegl/gegl-init.c                      |  2 +-
+ 2 files changed, 15 insertions(+), 2 deletions(-)
+
+commit 42643fb061064a06d0e893954f36ce7f82bcb666
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed May 23 20:49:12 2018 +0200
+
+    docs: remove some references to bugzilla
+
+ docs/Makefile.am  |  2 +-
+ docs/bugzilla.txt | 14 --------------
+ docs/index.txt.in | 11 ++++-------
+ 3 files changed, 5 insertions(+), 22 deletions(-)
+
+commit 48d883ade52092b6511f5ac71fea8a3e5444aaee
+Merge: 395307d21 7a4fd4639
+Author: Øyvind "pippin" Kolås <pippin@gimp.org>
+Date:   Tue May 22 17:23:58 2018 +0000
+
+    Merge branch 'wip/rishi/issue-72' into 'master'
+
+    gegl: Ensure that the "threads" property gets installed on big
+    machines
+
+    See merge request GNOME/gegl!1
+
+commit 7a4fd46392f5e01cdd60bf69cbd993deba1847d6
+Author: Debarshi Ray <debarshir@gnome.org>
+Date:   Tue May 22 14:35:54 2018 +0200
+
+    gegl: Ensure that the "threads" property gets installed on big
+    machines
+
+    ... where the value of g_get_num_processors exceeds GEGL_MAX_THREADS.
+
+    Spotted by Massimo Valentini.
+
+    Fallout from 03f83003760d1b19de06e08b80143bc70156f45e
+
+    https://gitlab.gnome.org/GNOME/gegl/issues/72
+
+ gegl/gegl-config.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 395307d213d85360ae12a5812f8d877c89164594
+Author: Alan Mortensen <alanmortensen.am@gmail.com>
+Date:   Sat May 19 17:38:10 2018 +0200
+
+    Updated Danish translation
+
+ po/da.po | 455
+ +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 236 insertions(+), 219 deletions(-)
+
+commit a4e6a63b8f45e247d397f6c390d904d99d666e37
+Author: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>
+Date:   Sat May 19 14:36:54 2018 +0000
+
+    Update Latvian translation
+
+ po/lv.po | 1750
+ ++++++++++++++++++++++++++------------------------------------
+ 1 file changed, 728 insertions(+), 1022 deletions(-)
+
+commit 923b4390bc3d43f07ef31d4db16c0551d78963d0
+Author: Ell <ell_se@yahoo.com>
+Date:   Thu May 17 13:04:28 2018 -0400
+
+    convert-format: perform copy in GeglOperationFilter::process()
+
+    When the input and output formats are different, perform the copy
+    (and hence the conversion) from the input buffer to the output
+    buffer in GeglOperationFilter::process(), rather than
+    GeglOperation::process(), so that it's parallelized.
+
+ operations/core/convert-format.c | 48
+ +++++++++++++++++++++++++---------------
+ 1 file changed, 30 insertions(+), 18 deletions(-)
+
+commit 1de2e18baa76ce9d2861687640f7c9d127eec928
+Author: Ell <ell_se@yahoo.com>
+Date:   Wed May 16 13:50:17 2018 -0400
+
+    fractal-trace: remove call to deprecated gegl_buffer_sample_cleanup()
+
+    ... which is a NOP, and the op already uses a sampler object
+    anyway.
+
+ operations/common-gpl3+/fractal-trace.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+commit bd9ee42380a0c997294dd06e4a8f35c9a099d11b
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed May 16 13:44:00 2018 +0200
+
+    post-release version bump
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 commit b16c1641126fd1ac0363845e1fc30c1f3c50fa1b
 Author: Øyvind Kolås <pippin@gimp.org>
 Date:   Wed May 16 13:32:57 2018 +0200
