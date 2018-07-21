@@ -1,7 +1,6 @@
 libbabl-0.1.so.0
 libc.so.6
 libcairo.so.2
-libfribidi.so.0
 libgdk_pixbuf-2.0.so.0
 libgexiv2.so.2
 libgio-2.0.so.0
@@ -22,5 +21,6 @@ libpthread.so.0
 libraw.so.19
 librsvg-2.so.2
 libstdc++.so.6
+libtiff.so.5
 libwebp.so.7
 libz.so.1
