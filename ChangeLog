@@ -1,3 +1,2696 @@
+commit 0c404a826c5ada5b5120983491bc09ddc05b250b
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 23 04:15:47 2018 +0200
+
+    release GEGL 0.4.6
+
+ configure.ac  |  2 +-
+ docs/NEWS.txt | 19 +++++++++++++------
+ 2 files changed, 14 insertions(+), 7 deletions(-)
+
+commit 986504cf8eadb8e8cdd2da78e23af399c4bbf7c4
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 23 04:04:04 2018 +0200
+
+    configure: depend on babl 0.1.54
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 664869fcdfc7ff59e44216d7336568de5f3f0b05
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Sun Jul 22 19:53:48 2018 +0200
+
+    Update Polish translation
+
+ po/pl.po | 171
+ +++++++++++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 113 insertions(+), 58 deletions(-)
+
+commit 1b2634494ddc9cc62d127907e8d5d518e7e67224
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Sun Jul 22 19:00:16 2018 +0200
+
+    NEWS: update
+
+ docs/NEWS.txt | 57
+ +++++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 33 insertions(+), 24 deletions(-)
+
+commit 6087f4218e84f0d177dcb017bc80b312dcf0b73f
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Sat Jul 21 13:25:43 2018 +0200
+
+    filmic: rename to aces-rrt
+
+    The ACES RRT is a filmic look, but a specific one hard-coded for ACES
+    workflows, renaming to show the intent of it becoming a parametric
+    implementation of the ACES RRT, update description.
+
+ operations/workshop/Makefile.am              |  2 +-
+ operations/workshop/{filmic.c => aces-rrt.c} | 66
+ ++++++++++++++++++++++++----
+ po/POTFILES.in                               |  2 +-
+ 3 files changed, 60 insertions(+), 10 deletions(-)
+
+commit 7bdab46b774bf09842fed05c9947b09a3b78226b
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Sat Jul 21 13:37:58 2018 +0200
+
+    gegl: store backpointer to hashtable of contexts in each context
+
+    This will permit simpler code in many scenarios, and enables storage
+    of data in the context.
+
+ gegl/operation/gegl-operation-context-private.h |  7 ++++++-
+ gegl/operation/gegl-operation-context.c         | 14 +++++++++++++-
+ gegl/operation/gegl-operation-context.h         |  4 ++++
+ gegl/process/gegl-graph-traversal.c             |  3 ++-
+ gegl/process/gegl-processor.c                   |  2 +-
+ 5 files changed, 26 insertions(+), 4 deletions(-)
+
+commit 569bc4adb0751075ca3dd94992ffffec73454838
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Sun Jul 22 12:34:28 2018 +0200
+
+    NEWS: more space invasion news tweaks
+
+ docs/NEWS.txt | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+commit 17d4571bcd23d57e79fe710edb333a3e64d69bcc
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 20 18:25:31 2018 +0200
+
+    NEWS: update
+
+ docs/NEWS.txt | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
+
+commit a1add18e38a371ed6e7efc034987d0b790f1b52f
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 20 14:32:51 2018 +0200
+
+    NEWS: update
+
+ docs/NEWS.txt | 23 +++++++++--------------
+ 1 file changed, 9 insertions(+), 14 deletions(-)
+
+commit 026658235495d158942f2c2ecf9152a517d10934
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 20 14:04:24 2018 +0200
+
+    NEWS: update
+
+ docs/NEWS.txt | 150
+ ++++++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 94 insertions(+), 56 deletions(-)
+
+commit f6bfb5f2aff3b45c7aa26c4394562200a035a3f0
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 20 12:33:42 2018 +0200
+
+    tools: simplify introspect graph
+
+    This clears up a warning about target not being regular file
+    when building the docs.
+
+ tools/introspect.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+commit d97122ed2a2d262f2c00647d6bb3692276b9fc6e
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 20 12:03:18 2018 +0200
+
+    gegl: gegl-algorithms.c clean up old workaround for broken babl
+    behavior
+
+    An workaround for an older babl is triggering reported segfaults
+    during GIMP
+    builds on OSX.  Simplify this code assuming that babl does the right
+    thing -
+    The result of the calls should be equivalen, but this refactoring
+    might help
+    issue #75.
+
+ gegl/gegl-algorithms.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
+
+commit aa3dff2ebbd65e13bf7cb9261983a284a7970895
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 20 11:42:39 2018 +0200
+
+    vignette: extend usable range of gamma property
+
+    Values between 1.0 and 2 were treated as 2.0, also extend permitted
+    value range down to 0.0, fixing issue #93
+
+ opencl/vignette.cl           | 2 +-
+ opencl/vignette.cl.h         | 2 +-
+ operations/common/vignette.c | 7 ++++---
+ 3 files changed, 6 insertions(+), 5 deletions(-)
+
+commit b2fe647f09a7010b60ebdb677a24fcafa7b0a9d4
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 20 11:41:40 2018 +0200
+
+    docs/website: remove version from title
+
+    Fixing issue #92.
+
+ docs/index.txt.in | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 4bf2e5c05e9a3362f81c1b392ac7ff531230d7ce
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 20 00:51:19 2018 +0200
+
+    docs: update download folder location
+
+    it was still pointing to the 0.3 location. Fixing issue #91 (when
+    website soon next gets synced from generated docs).
+
+ docs/index.txt.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit d08ce90cf8815ee646812742c9100236c16fb72c
+Author: Daniel Mustieles <daniel.mustieles@gmail.com>
+Date:   Thu Jul 19 12:19:42 2018 +0000
+
+    Update Spanish translation
+
+ po/es.po | 231
+ +++++++++++++++++++++++----------------------------------------
+ 1 file changed, 85 insertions(+), 146 deletions(-)
+
+commit c2bd1fe8e49a12da14f1b27e47d28b3c9a878c32
+Author: Rodrigo <rodhos92@gmail.com>
+Date:   Thu Jul 19 09:11:16 2018 +0000
+
+    Update Spanish translation
+
+ po/es.po | 437
+ ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 225 insertions(+), 212 deletions(-)
+
+commit 92f522ab254354ddfb59170b2be2d59d9bee1cf4
+Author: Marco Ciampa <ciampix@posteo.net>
+Date:   Wed Jul 18 23:42:14 2018 +0200
+
+    Updated Italian translation
+
+ po/it.po | 918
+ ++++++++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 525 insertions(+), 393 deletions(-)
+
+commit 1d6f8563b5088618a0249850f94b732087fb782b
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 18 16:46:36 2018 +0200
+
+    NEWS: update
+
+ docs/NEWS.txt | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+commit 8886f3db5e25e913468bdd483ecab6f5294e12a4
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Jul 17 22:46:28 2018 +0200
+
+    filmic: update description
+
+ operations/workshop/filmic.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+commit 853a7daf2ed0491f8dbff87e21720c8fee269208
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Jul 17 18:41:17 2018 +0200
+
+    NEWS: update
+
+ docs/NEWS.txt | 45 ++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 44 insertions(+), 1 deletion(-)
+
+commit c9c439c7f17499278ddddec1e804e92aecd12b5a
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Jul 17 18:05:20 2018 +0200
+
+    png-save: only save icc profile for RGB images
+
+ operations/external/png-save.c | 94
+ +++++++++++++++++++++++-------------------
+ 1 file changed, 51 insertions(+), 43 deletions(-)
+
+commit 356fdc9420e5dabb2c3f3fa0308305b6db45a529
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Jul 17 18:02:27 2018 +0200
+
+    filmic: fix syntax typo
+
+ operations/workshop/filmic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 18db3c27ea38e837a84f3e5796d150c54235e50a
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Jul 17 15:46:50 2018 +0200
+
+    filmic: add ACES based filmic HDR to SDR proofing filter
+
+ operations/workshop/Makefile.am |  1 +
+ operations/workshop/filmic.c    | 91
+ +++++++++++++++++++++++++++++++++++++++++
+ po/POTFILES.in                  |  1 +
+ 3 files changed, 93 insertions(+)
+
+commit 33d64bb65d3d0bf923a2a074c5dadc6afb9c00f8
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Jul 17 00:04:23 2018 +0200
+
+    docs: update gegl-chain docs
+
+ docs/gegl-chain.txt | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+commit 7083df080254307c6ced47e2717e811f962be0bd
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 16 23:58:42 2018 +0200
+
+    docs: document impact of space invasion on commandline interface
+
+    This documents how to replace, convert, export and otherwise
+    interact with
+    the color space through a gegl-chain.
+
+    The concepts as documented here also applies to programmatic use of
+    GEGL, then
+    one can also pass const Babl *space pointers to cast-space and
+    convert-space as
+    well.
+
+ docs/gegl-chain.txt | 59
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 59 insertions(+)
+
+commit e2c52833769250fade35bbbe429f63a4450bf8d4
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 16 23:42:19 2018 +0200
+
+    bin: s/babl_icc_make_space/babl_space_from_icc/
+
+ bin/mrg-gegl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit ec6456fb1265c1efa2ee7ae1e7fd08de461ff8c3
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 16 18:35:38 2018 +0200
+
+    cast-space: use babl_space_from_icc instead of icc_make_space
+
+ operations/core/cast-space.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 0876671148757a31c946c7fa258e6d945f41be85
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 16 18:35:25 2018 +0200
+
+    convert-space: use babl_space_from_icc instead of icc_make_space
+
+ operations/core/convert-space.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 3d992dac18a6dba4052b0826b766820241b560b9
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 16 18:34:50 2018 +0200
+
+    *-load: update with tweaks to recent babl APIs
+
+ operations/external/exr-load.cpp |  2 +-
+ operations/external/jp2-load.c   |  4 ++--
+ operations/external/jpg-load.c   |  2 +-
+ operations/external/png-load.c   | 18 +++++++++---------
+ operations/external/tiff-load.c  |  2 +-
+ 5 files changed, 14 insertions(+), 14 deletions(-)
+
+commit c7583e5d02cfd26f73d2cf167398de493505bc8b
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 16 11:53:18 2018 +0200
+
+    raw-load: add property for specifying color space
+
+    libraw has support for loading into various predefined RGB spaces,
+    up until now
+    we've been using sRGB, to avoid changing results of existing
+    pipelines sRGB
+    remains the default space for now. Also change to want linear data
+    out of
+    libraw - and make relevant changes to requested formats, thus
+    mimicking also
+    how EXR with predominantly linear data behaves.
+
+ operations/external/raw-load.c | 50
+ ++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 43 insertions(+), 7 deletions(-)
+
+commit 9682c3f454fb53164c25f9951fbc4b9c12383d58
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Sun Jul 15 21:47:16 2018 +0200
+
+    operations: move cast-space and convert-space out of workshop
+
+ operations/core/Makefile.am                        |  2 +
+ operations/{workshop => core}/cast-space.c         | 30 ++++++------
+ .../{workshop/set-space.c => core/convert-space.c} | 54
+ ++++++++++------------
+ operations/workshop/Makefile.am                    |  2 -
+ operations/workshop/ditto.c                        |  7 ++-
+ po/POTFILES.in                                     |  4 +-
+ 6 files changed, 45 insertions(+), 54 deletions(-)
+
+commit bc9a9a59c23750d248d3920eb3b9d2abf91c876d
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Sun Jul 15 19:49:23 2018 +0200
+
+    Update Polish translation
+
+ po/pl.po | 96
+ +++++++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 77 insertions(+), 19 deletions(-)
+
+commit 5452ac49dc876bae84a9e13abf83a837ae507db3
+Author: Daniel Korostil <ted.korostiled@gmail.com>
+Date:   Sun Jul 15 17:37:33 2018 +0000
+
+    Update Ukrainian translation
+
+ po/uk.po | 917
+ +++++++++++++++++++++++++++------------------------------------
+ 1 file changed, 387 insertions(+), 530 deletions(-)
+
+commit 494234cd3e4e1ac88b9062bb5f9d94e11083e5e0
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Sun Jul 15 15:30:12 2018 +0200
+
+    png-load: do not reinterpret gamma when using ICC profile
+
+ operations/external/png-load.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 21b0300b2f57365537d9f17624468b4c58d7cea8
+Author: Daniel Mustieles <daniel.mustieles@gmail.com>
+Date:   Fri Jul 13 12:02:02 2018 +0000
+
+    Update Spanish translation
+
+ po/es.po | 9180
+ ++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 4799 insertions(+), 4381 deletions(-)
+
+commit 8b1705a083f586feabc1d2070d1b6f3e669836b3
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 13 12:21:37 2018 +0200
+
+    png-save: only look for "linear" variant of 1.0 trc
+
+ operations/external/png-save.c | 33 ++++++++++++++++++++++++++++++++-
+ 1 file changed, 32 insertions(+), 1 deletion(-)
+
+commit f6212f1fd3485ea410e953700229e75e261c7d4f
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 12 17:06:08 2018 +0200
+
+    tiff-save: simplify code with babl_model_is
+
+ operations/external/tiff-save.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+commit d9c7aeb7296329a8200b5d6497e52b6541cddeeb
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 12 00:26:34 2018 +0200
+
+    rgb-clip: use babl_model_is
+
+ operations/common/rgb-clip.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+commit 758b21f68438c53496078fb5cf177166f32e603a
+Author: Michael Natterer <mitch@gimp.org>
+Date:   Thu Jul 12 00:04:13 2018 +0200
+
+    Change the license URL from http://www.gnu.org/licenses/ to https://
+
+ COPYING                                                 | 4 ++--
+ bin/gegl-options.c                                      | 2 +-
+ bin/gegl-options.h                                      | 2 +-
+ bin/gegl-path-smooth.c                                  | 2 +-
+ bin/gegl-path-spiro.c                                   | 2 +-
+ bin/gegl.c                                              | 2 +-
+ bin/mrg-gegl.c                                          | 2 +-
+ bin/ui.c                                                | 2 +-
+ docs/operations.html                                    | 2 +-
+ gegl/buffer/gegl-buffer-access.c                        | 2 +-
+ gegl/buffer/gegl-buffer-backend.h                       | 2 +-
+ gegl/buffer/gegl-buffer-cl-cache.c                      | 2 +-
+ gegl/buffer/gegl-buffer-cl-cache.h                      | 2 +-
+ gegl/buffer/gegl-buffer-cl-iterator.c                   | 2 +-
+ gegl/buffer/gegl-buffer-cl-iterator.h                   | 2 +-
+ gegl/buffer/gegl-buffer-iterator-private.h              | 2 +-
+ gegl/buffer/gegl-buffer-iterator.c                      | 2 +-
+ gegl/buffer/gegl-buffer-iterator.h                      | 2 +-
+ gegl/buffer/gegl-buffer-load.c                          | 2 +-
+ gegl/buffer/gegl-buffer-private.h                       | 2 +-
+ gegl/buffer/gegl-buffer-save.c                          | 2 +-
+ gegl/buffer/gegl-buffer-types.h                         | 2 +-
+ gegl/buffer/gegl-buffer.c                               | 2 +-
+ gegl/buffer/gegl-buffer.h                               | 2 +-
+ gegl/buffer/gegl-cache.c                                | 2 +-
+ gegl/buffer/gegl-cache.h                                | 2 +-
+ gegl/buffer/gegl-region.h                               | 2 +-
+ gegl/buffer/gegl-sampler-cubic.c                        | 2 +-
+ gegl/buffer/gegl-sampler-cubic.h                        | 2 +-
+ gegl/buffer/gegl-sampler-linear.c                       | 2 +-
+ gegl/buffer/gegl-sampler-linear.h                       | 2 +-
+ gegl/buffer/gegl-sampler-lohalo.c                       | 2 +-
+ gegl/buffer/gegl-sampler-lohalo.h                       | 2 +-
+ gegl/buffer/gegl-sampler-nearest.c                      | 2 +-
+ gegl/buffer/gegl-sampler-nearest.h                      | 2 +-
+ gegl/buffer/gegl-sampler-nohalo.c                       | 2 +-
+ gegl/buffer/gegl-sampler-nohalo.h                       | 2 +-
+ gegl/buffer/gegl-sampler.c                              | 2 +-
+ gegl/buffer/gegl-sampler.h                              | 2 +-
+ gegl/buffer/gegl-tile-backend-buffer.c                  | 2 +-
+ gegl/buffer/gegl-tile-backend-buffer.h                  | 2 +-
+ gegl/buffer/gegl-tile-backend-file-async.c              | 2 +-
+ gegl/buffer/gegl-tile-backend-file.h                    | 2 +-
+ gegl/buffer/gegl-tile-backend-ram.c                     | 2 +-
+ gegl/buffer/gegl-tile-backend-ram.h                     | 2 +-
+ gegl/buffer/gegl-tile-backend-swap.c                    | 2 +-
+ gegl/buffer/gegl-tile-backend-swap.h                    | 2 +-
+ gegl/buffer/gegl-tile-backend.c                         | 2 +-
+ gegl/buffer/gegl-tile-backend.h                         | 2 +-
+ gegl/buffer/gegl-tile-handler-cache.c                   | 2 +-
+ gegl/buffer/gegl-tile-handler-cache.h                   | 2 +-
+ gegl/buffer/gegl-tile-handler-chain.c                   | 2 +-
+ gegl/buffer/gegl-tile-handler-chain.h                   | 2 +-
+ gegl/buffer/gegl-tile-handler-empty.c                   | 2 +-
+ gegl/buffer/gegl-tile-handler-empty.h                   | 2 +-
+ gegl/buffer/gegl-tile-handler-log.c                     | 2 +-
+ gegl/buffer/gegl-tile-handler-log.h                     | 2 +-
+ gegl/buffer/gegl-tile-handler-private.h                 | 2 +-
+ gegl/buffer/gegl-tile-handler-zoom.c                    | 2 +-
+ gegl/buffer/gegl-tile-handler-zoom.h                    | 2 +-
+ gegl/buffer/gegl-tile-handler.c                         | 2 +-
+ gegl/buffer/gegl-tile-handler.h                         | 2 +-
+ gegl/buffer/gegl-tile-source.c                          | 2 +-
+ gegl/buffer/gegl-tile-source.h                          | 2 +-
+ gegl/buffer/gegl-tile-storage.c                         | 2 +-
+ gegl/buffer/gegl-tile-storage.h                         | 2 +-
+ gegl/buffer/gegl-tile.c                                 | 2 +-
+ gegl/buffer/gegl-tile.h                                 | 2 +-
+ gegl/gegl-algorithms.c                                  | 2 +-
+ gegl/gegl-algorithms.h                                  | 2 +-
+ gegl/gegl-apply.c                                       | 2 +-
+ gegl/gegl-apply.h                                       | 2 +-
+ gegl/gegl-config.c                                      | 2 +-
+ gegl/gegl-config.h                                      | 2 +-
+ gegl/gegl-dot-visitor.c                                 | 2 +-
+ gegl/gegl-dot-visitor.h                                 | 2 +-
+ gegl/gegl-dot.h                                         | 2 +-
+ gegl/gegl-enums.c                                       | 2 +-
+ gegl/gegl-enums.h                                       | 2 +-
+ gegl/gegl-gio-private.h                                 | 2 +-
+ gegl/gegl-gio.c                                         | 2 +-
+ gegl/gegl-init-private.h                                | 2 +-
+ gegl/gegl-init.c                                        | 2 +-
+ gegl/gegl-init.h                                        | 2 +-
+ gegl/gegl-instrument.c                                  | 2 +-
+ gegl/gegl-instrument.h                                  | 2 +-
+ gegl/gegl-introspection-support.c                       | 2 +-
+ gegl/gegl-introspection-support.h                       | 2 +-
+ gegl/gegl-lookup.c                                      | 2 +-
+ gegl/gegl-lookup.h                                      | 2 +-
+ gegl/gegl-matrix.c                                      | 2 +-
+ gegl/gegl-matrix.h                                      | 2 +-
+ gegl/gegl-module.h                                      | 2 +-
+ gegl/gegl-op.h                                          | 2 +-
+ gegl/gegl-operations-util.h                             | 2 +-
+ gegl/gegl-plugin.h                                      | 2 +-
+ gegl/gegl-random-private.h                              | 2 +-
+ gegl/gegl-random.c                                      | 2 +-
+ gegl/gegl-random.h                                      | 2 +-
+ gegl/gegl-serialize.c                                   | 2 +-
+ gegl/gegl-stats.c                                       | 2 +-
+ gegl/gegl-stats.h                                       | 2 +-
+ gegl/gegl-types-internal.h                              | 2 +-
+ gegl/gegl-types.h                                       | 2 +-
+ gegl/gegl-utils.c                                       | 2 +-
+ gegl/gegl-utils.h                                       | 2 +-
+ gegl/gegl-version.h.in                                  | 2 +-
+ gegl/gegl-xml.c                                         | 2 +-
+ gegl/gegl-xml.h                                         | 2 +-
+ gegl/gegl.h                                             | 2 +-
+ gegl/graph/gegl-callback-visitor.c                      | 2 +-
+ gegl/graph/gegl-callback-visitor.h                      | 2 +-
+ gegl/graph/gegl-connection.c                            | 2 +-
+ gegl/graph/gegl-connection.h                            | 2 +-
+ gegl/graph/gegl-node-output-visitable.c                 | 2 +-
+ gegl/graph/gegl-node-output-visitable.h                 | 2 +-
+ gegl/graph/gegl-node-private.h                          | 2 +-
+ gegl/graph/gegl-node.c                                  | 2 +-
+ gegl/graph/gegl-node.h                                  | 2 +-
+ gegl/graph/gegl-pad.c                                   | 2 +-
+ gegl/graph/gegl-pad.h                                   | 2 +-
+ gegl/graph/gegl-visitable.c                             | 2 +-
+ gegl/graph/gegl-visitable.h                             | 2 +-
+ gegl/graph/gegl-visitor.c                               | 2 +-
+ gegl/graph/gegl-visitor.h                               | 2 +-
+ gegl/module/gegldatafiles.c                             | 2 +-
+ gegl/module/gegldatafiles.h                             | 2 +-
+ gegl/module/geglmodule.c                                | 2 +-
+ gegl/module/geglmodule.h                                | 2 +-
+ gegl/module/geglmoduledb.c                              | 2 +-
+ gegl/module/geglmoduledb.h                              | 2 +-
+ gegl/opencl/gegl-cl-color.c                             | 2 +-
+ gegl/opencl/gegl-cl-color.h                             | 2 +-
+ gegl/opencl/gegl-cl-init.c                              | 2 +-
+ gegl/opencl/gegl-cl-init.h                              | 2 +-
+ gegl/opencl/gegl-cl-random.c                            | 2 +-
+ gegl/opencl/gegl-cl-random.h                            | 2 +-
+ gegl/opencl/gegl-cl-types.h                             | 2 +-
+ gegl/opencl/gegl-cl.h                                   | 2 +-
+ gegl/operation/gegl-extension-handler.c                 | 2 +-
+ gegl/operation/gegl-extension-handler.h                 | 2 +-
+ gegl/operation/gegl-operation-area-filter.c             | 2 +-
+ gegl/operation/gegl-operation-area-filter.h             | 2 +-
+ gegl/operation/gegl-operation-composer.c                | 2 +-
+ gegl/operation/gegl-operation-composer.h                | 2 +-
+ gegl/operation/gegl-operation-composer3.c               | 2 +-
+ gegl/operation/gegl-operation-composer3.h               | 2 +-
+ gegl/operation/gegl-operation-context-private.h         | 2 +-
+ gegl/operation/gegl-operation-context.c                 | 2 +-
+ gegl/operation/gegl-operation-context.h                 | 2 +-
+ gegl/operation/gegl-operation-filter.c                  | 2 +-
+ gegl/operation/gegl-operation-filter.h                  | 2 +-
+ gegl/operation/gegl-operation-handlers-private.h        | 2 +-
+ gegl/operation/gegl-operation-handlers.c                | 2 +-
+ gegl/operation/gegl-operation-handlers.h                | 2 +-
+ gegl/operation/gegl-operation-meta-json.c               | 2 +-
+ gegl/operation/gegl-operation-meta-json.h               | 2 +-
+ gegl/operation/gegl-operation-meta.c                    | 2 +-
+ gegl/operation/gegl-operation-meta.h                    | 2 +-
+ gegl/operation/gegl-operation-point-composer.c          | 2 +-
+ gegl/operation/gegl-operation-point-composer.h          | 2 +-
+ gegl/operation/gegl-operation-point-composer3.c         | 2 +-
+ gegl/operation/gegl-operation-point-composer3.h         | 2 +-
+ gegl/operation/gegl-operation-point-filter.c            | 2 +-
+ gegl/operation/gegl-operation-point-filter.h            | 2 +-
+ gegl/operation/gegl-operation-point-render.c            | 2 +-
+ gegl/operation/gegl-operation-point-render.h            | 2 +-
+ gegl/operation/gegl-operation-property-keys.c           | 2 +-
+ gegl/operation/gegl-operation-property-keys.h           | 2 +-
+ gegl/operation/gegl-operation-sink.c                    | 2 +-
+ gegl/operation/gegl-operation-sink.h                    | 2 +-
+ gegl/operation/gegl-operation-source.c                  | 2 +-
+ gegl/operation/gegl-operation-source.h                  | 2 +-
+ gegl/operation/gegl-operation-temporal.c                | 2 +-
+ gegl/operation/gegl-operation-temporal.h                | 2 +-
+ gegl/operation/gegl-operation.c                         | 2 +-
+ gegl/operation/gegl-operation.h                         | 2 +-
+ gegl/operation/gegl-operations.c                        | 2 +-
+ gegl/operation/gegl-operations.h                        | 2 +-
+ gegl/process/gegl-eval-manager.c                        | 2 +-
+ gegl/process/gegl-eval-manager.h                        | 2 +-
+ gegl/process/gegl-graph-debug.h                         | 2 +-
+ gegl/process/gegl-graph-traversal-debug.c               | 2 +-
+ gegl/process/gegl-graph-traversal-private.h             | 2 +-
+ gegl/process/gegl-graph-traversal.c                     | 2 +-
+ gegl/process/gegl-graph-traversal.h                     | 2 +-
+ gegl/process/gegl-processor-private.h                   | 2 +-
+ gegl/process/gegl-processor.c                           | 2 +-
+ gegl/process/gegl-processor.h                           | 2 +-
+ gegl/property-types/gegl-audio-fragment.c               | 2 +-
+ gegl/property-types/gegl-audio-fragment.h               | 2 +-
+ gegl/property-types/gegl-color.c                        | 2 +-
+ gegl/property-types/gegl-color.h                        | 2 +-
+ gegl/property-types/gegl-curve.c                        | 2 +-
+ gegl/property-types/gegl-curve.h                        | 2 +-
+ gegl/property-types/gegl-paramspecs.c                   | 2 +-
+ gegl/property-types/gegl-paramspecs.h                   | 2 +-
+ gegl/property-types/gegl-path.c                         | 2 +-
+ gegl/property-types/gegl-path.h                         | 2 +-
+ libs/npd/deformation.c                                  | 2 +-
+ libs/npd/deformation.h                                  | 2 +-
+ libs/npd/graphics.c                                     | 2 +-
+ libs/npd/graphics.h                                     | 2 +-
+ libs/npd/lattice_cut.c                                  | 2 +-
+ libs/npd/lattice_cut.h                                  | 2 +-
+ libs/npd/npd.h                                          | 2 +-
+ libs/npd/npd_common.c                                   | 2 +-
+ libs/npd/npd_common.h                                   | 2 +-
+ libs/npd/npd_debug.c                                    | 2 +-
+ libs/npd/npd_debug.h                                    | 2 +-
+ libs/npd/npd_gegl.c                                     | 2 +-
+ libs/npd/npd_gegl.h                                     | 2 +-
+ libs/npd/npd_math.c                                     | 2 +-
+ libs/npd/npd_math.h                                     | 2 +-
+ libs/rgbe/rgbe.c                                        | 2 +-
+ libs/rgbe/rgbe.h                                        | 2 +-
+ opencl/alien-map.cl                                     | 2 +-
+ opencl/alien-map.cl.h                                   | 2 +-
+ opencl/bilateral-filter-fast.cl                         | 2 +-
+ opencl/bilateral-filter-fast.cl.h                       | 2 +-
+ opencl/color-exchange.cl                                | 2 +-
+ opencl/color-exchange.cl.h                              | 2 +-
+ opencl/colors-8bit-lut.cl                               | 2 +-
+ opencl/colors-8bit-lut.cl.h                             | 2 +-
+ opencl/colors.cl                                        | 2 +-
+ opencl/colors.cl.h                                      | 2 +-
+ opencl/contrast-curve.cl                                | 2 +-
+ opencl/contrast-curve.cl.h                              | 2 +-
+ opencl/gblur-1d.cl                                      | 2 +-
+ opencl/gblur-1d.cl.h                                    | 2 +-
+ opencl/noise-hsv.cl                                     | 2 +-
+ opencl/noise-hsv.cl.h                                   | 2 +-
+ opencl/noise-hurl.cl                                    | 2 +-
+ opencl/noise-hurl.cl.h                                  | 2 +-
+ opencl/pixelize.cl                                      | 2 +-
+ opencl/pixelize.cl.h                                    | 2 +-
+ opencl/posterize.cl                                     | 2 +-
+ opencl/posterize.cl.h                                   | 2 +-
+ opencl/random.cl                                        | 2 +-
+ opencl/random.cl.h                                      | 2 +-
+ opencl/red-eye-removal.cl                               | 2 +-
+ opencl/red-eye-removal.cl.h                             | 2 +-
+ opencl/stretch-contrast.cl                              | 2 +-
+ opencl/stretch-contrast.cl.h                            | 2 +-
+ operations/common-gpl3+/antialias.c                     | 2 +-
+ operations/common-gpl3+/apply-lens.c                    | 2 +-
+ operations/common-gpl3+/bump-map.c                      | 2 +-
+ operations/common-gpl3+/cartoon.c                       | 4 ++--
+ operations/common-gpl3+/channel-mixer.c                 | 2 +-
+ operations/common-gpl3+/color-exchange.c                | 2 +-
+ operations/common-gpl3+/color-to-alpha.c                | 2 +-
+ operations/common-gpl3+/cubism.c                        | 2 +-
+ operations/common-gpl3+/deinterlace.c                   | 2 +-
+ operations/common-gpl3+/diffraction-patterns.c          | 2 +-
+ operations/common-gpl3+/displace.c                      | 2 +-
+ operations/common-gpl3+/edge-laplace.c                  | 2 +-
+ operations/common-gpl3+/edge.c                          | 2 +-
+ operations/common-gpl3+/emboss.c                        | 2 +-
+ operations/common-gpl3+/engrave.c                       | 2 +-
+ operations/common-gpl3+/fractal-explorer.c              | 4 ++--
+ operations/common-gpl3+/fractal-trace.c                 | 2 +-
+ operations/common-gpl3+/gaussian-blur-selective.c       | 2 +-
+ operations/common-gpl3+/illusion.c                      | 2 +-
+ operations/common-gpl3+/lens-distortion.c               | 2 +-
+ operations/common-gpl3+/lens-flare.c                    | 2 +-
+ operations/common-gpl3+/maze.c                          | 2 +-
+ operations/common-gpl3+/mosaic.c                        | 2 +-
+ operations/common-gpl3+/motion-blur-circular.c          | 2 +-
+ operations/common-gpl3+/motion-blur-zoom.c              | 2 +-
+ operations/common-gpl3+/noise-slur.c                    | 2 +-
+ operations/common-gpl3+/noise-solid.c                   | 2 +-
+ operations/common-gpl3+/oilify.c                        | 2 +-
+ operations/common-gpl3+/photocopy.c                     | 2 +-
+ operations/common-gpl3+/plasma.c                        | 2 +-
+ operations/common-gpl3+/polar-coordinates.c             | 2 +-
+ operations/common-gpl3+/red-eye-removal.c               | 2 +-
+ operations/common-gpl3+/ripple.c                        | 2 +-
+ operations/common-gpl3+/shadows-highlights-correction.c | 2 +-
+ operations/common-gpl3+/shadows-highlights.c            | 2 +-
+ operations/common-gpl3+/shift.c                         | 2 +-
+ operations/common-gpl3+/sinus.c                         | 2 +-
+ operations/common-gpl3+/softglow.c                      | 2 +-
+ operations/common-gpl3+/spiral.c                        | 2 +-
+ operations/common-gpl3+/supernova.c                     | 2 +-
+ operations/common-gpl3+/texturize-canvas.c              | 2 +-
+ operations/common-gpl3+/tile-glass.c                    | 2 +-
+ operations/common-gpl3+/tile-paper.c                    | 2 +-
+ operations/common-gpl3+/value-propagate.c               | 2 +-
+ operations/common-gpl3+/video-degradation.c             | 2 +-
+ operations/common-gpl3+/waves.c                         | 2 +-
+ operations/common-gpl3+/whirl-pinch.c                   | 2 +-
+ operations/common-gpl3+/wind.c                          | 2 +-
+ operations/common/absolute.c                            | 2 +-
+ operations/common/alien-map.c                           | 2 +-
+ operations/common/bilateral-filter.c                    | 2 +-
+ operations/common/box-blur.c                            | 2 +-
+ operations/common/brightness-contrast.c                 | 2 +-
+ operations/common/buffer-sink.c                         | 2 +-
+ operations/common/buffer-source.c                       | 2 +-
+ operations/common/c2g.c                                 | 2 +-
+ operations/common/checkerboard.c                        | 2 +-
+ operations/common/color-enhance.c                       | 2 +-
+ operations/common/color-overlay.c                       | 2 +-
+ operations/common/color-rotate.c                        | 2 +-
+ operations/common/color-temperature.c                   | 2 +-
+ operations/common/color-warp.c                          | 4 ++--
+ operations/common/color.c                               | 2 +-
+ operations/common/component-extract.c                   | 2 +-
+ operations/common/contrast-curve.c                      | 2 +-
+ operations/common/convolution-matrix.c                  | 2 +-
+ operations/common/copy-buffer.c                         | 2 +-
+ operations/common/difference-of-gaussians.c             | 2 +-
+ operations/common/display.c                             | 2 +-
+ operations/common/distance-transform.c                  | 2 +-
+ operations/common/dither.c                              | 2 +-
+ operations/common/dropshadow.c                          | 2 +-
+ operations/common/edge-neon.c                           | 2 +-
+ operations/common/edge-sobel.c                          | 2 +-
+ operations/common/envelopes.h                           | 2 +-
+ operations/common/exp-combine.c                         | 2 +-
+ operations/common/exposure.c                            | 2 +-
+ operations/common/fattal02.c                            | 2 +-
+ operations/common/gaussian-blur.c                       | 2 +-
+ operations/common/gblur-1d.c                            | 2 +-
+ operations/common/gegl-buffer-load-op.c                 | 2 +-
+ operations/common/gegl-buffer-save-op.c                 | 2 +-
+ operations/common/gegl.c                                | 2 +-
+ operations/common/grey.c                                | 2 +-
+ operations/common/grid.c                                | 2 +-
+ operations/common/high-pass.c                           | 2 +-
+ operations/common/hue-chroma.c                          | 2 +-
+ operations/common/icc-save.c                            | 2 +-
+ operations/common/image-compare.c                       | 2 +-
+ operations/common/image-gradient.c                      | 2 +-
+ operations/common/introspect.c                          | 2 +-
+ operations/common/invert-gamma.c                        | 2 +-
+ operations/common/invert-linear.c                       | 2 +-
+ operations/common/layer.c                               | 2 +-
+ operations/common/levels.c                              | 2 +-
+ operations/common/linear-gradient.c                     | 2 +-
+ operations/common/little-planet.c                       | 2 +-
+ operations/common/magick-load.c                         | 2 +-
+ operations/common/mantiuk06.c                           | 2 +-
+ operations/common/map-absolute.c                        | 2 +-
+ operations/common/map-relative.c                        | 2 +-
+ operations/common/matting-global.c                      | 2 +-
+ operations/common/mblur.c                               | 2 +-
+ operations/common/mean-curvature-blur.c                 | 2 +-
+ operations/common/median-blur.c                         | 2 +-
+ operations/common/mirrors.c                             | 2 +-
+ operations/common/mix.c                                 | 2 +-
+ operations/common/mono-mixer.c                          | 2 +-
+ operations/common/motion-blur-linear.c                  | 2 +-
+ operations/common/newsprint.c                           | 2 +-
+ operations/common/noise-cell.c                          | 2 +-
+ operations/common/noise-cie-lch.c                       | 2 +-
+ operations/common/noise-hsv.c                           | 2 +-
+ operations/common/noise-hurl.c                          | 2 +-
+ operations/common/noise-perlin.c                        | 2 +-
+ operations/common/noise-pick.c                          | 2 +-
+ operations/common/noise-reduction.c                     | 2 +-
+ operations/common/noise-rgb.c                           | 2 +-
+ operations/common/noise-simplex.c                       | 2 +-
+ operations/common/noise-spread.c                        | 2 +-
+ operations/common/opacity.c                             | 2 +-
+ operations/common/open-buffer.c                         | 2 +-
+ operations/common/over.c                                | 2 +-
+ operations/common/panorama-projection.c                 | 2 +-
+ operations/common/pixelize.c                            | 2 +-
+ operations/common/posterize.c                           | 2 +-
+ operations/common/radial-gradient.c                     | 2 +-
+ operations/common/rectangle.c                           | 2 +-
+ operations/common/recursive-transform.c                 | 2 +-
+ operations/common/reinhard05.c                          | 2 +-
+ operations/common/remap.c                               | 2 +-
+ operations/common/rgb-clip.c                            | 2 +-
+ operations/common/saturation.c                          | 2 +-
+ operations/common/save.c                                | 2 +-
+ operations/common/sepia.c                               | 2 +-
+ operations/common/slic.c                                | 2 +-
+ operations/common/snn-mean.c                            | 2 +-
+ operations/common/spherize.c                            | 2 +-
+ operations/common/stress.c                              | 2 +-
+ operations/common/stretch-contrast-hsv.c                | 2 +-
+ operations/common/stretch-contrast.c                    | 2 +-
+ operations/common/svg-huerotate.c                       | 2 +-
+ operations/common/svg-luminancetoalpha.c                | 2 +-
+ operations/common/svg-matrix.c                          | 2 +-
+ operations/common/svg-saturate.c                        | 2 +-
+ operations/common/threshold.c                           | 2 +-
+ operations/common/tile-seamless.c                       | 2 +-
+ operations/common/tile.c                                | 2 +-
+ operations/common/unpremultiply.c                       | 2 +-
+ operations/common/unsharp-mask.c                        | 2 +-
+ operations/common/value-invert.c                        | 2 +-
+ operations/common/vignette.c                            | 2 +-
+ operations/common/warp.c                                | 2 +-
+ operations/common/waterpixels.c                         | 2 +-
+ operations/common/watershed-transform.c                 | 2 +-
+ operations/common/wavelet-blur-1d.c                     | 2 +-
+ operations/common/wavelet-blur.c                        | 2 +-
+ operations/common/weighted-blend.c                      | 2 +-
+ operations/common/write-buffer.c                        | 2 +-
+ operations/core/cache.c                                 | 2 +-
+ operations/core/cast-format.c                           | 2 +-
+ operations/core/clone.c                                 | 2 +-
+ operations/core/convert-format.c                        | 2 +-
+ operations/core/crop.c                                  | 2 +-
+ operations/core/json.c                                  | 2 +-
+ operations/core/load.c                                  | 2 +-
+ operations/core/nop.c                                   | 2 +-
+ operations/external/exr-load.cpp                        | 2 +-
+ operations/external/exr-save.cc                         | 2 +-
+ operations/external/ff-load.c                           | 2 +-
+ operations/external/ff-save.c                           | 2 +-
+ operations/external/jp2-load.c                          | 2 +-
+ operations/external/jpg-load.c                          | 2 +-
+ operations/external/jpg-save.c                          | 2 +-
+ operations/external/lcms-from-profile.c                 | 2 +-
+ operations/external/matting-levin-cblas.c               | 2 +-
+ operations/external/matting-levin-cblas.h               | 2 +-
+ operations/external/matting-levin.c                     | 2 +-
+ operations/external/npd.c                               | 2 +-
+ operations/external/npy-save.c                          | 2 +-
+ operations/external/path.c                              | 2 +-
+ operations/external/pixbuf.c                            | 2 +-
+ operations/external/png-load.c                          | 2 +-
+ operations/external/png-save.c                          | 2 +-
+ operations/external/ppm-load.c                          | 2 +-
+ operations/external/ppm-save.c                          | 2 +-
+ operations/external/raw-load.c                          | 2 +-
+ operations/external/rgbe-load.c                         | 2 +-
+ operations/external/rgbe-save.c                         | 2 +-
+ operations/external/save-pixbuf.c                       | 2 +-
+ operations/external/sdl-display.c                       | 2 +-
+ operations/external/svg-load.c                          | 2 +-
+ operations/external/text.c                              | 2 +-
+ operations/external/tiff-load.c                         | 2 +-
+ operations/external/tiff-save.c                         | 2 +-
+ operations/external/v4l.c                               | 2 +-
+ operations/external/vector-fill.c                       | 2 +-
+ operations/external/vector-stroke.c                     | 2 +-
+ operations/external/webp-load.c                         | 2 +-
+ operations/external/webp-save.c                         | 2 +-
+ operations/generated/add.c                              | 2 +-
+ operations/generated/clear.c                            | 2 +-
+ operations/generated/color-burn.c                       | 2 +-
+ operations/generated/color-dodge.c                      | 2 +-
+ operations/generated/darken.c                           | 2 +-
+ operations/generated/difference.c                       | 2 +-
+ operations/generated/divide.c                           | 2 +-
+ operations/generated/dst-atop.c                         | 2 +-
+ operations/generated/dst-in.c                           | 2 +-
+ operations/generated/dst-out.c                          | 2 +-
+ operations/generated/dst-over.c                         | 2 +-
+ operations/generated/dst.c                              | 2 +-
+ operations/generated/exclusion.c                        | 2 +-
+ operations/generated/gamma.c                            | 2 +-
+ operations/generated/hard-light.c                       | 2 +-
+ operations/generated/lighten.c                          | 2 +-
+ operations/generated/math.rb                            | 2 +-
+ operations/generated/multiply.c                         | 2 +-
+ operations/generated/overlay.c                          | 2 +-
+ operations/generated/plus.c                             | 2 +-
+ operations/generated/screen.c                           | 2 +-
+ operations/generated/soft-light.c                       | 2 +-
+ operations/generated/src-atop.c                         | 2 +-
+ operations/generated/src-in.c                           | 2 +-
+ operations/generated/src-out.c                          | 2 +-
+ operations/generated/src.c                              | 2 +-
+ operations/generated/subtract.c                         | 2 +-
+ operations/generated/svg-12-blend.rb                    | 2 +-
+ operations/generated/svg-12-porter-duff.rb              | 2 +-
+ operations/generated/xor.c                              | 2 +-
+ operations/seamless-clone/seamless-clone-compose.c      | 2 +-
+ operations/seamless-clone/seamless-clone.c              | 2 +-
+ operations/seamless-clone/seamless-clone.h              | 2 +-
+ operations/transform/module.c                           | 2 +-
+ operations/transform/reflect.c                          | 2 +-
+ operations/transform/rotate-on-center.c                 | 2 +-
+ operations/transform/rotate.c                           | 2 +-
+ operations/transform/scale-ratio.c                      | 2 +-
+ operations/transform/scale-size-keepaspect.c            | 2 +-
+ operations/transform/scale-size.c                       | 2 +-
+ operations/transform/scale.c                            | 2 +-
+ operations/transform/shear.c                            | 2 +-
+ operations/transform/transform-core.c                   | 2 +-
+ operations/transform/transform.c                        | 2 +-
+ operations/transform/translate.c                        | 2 +-
+ operations/workshop/bayer-matrix.c                      | 2 +-
+ operations/workshop/bilateral-filter-fast.c             | 2 +-
+ operations/workshop/cast-space.c                        | 2 +-
+ operations/workshop/demosaic-bimedian.c                 | 2 +-
+ operations/workshop/demosaic-simple.c                   | 2 +-
+ operations/workshop/ditto.c                             | 2 +-
+ operations/workshop/domain-transform.c                  | 2 +-
+ operations/workshop/enlarge.c                           | 2 +-
+ operations/workshop/external/gluas.c                    | 2 +-
+ operations/workshop/external/lens-correct.c             | 2 +-
+ operations/workshop/external/line-profile.c             | 2 +-
+ operations/workshop/external/v4l2.c                     | 2 +-
+ operations/workshop/generated/average.c                 | 2 +-
+ operations/workshop/generated/blend-reflect.c           | 2 +-
+ operations/workshop/generated/blend.rb                  | 2 +-
+ operations/workshop/generated/negation.c                | 2 +-
+ operations/workshop/generated/soft-burn.c               | 2 +-
+ operations/workshop/generated/soft-dodge.c              | 2 +-
+ operations/workshop/generated/subtractive.c             | 2 +-
+ operations/workshop/gradient-map.c                      | 2 +-
+ operations/workshop/hstack.c                            | 2 +-
+ operations/workshop/inpaint.c                           | 2 +-
+ operations/workshop/integral-image.c                    | 2 +-
+ operations/workshop/linear-sinusoid.c                   | 2 +-
+ operations/workshop/rawbayer-load.c                     | 2 +-
+ operations/workshop/segment-kmeans.c                    | 2 +-
+ operations/workshop/selective-hue-saturation.c          | 2 +-
+ operations/workshop/set-space.c                         | 2 +-
+ seamless-clone/sc-common.h                              | 2 +-
+ seamless-clone/sc-context-private.h                     | 2 +-
+ seamless-clone/sc-context.c                             | 2 +-
+ seamless-clone/sc-context.h                             | 2 +-
+ seamless-clone/sc-outline.c                             | 2 +-
+ seamless-clone/sc-outline.h                             | 2 +-
+ seamless-clone/sc-sample.c                              | 2 +-
+ seamless-clone/sc-sample.h                              | 2 +-
+ tests/python/test-gegl-buffer.py                        | 2 +-
+ tests/python/test-gegl-color.py                         | 2 +-
+ tests/python/test-gegl-format.py                        | 2 +-
+ tests/python/test-gegl.py                               | 2 +-
+ tests/simple/test-backend-file.c                        | 2 +-
+ tests/simple/test-buffer-cast.c                         | 2 +-
+ tests/simple/test-buffer-changes.c                      | 2 +-
+ tests/simple/test-buffer-extract.c                      | 2 +-
+ tests/simple/test-buffer-hot-tile.c                     | 2 +-
+ tests/simple/test-buffer-sharing.c                      | 2 +-
+ tests/simple/test-buffer-tile-voiding.c                 | 2 +-
+ tests/simple/test-buffer-unaligned-access.c             | 2 +-
+ tests/simple/test-change-processor-rect.c               | 2 +-
+ tests/simple/test-color-op.c                            | 2 +-
+ tests/simple/test-convert-format.c                      | 2 +-
+ tests/simple/test-format-sensing.c                      | 2 +-
+ tests/simple/test-gegl-color.c                          | 2 +-
+ tests/simple/test-gegl-rectangle.c                      | 2 +-
+ tests/simple/test-gegl-tile.c                           | 2 +-
+ tests/simple/test-image-compare.c                       | 2 +-
+ tests/simple/test-license-check.c                       | 2 +-
+ tests/simple/test-misc.c                                | 2 +-
+ tests/simple/test-node-connections.c                    | 2 +-
+ tests/simple/test-node-exponential.c                    | 2 +-
+ tests/simple/test-node-passthrough.c                    | 2 +-
+ tests/simple/test-node-properties.c                     | 2 +-
+ tests/simple/test-object-forked.c                       | 2 +-
+ tests/simple/test-opencl-colors.c                       | 2 +-
+ tests/simple/test-proxynop-processing.c                 | 2 +-
+ tests/simple/test-scaled-blit.c                         | 2 +-
+ tests/simple/test-serialize.c                           | 2 +-
+ tests/simple/test-svg-abyss.c                           | 2 +-
+ tests/xml/common.c                                      | 2 +-
+ tests/xml/test-load.c                                   | 2 +-
+ tests/xml/test-roundtrip.c                              | 2 +-
+ tests/xml/test-save.c                                   | 2 +-
+ tools/detect_opencl.c                                   | 2 +-
+ tools/gegl-tester.c                                     | 2 +-
+ tools/gobj2dot.rb                                       | 2 +-
+ 564 files changed, 568 insertions(+), 568 deletions(-)
+
+commit 89a9fe331918491d909e4007d7c6f5b7e26cdb56
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 23:45:38 2018 +0200
+
+    saturation: use babl_model_with_space
+
+ operations/common/saturation.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 93ee127d7303839563cf22d9d44ca0f11a93f54e
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 23:45:10 2018 +0200
+
+    opacity: use babl_model_is
+
+ operations/common/opacity.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+commit f801a01fa89568c087b66478f4abe4ca93def589
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 23:44:48 2018 +0200
+
+    noise-hurl: use babl_model_is
+
+ operations/common/noise-hurl.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+commit 27ba2d7d9dba926e1970a9f9c0437c75f6d0bdf4
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 23:41:20 2018 +0200
+
+    median-blur: use babl_model_is
+
+ operations/common/median-blur.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
+
+commit 543ee2e87fdbe512a5b390ef2d1f83ab8e0aae6c
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 23:40:19 2018 +0200
+
+    gblur-1d: use babl_model_is
+
+ operations/common/gblur-1d.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+commit 6c53fa444f5d8bd379b6d2f036763d8c4ceb916d
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 23:39:02 2018 +0200
+
+    exposure: do model comparisons including space
+
+ operations/common/exposure.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit a23c6b08252d31cd89895f4b1d7f6b80ef556acc
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 23:38:36 2018 +0200
+
+    box-blur: stop mixing code and declarations
+
+ operations/common/box-blur.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit ce8335bd066eccb12f4d7c7891d7a6bca87e7995
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 23:06:38 2018 +0200
+
+    png-save: fix const warning
+
+ operations/external/png-save.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 7b2a4848926d8aa008ed657b98bfae3c9861a509
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 23:06:09 2018 +0200
+
+    exr-load: use BABL_SPACE_FLAG_EQUALIZE
+
+ operations/external/exr-load.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit c693685df03439d4e1fc50ccfb2dd41160b4afe5
+Author: Matej Urbančič <mateju@svn.gnome.org>
+Date:   Wed Jul 11 21:56:50 2018 +0200
+
+    Added Slovenian translation
+
+ po/sl.po | 8884
+ ++++++++++++++++++--------------------------------------------
+ 1 file changed, 2595 insertions(+), 6289 deletions(-)
+
+commit dac76e31e074f900a0670226dd0b8e707bc34fd6
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 21:42:48 2018 +0200
+
+    gegl: do not case g_param_spec_unref to GDestroyNotify
+
+ gegl/graph/gegl-pad.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+commit 9cd8195c177961ffef9980e2771a81a3cdc9f6a8
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 20:49:45 2018 +0200
+
+    jpg,png,tif-save: finish porting to babl_space_get_icc
+
+ operations/external/jpg-save.c  | 4 ++--
+ operations/external/tiff-save.c | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+commit c990e0753be2a2caad4a1d7de124bc0ed66af5b1
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 20:41:54 2018 +0200
+
+    png,jpg,tif-save: use babl_space_get_icc
+
+ operations/external/jpg-save.c  | 8 +++-----
+ operations/external/png-save.c  | 3 +--
+ operations/external/tiff-save.c | 8 +++-----
+ 3 files changed, 7 insertions(+), 12 deletions(-)
+
+commit f0427eddf08954bbebc2cab7a5c357d95d3eb346
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 17:10:01 2018 +0200
+
+    icc-save: new operation
+
+ operations/common/Makefile.am |  1 +
+ operations/common/icc-save.c  | 81
+ +++++++++++++++++++++++++++++++++++++++++++
+ po/POTFILES.in                |  1 +
+ 3 files changed, 83 insertions(+)
+
+commit 947ddd827d57e93660d2e5f0d4c65ce8b655f7a9
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Wed Jul 11 16:24:01 2018 +0200
+
+    Update POTFILES.in
+
+ po/POTFILES.in | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 1ef3bb033ae437fec909c9e773e26e1b87970f87
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 16:19:50 2018 +0200
+
+    tests: update tiff-load reference
+
+    All the 4 images load visually same after the space invasion,
+    this seems
+    like an improvement.
+
+ .../reference/stretch-contrast-hsv.png             | Bin 406837 ->
+ 410032 bytes
+ tests/compositions/reference/tiff-load.png         | Bin 190180 ->
+ 196534 bytes
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit ebebccc4fe6713f59b8060448e88334913c6c89c
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 15:56:21 2018 +0200
+
+    tests: update tests using boats.png image
+
+    The PNG file doesn't contain an sRGB chunk and it does dontain a
+    gAMA chunk
+    meaning the gamma value should be obeyed and the image not treated
+    as sRGB.
+
+ tests/compositions/reference/lens-flare.png       | Bin 327275 ->
+ 456322 bytes
+ tests/compositions/reference/stretch-contrast.png | Bin 2921 ->
+ 2994 bytes
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit b675cd1e15d7e1e608c855a0bd2e385e6679e9d6
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 14:35:12 2018 +0200
+
+    exr-save: fix order of arguments in chromaticities constructor
+
+ operations/external/exr-save.cc | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+commit 087b73891e39707d892a8d8daa38a90e082622d8
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 14:34:34 2018 +0200
+
+    exr-load: fix order of arguments in chromaticities constructor
+
+ operations/external/exr-load.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit b3ca41ac3ffd184b187f3178bf0efb219246d3cb
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 14:08:52 2018 +0200
+
+    png-save: do not store ICC profile for sRGB
+
+ operations/external/png-save.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 6584576dfa4ddb3f1332d2c98a89f8e9b16a87fe
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 13:54:07 2018 +0200
+
+    tiff-save: improve tiff profile embedding
+
+ operations/external/tiff-save.c | 25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
+
+commit 9d833cf6676275daf4a61ae2a808cbf725047fa6
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 13:21:13 2018 +0200
+
+    set-space: new op that changes the current space
+
+ operations/workshop/Makefile.am |   3 +-
+ operations/workshop/set-space.c | 114
+ ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 116 insertions(+), 1 deletion(-)
+
+commit 4b5f8049ee8334d11c62140b4bb8226303c72448
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 13:20:29 2018 +0200
+
+    cast-space: make it a composer that take only format from aux
+
+ operations/workshop/cast-space.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+commit d02e1cd9162c0c3ff5bb23573be5ebbb76574605
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 13:18:24 2018 +0200
+
+    configure: depend on babl 0.1.53
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 3e358a17fa3022ff739f014712885bb342d762a9
+Author: Francisco Mariano-Neto <fmneto@gmail.com>
+Date:   Wed Jul 11 10:28:01 2018 +0000
+
+    Update Brazilian Portuguese translation
+
+ po/pt_BR.po | 9853
+ +++++++++++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 6803 insertions(+), 3050 deletions(-)
+
+commit 1db79d81d75f82716da185a3b9d7ddcb955338e2
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 12:10:33 2018 +0200
+
+    png-save: set icc profile before writing info/header
+
+ operations/external/png-save.c | 31 +++++++++++++++++--------------
+ 1 file changed, 17 insertions(+), 14 deletions(-)
+
+commit 07d96bc9864613912e8e946914fc26047e62b4fb
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 11 09:39:28 2018 +0200
+
+    cast-space: new op in workshop
+
+    Op for reassigning a new space to the image data entering on input.
+
+ operations/workshop/Makefile.am  |   1 +
+ operations/workshop/cast-space.c | 133
+ +++++++++++++++++++++++++++++++++++++++
+ po/POTFILES.in                   |   1 +
+ 3 files changed, 135 insertions(+)
+
+commit 31b699b966b3283ef22c32ebc2557e7792be2452
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Jul 10 10:29:38 2018 +0200
+
+    tiff-save: export in incoming color space and store ICC
+
+ operations/external/tiff-save.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
+
+commit dd0512887289d3dc743f78bcfb2ae38d96272139
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Jul 10 09:44:19 2018 +0200
+
+    exr-save: store space in chromaticities
+
+ operations/external/exr-save.cc | 60
+ ++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 56 insertions(+), 4 deletions(-)
+
+commit 9c671d33c26b16324f6c765fa21cb23989b7d714
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Jul 10 09:40:19 2018 +0200
+
+    bin: color manage display of gegl binary
+
+ bin/mrg-gegl.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+commit ab83e6bb617d19e5583456df58a47d17f8a74f24
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 9 16:52:17 2018 +0200
+
+    png-save: re-enable ICC profile saving
+
+ operations/external/png-save.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+commit 25c0c9c4a1f78782e357865e50e1792782727434
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 9 16:51:03 2018 +0200
+
+    exr-load: set up babl space from chromaticities
+
+ operations/external/exr-load.cpp | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+commit c7e712a1397b4b92c3a66497273222699735859f
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 9 15:01:34 2018 +0200
+
+    png-load: invert gamma loaded from gAMA
+
+ operations/external/png-load.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 12fe7b5d0971022d590de607bf92d5bd4ddda22d
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 9 14:27:30 2018 +0200
+
+    tiff-load: load ICC profile
+
+ operations/external/tiff-load.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
+
+commit 3ab28ea95af86a22a5be60000c51f0025e467263
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 9 14:15:14 2018 +0200
+
+    png-save: temporarily comment out icc profile saving, pending fixes
+    in babl
+
+ operations/external/png-save.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit c7d6cc43c99ce3e8b79bfe5aebb3545715d4053c
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 9 13:53:28 2018 +0200
+
+    png-save: support storing non sRGB colorspaces with ICC profile
+
+ operations/external/png-save.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
+
+commit 4e3e236001ceea372b40888f044ca2edc61a5d8b
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 9 13:51:12 2018 +0200
+
+    png-load: permit loading files with bening errors
+
+ operations/external/png-load.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+commit cab336bb0e423fd47c69eb9db2bb3fd1c5879931
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Sun Jul 8 23:27:08 2018 +0200
+
+    jpg-save: store icc profiles in jpgs
+
+ operations/external/jpg-save.c | 99
+ +++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 97 insertions(+), 2 deletions(-)
+
+commit f854eb94ae051a6d368e2cf849f69cc22f9bae76
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Sun Jul 8 21:32:13 2018 +0200
+
+    png-load: suport space construction from primaries
+
+ operations/external/png-load.c | 44
+ ++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 40 insertions(+), 4 deletions(-)
+
+commit db62d92126b46a7a4fbb55183b3b415d20712ae3
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Sun Jul 8 17:01:37 2018 +0200
+
+    Update Polish translation
+
+ po/pl.po | 639
+ ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 326 insertions(+), 313 deletions(-)
+
+commit 35ed8c3dd14c6ed553c9514e3ace7f43d7f38cf5
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Sun Jul 8 14:20:08 2018 +0200
+
+    jpg-load: load ICC profiles
+
+ operations/external/jpg-load.c | 217
+ ++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 202 insertions(+), 15 deletions(-)
+
+commit 55e7fb6c034f81b880bd6d94ae2e34f5c8fae273
+Author: Snehalata B Shirude <snehalata.shirude@gmail.com>
+Date:   Sat Jul 7 18:31:12 2018 +0200
+
+    Added Marathi translation
+
+ po/LINGUAS |    1 +
+ po/mr.po   | 7962
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 7963 insertions(+)
+
+commit c4d5e1b18458b0b83933ceaf93500955d04cd568
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Sat Jul 7 18:04:35 2018 +0200
+
+    gegl: revert accidental added makefile
+
+ gegl/property-types/Makefile.am | 2 --
+ 1 file changed, 2 deletions(-)
+
+commit bfafeb11e117a061e1ea30131a16b1f07c46e7ef
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Sat Jul 7 17:54:13 2018 +0200
+
+    load-png: add support for iCCP chunk
+
+    Load ICC babl space and set it on provided GeglBuffer.
+
+    Running $ gegl png-color-profile-test.png -o output.jpg
+    applies the profile and will do processing in this space
+    until the jpg save op is reached which specifies working
+    on space-less, i.e. sRGB data.
+
+ gegl/property-types/Makefile.am |  2 ++
+ operations/external/png-load.c  | 36 ++++++++++++++++++++++++++++++------
+ 2 files changed, 32 insertions(+), 6 deletions(-)
+
+commit d019735ffc75053ac30b00d26ac052ff42d70f16
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Sat Jul 7 13:08:23 2018 +0200
+
+    gegl: do not convert away from buffers space on view scaling
+
+ gegl/gegl-algorithms.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 4882c453bc4ed6351a714b2f199e54ca7d305641
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 16:59:22 2018 +0200
+
+    buffer: do sampler interpolation in buffers space
+
+ gegl/buffer/gegl-sampler-cubic.c   | 1 -
+ gegl/buffer/gegl-sampler-linear.c  | 1 -
+ gegl/buffer/gegl-sampler-lohalo.c  | 2 --
+ gegl/buffer/gegl-sampler-nearest.c | 1 -
+ gegl/buffer/gegl-sampler-nohalo.c  | 2 --
+ gegl/buffer/gegl-sampler.c         | 4 +++-
+ 6 files changed, 3 insertions(+), 8 deletions(-)
+
+commit 9116febb85a59f8ffd8cebfa88fda143e606feab
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 12:38:42 2018 +0200
+
+    wind: propagate space
+
+ operations/common-gpl3+/wind.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit af5955a7a8e3ac8b96b159fe221c5923db81328d
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 12:35:50 2018 +0200
+
+    whirl-pinch: propagate space
+
+ operations/common-gpl3+/whirl-pinch.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+commit 38155faca55327f9fe08c900385be3d813552174
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 12:35:42 2018 +0200
+
+    waves: propagate space
+
+ operations/common-gpl3+/waves.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+commit 23e84c7ed5ea7515ace2214ebc267cdabea6c104
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 12:35:33 2018 +0200
+
+    video-degradation: propagate space
+
+ operations/common-gpl3+/video-degradation.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 3cfbc6f316b113635e42b2fdd016565cb941f52c
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 12:35:24 2018 +0200
+
+    tile-glass: propagate space
+
+ operations/common-gpl3+/tile-glass.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 6129f79abd9dc4f2302993d3b6fb3b523e5ecd24
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 12:35:16 2018 +0200
+
+    supernova: propagate space
+
+ operations/common-gpl3+/supernova.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 8e51c324db05e1373dac358e6498b52081bd5d28
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 12:35:09 2018 +0200
+
+    spiral: propagate space
+
+ operations/common-gpl3+/spiral.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 7ef6f4f326a9f2aaf0e9a924c7fb409ef4afd607
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 12:35:03 2018 +0200
+
+    softglow: propagate space
+
+ operations/common-gpl3+/softglow.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
+
+commit b6fb000a4371a2b2506d9d3769634eb4fc0e59cc
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 12:34:04 2018 +0200
+
+    shadows-highlights: propagate space
+
+ operations/common-gpl3+/shadows-highlights-correction.c | 5 +++--
+ operations/common-gpl3+/shadows-highlights.c            | 4 ++--
+ 2 files changed, 5 insertions(+), 4 deletions(-)
+
+commit e3360b2287cdec5b63584ea4b786dfade0435c9f
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 12:33:41 2018 +0200
+
+    value-propagate: propagate space
+
+ operations/common-gpl3+/value-propagate.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+commit 3550943e43ffac209fc1cf728b3fe31512a8bf74
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 12:32:49 2018 +0200
+
+    ripple: propagate space
+
+ operations/common-gpl3+/ripple.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+commit 1f220232f9ca511fe8aaac0fee0b1ffeeeaa9e0a
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 12:17:21 2018 +0200
+
+    red-eye-removal: propagate space
+
+ operations/common-gpl3+/red-eye-removal.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit c311721b589c615184e2beb72dd82961768b9364
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 12:17:07 2018 +0200
+
+    polar-coordinates: propagate color space and trc
+
+ operations/common-gpl3+/polar-coordinates.c | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
+
+commit 4f455df79a58eb0e88b4e40dd934906c223f264c
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 12:16:27 2018 +0200
+
+    oilify: support arbitrary primaries
+
+ operations/common-gpl3+/oilify.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
+
+commit 232c785d1f7136f83a267815ebec3a71b4453830
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 12:06:27 2018 +0200
+
+    motion-blur-zoom: propagate space
+
+ operations/common-gpl3+/motion-blur-zoom.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+commit 14aa1586581f2ad69332f31300a156ba1f35698f
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 11:49:46 2018 +0200
+
+    lens-distortion: propagate space
+
+ operations/common-gpl3+/lens-distortion.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit c9f5af1a53922d8324ab0b3930ce554f8aa38286
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 11:49:35 2018 +0200
+
+    mosaic: propagate space
+
+ operations/common-gpl3+/mosaic.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
+
+commit eb98ebc864482aae9a3816f62ab09fac33ffc53b
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 11:49:04 2018 +0200
+
+    motion-blur-circular: propagate space
+
+ operations/common-gpl3+/motion-blur-circular.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+commit f6d1dd07d3efc54dc63357fa40ec1d0c6c4501cb
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 11:44:41 2018 +0200
+
+    lens-flare: propagate space
+
+ operations/common-gpl3+/lens-flare.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 88bbbae175b526fcb4265a36f0ca99f1fa983227
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 11:42:37 2018 +0200
+
+    illusion: propagate space
+
+ operations/common-gpl3+/illusion.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 383bd3e7f9a0a576359a0098d645bc914649157f
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 11:42:23 2018 +0200
+
+    gaussian-blur-selective: propagate space
+
+ operations/common-gpl3+/gaussian-blur-selective.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 4a9a14ecb59228d1ed28ac06223c41dc7f9c61a4
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 11:42:12 2018 +0200
+
+    fractal-trace: propagate space
+
+ operations/common-gpl3+/fractal-trace.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 073d7580524925bf3e040eb8245d159dd85d2cb1
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 11:36:46 2018 +0200
+
+    engrave: propagate space
+
+ operations/common-gpl3+/engrave.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 0a6e937152746442c7601739b54ab476e86043f7
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 11:35:45 2018 +0200
+
+    edge-laplace: propagate space
+
+ operations/common-gpl3+/edge-laplace.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
+
+commit 63a22807bc2ad7b82ebf4dfce8a6edfae98c8baa
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 11:35:34 2018 +0200
+
+    emboss: propagate space
+
+ operations/common-gpl3+/emboss.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+commit 87c174ac4645b1f9d08bec4b97f9383f3ff053ed
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 11:35:27 2018 +0200
+
+    displace: propagate space
+
+ operations/common-gpl3+/displace.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit a6321e3585edaae41fa561218d9d0f4fae8745ac
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 11:30:08 2018 +0200
+
+    edge: propagate space
+
+ operations/common-gpl3+/edge.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 23ee6ee6688102dcadaaf711f666e143105d82d7
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 11:23:05 2018 +0200
+
+    deinterlace: propagate space
+
+ operations/common-gpl3+/deinterlace.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+commit 933f64663b02005e3f36ea820e304d4fd6fe9e71
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 11:22:04 2018 +0200
+
+    cubism: use space
+
+ operations/common-gpl3+/cubism.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+commit 7d136050e51a8c4405fd3b0956d7dfdc6e190587
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 11:19:54 2018 +0200
+
+    color-to-alpha: propagate space
+
+ operations/common-gpl3+/color-to-alpha.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+commit bfc3c22694a7a6d980eb365c886baed4b682baca
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 11:14:54 2018 +0200
+
+    color-exchange: propagate space
+
+ operations/common-gpl3+/color-exchange.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 6cb74c3c749b877a72ab72436e0c316ba65f13e5
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 11:11:10 2018 +0200
+
+    channel-mixer: propagate space
+
+ operations/common-gpl3+/channel-mixer.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 32031e5fb399cd2c4464e2b6e9e285e7688b2881
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 11:10:42 2018 +0200
+
+    bump-map: deal with space
+
+ operations/common-gpl3+/bump-map.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit fd85614ccdd87e8612ab501ae6ae0551e17ad02a
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 11:08:56 2018 +0200
+
+    apply-lens: propagate space
+
+ operations/common-gpl3+/apply-lens.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit bb9f735a9e459a9c8e1d812dfed4f425b093561d
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 11:08:47 2018 +0200
+
+    antialias: propagate space
+
+ operations/common-gpl3+/antialias.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit ca9efdd4bbf59966d19c830ae6b45e6965ceda68
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 11:00:04 2018 +0200
+
+    stretch-contrast-hsv: improve space usage
+
+ operations/common/stretch-contrast-hsv.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
+
+commit 45c7f8402d9854ec88ad406842974b59cd044e0f
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 10:37:53 2018 +0200
+
+    waterpixels: propagate space
+
+ operations/common/waterpixels.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
+
+commit 00b31fe1bdb0dd6c679c7b0d04bcd4f6c8660674
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 10:33:56 2018 +0200
+
+    reinhard05: propagate space
+
+ operations/common/reinhard05.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
+
+commit c17a758b0d4b1026da6ea83b36fcb36600219d2e
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 10:28:28 2018 +0200
+
+    mantiuk06: propagate space
+
+ operations/common/mantiuk06.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
+
+commit a5b84e790f1f33cd7c98b849c96c4ab630d38f94
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 00:10:25 2018 +0200
+
+    fattal02: propagate space
+
+ operations/common/fattal02.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
+
+commit 2bd9296aab793ffb90e4548cea269db5a994c40e
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 00:08:35 2018 +0200
+
+    exp-combine: propagate space
+
+ operations/common/exp-combine.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
+
+commit e0d2f3f30a4d0f1f2fc24683fb8cd4e3e783dfa3
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 00:07:11 2018 +0200
+
+    mblur: propagate space
+
+ operations/common/mblur.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
+
+commit c8f2daf60ce75d056f6428f4fb4a1de5dfcc6832
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 00:06:32 2018 +0200
+
+    edge-sobel: propagate space
+
+ operations/common/edge-sobel.c | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
+
+commit c09d7936d8f4297470dc436249e83bdb65abc3d8
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 00:03:02 2018 +0200
+
+    edge-neon: propagate space
+
+ operations/common/edge-neon.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+commit 13927dc61a724bdae66f33ca4207ee1aa345b26f
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Jul 6 00:01:08 2018 +0200
+
+    distance-transform: propagate space
+
+ operations/common/distance-transform.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit a60d8dd0e42eea63a9d186e3e99744f30d1a3b4c
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 23:22:48 2018 +0200
+
+    component-extract: propagate space
+
+ operations/common/component-extract.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
+
+commit 2d87c9ed60c480894fe92dd1603ff8ef50f40e6a
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 23:09:48 2018 +0200
+
+    map-relative: propagate space
+
+ operations/common/map-relative.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit f42e0d673fc997ad6e8e99aa775cf60e9ca8b72f
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 23:09:16 2018 +0200
+
+    map-absolute: propagate space
+
+ operations/common/map-absolute.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 9caeb777939402195cd10a879cd552318e9dedba
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 23:07:19 2018 +0200
+
+    matting-global: propagate space
+
+ operations/common/matting-global.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
+
+commit 09c6cfcc3638653a276ea018014c76d6c791bf60
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 23:06:04 2018 +0200
+
+    image-gradient: propagate space
+
+ operations/common/image-gradient.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit adfe9164bb37650a1b77a552dc4435a82ccd2230
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 23:02:57 2018 +0200
+
+    motion-blur-linear: propagate BablSpace
+
+ operations/common/motion-blur-linear.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
+
+commit ce43089bdd5963baf9d233dc0a6c81e88eff793a
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 23:00:03 2018 +0200
+
+    svg-luminancetoalpha: propagate space
+
+ operations/common/svg-luminancetoalpha.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit a571af73c1e7aece0f42c2f088f00dcdd373b1e3
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:58:24 2018 +0200
+
+    stretch-contrast-hsv: propagate space
+
+ operations/common/stretch-contrast-hsv.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 951f29e02e1e0df84ae47367f0af04df80e4c476
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:55:29 2018 +0200
+
+    stretch-contrast: propagate space
+
+ operations/common/stretch-contrast.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+commit c472a7aabb0abe640b5cb5d5ecbd044419c21dc4
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:53:47 2018 +0200
+
+    noise-cie-lch: propagate space
+
+ operations/common/noise-cie-lch.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 10c701b670ce5725e248275eda5c70b7074479c0
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:51:36 2018 +0200
+
+    noise-hsv: propagate space
+
+ operations/common/noise-hsv.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 4aac0817cd5279e6484e27a7dcfeb150ee63caff
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:50:24 2018 +0200
+
+    noise-hurl: propagate space
+
+ operations/common/noise-hurl.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+commit 9366156ffa3706a446261a5062be44c460c2e523
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:49:14 2018 +0200
+
+    noise-rgb: propagate space and use R~G~B~
+
+ operations/common/noise-rgb.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
+
+commit 8a4be80813caedddf68e6451ff9dcf68ca82cb86
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:47:45 2018 +0200
+
+    svg-hurerotate: propagate BablSpace
+
+ operations/common/svg-huerotate.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 325aaa31b9cd86df3557dc6a3f9880a4ae9c69ca
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:46:33 2018 +0200
+
+    noise-reduction: propagate BablSpace and use R~G~B~
+
+ operations/common/noise-reduction.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+commit 3f5ad9feed67aa7b58c0706bca15df3389e904ea
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:44:48 2018 +0200
+
+    svg-matrix: propagate BablSpace
+
+ operations/common/svg-matrix.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit d2c16d0b398351ef370788c5c7706f1429832e61
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:44:24 2018 +0200
+
+    svg-saturate: propagate BablSpace
+
+ operations/common/svg-saturate.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 29acb70b9b7ec9e94ad57069aa16914e26ad8397
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:42:30 2018 +0200
+
+    tile-seamless: propagate BablSpace
+
+ operations/common/tile-seamless.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
+
+commit c63a8b49e15330c114fef6bb58c883a940544fc9
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:40:25 2018 +0200
+
+    stress: propagate BablSpace
+
+ operations/common/stress.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
+
+commit 002e9acb28a59893424c011f99b63e41dcc503e3
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:39:01 2018 +0200
+
+    slic: propagate BablSpace
+
+ operations/common/slic.c | 27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
+
+commit 2208c0d97e066eaf597425f08ee7da3f72fc59ce
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:38:07 2018 +0200
+
+    wavelet-blur-1d: propagate BablSpace
+
+ operations/common/wavelet-blur-1d.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 7b10a5f3d87b8c07e90aad3ee02908b9b0f74d26
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:36:17 2018 +0200
+
+    spherize: propagate BablSpace
+
+ operations/common/spherize.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 16a497ea60eae8412efb488e7c2408d58f91a3c8
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:34:18 2018 +0200
+
+    vignette: propagate BablSpace
+
+ operations/common/vignette.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 667ba63704a8460fd1e5657a9780cd14c38b4cf3
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:32:35 2018 +0200
+
+    rgb-clip: propagate BablSpace
+
+ operations/common/rgb-clip.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 8227a9daaa82604c1d18ff847f4d30d73aa16787
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:30:50 2018 +0200
+
+    pixelize: propagate BablSpace
+
+ operations/common/pixelize.c | 49
+ +++++++++++++++++++++++++-------------------
+ 1 file changed, 28 insertions(+), 21 deletions(-)
+
+commit f5e4e01f5a18be9869ec540f7b01d618dd5dac79
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:11:21 2018 +0200
+
+    panorama-projection: propagate BablSpace
+
+ operations/common/panorama-projection.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+
+commit 41accb065ae130f1964fdd5e0f736f1c4175453e
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:06:33 2018 +0200
+
+    tests: commit updated posterize.xml
+
+ tests/compositions/posterize.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 4706147009c6698f34f3cbcc261ff48cd922f622
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:05:08 2018 +0200
+
+    snn-mean: propagate BablSpace
+
+ operations/common/snn-mean.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
+
+commit 6d827da09abd8d572d2eb344859a02d4f4298fd4
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:03:33 2018 +0200
+
+    remap: propagate BablSpace
+
+ operations/common/remap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit c82aa06e8d864f098a07fcd1c2d47af6fc23dab4
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:01:49 2018 +0200
+
+    threshold: propagate BablSpace
+
+ operations/common/threshold.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+commit 1a97251b764e8edfed48579b4fea150ee8da38bc
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 22:00:40 2018 +0200
+
+    value-invert: propaget BablSpace
+
+ operations/common/value-invert.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 0e3fa3e09becc41e59e4fb2c1c6633814fbb65c8
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 21:58:40 2018 +0200
+
+    sepia: propagate BablSpace and use R~G~B~
+
+ operations/common/sepia.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 2a46633ea129cbf5db5536c2fa4a60af3f9c0e1e
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 21:57:51 2018 +0200
+
+    saturation: propagte BablSpace
+
+ operations/common/saturation.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+commit 316c8e1302b647de87fe8f9bf24734f90f90fe3e
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 21:56:00 2018 +0200
+
+    opacity: propagate BablSpace
+
+ operations/common/opacity.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
+
+commit 9f4d59d70ce3179bf2ae8fc24f20e86d63e61f4a
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 21:55:23 2018 +0200
+
+    mono-mixer: propagate BablSpace
+
+ operations/common/mono-mixer.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 9ac97fcbb3d6bb76c57c6de0ec4bdd4d268edf92
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 21:54:51 2018 +0200
+
+    mix: propagate BablSpace
+
+ operations/common/mix.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit ba7999120ab5d695c63d0ab8ab8320d59a76f659
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 21:53:26 2018 +0200
+
+    over: propagate BablSpace
+
+ operations/common/over.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit fbf0a925352b93d410ee0c3aab2af54e03f4ce58
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 21:50:08 2018 +0200
+
+    posterize: propage BablSpace, and explicitly request sRGB TRC
+
+    Maybe this should be using R'G'B' instead of R~G~B~ - for consistently
+    useful
+    in most workflows though using a perceptual TRC makes sense.
+
+ operations/common/posterize.c              |  10 ++++++++++
+ tests/compositions/reference/posterize.png | Bin 300303 -> 118630 bytes
+ 2 files changed, 10 insertions(+)
+
+commit 7aa02f5692a18a05f6b1219b8c90f532ea0b23b4
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 21:24:36 2018 +0200
+
+    little-planet: propagate BablSpace
+
+ operations/common/little-planet.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+
+commit f9ccceccb4ff24faed455a1649e343939db03a8a
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 21:23:09 2018 +0200
+
+    median-blur: propagate BablSpace
+
+ operations/common/median-blur.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
+
+commit 50a4d0e6838295be4c4671a11c9712e840b5451b
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 21:19:31 2018 +0200
+
+    mirrors: propagate BablSpace
+
+ operations/common/mirrors.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+commit 6b9e86ade22adce6f4c72dcd45156ac29f91375c
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 20:16:54 2018 +0200
+
+    mean-curvature-blur: propagate BablSpace
+
+ operations/common/mean-curvature-blur.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit bd72b1f4103ae7d9658791a337f769aa5a827971
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 20:15:00 2018 +0200
+
+    invert-gamma: propagate BablSpace
+
+ operations/common/invert-gamma.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit dfb89e5a6f0caf73ec2f84717a344149e9ee887d
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 17:21:01 2018 +0200
+
+    hue-chroma: propagate BablSpace
+
+ operations/common/hue-chroma.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 80fed62ab6c0a50b6bc4a7405242874ff8246058
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 15:57:35 2018 +0200
+
+    grey: propagate BablSpace
+
+ operations/common/grey.c | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
+
+commit a05914704a85c12a75a6b111e711d6c1e69325fb
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 15:52:38 2018 +0200
+
+    gblur-1d: propagate BablSpace
+
+ operations/common/gblur-1d.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 34b9a10bdfcadd6afe98602d517740fc77010538
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 15:50:05 2018 +0200
+
+    exposure: propagate BablSpace
+
+ operations/common/exposure.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+commit e6df830237bc0556cda4661407f3032fc22d90a2
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 15:46:28 2018 +0200
+
+    dither: propagate BablSpace
+
+ operations/common/dither.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
+
+commit 90abbacf2b558b25481dcddf0f2030f444bfa9d7
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 15:19:24 2018 +0200
+
+    convolution-matrix: propagate BablSpace
+
+ operations/common/convolution-matrix.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+commit 9afab8abe500d118dfbd4d7048f686f80a2808d8
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 15:18:12 2018 +0200
+
+    contrast_curve: propagate BablSpace
+
+ operations/common/contrast-curve.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 0d9f6d3a0e4f7525df9de60f019c377149085007
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 15:08:16 2018 +0200
+
+    color-warp: propagate BablSpace
+
+ operations/common/color-warp.c | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
+
+commit e1db59326c23c29f1f834c6210eaeb40ab9892f0
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 15:04:56 2018 +0200
+
+    color-rotate: propagate BablSpace
+
+ operations/common/color-rotate.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 0178f52d0b523956b52370782073c91bd7789014
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 14:18:18 2018 +0200
+
+    color-overlay: propagate BablSpace
+
+ operations/common/color-overlay.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
+
+commit 6048aee4dae138fd75504237f91e17f18a21b0d7
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 13:54:44 2018 +0200
+
+    color-enhance: propagate BablSpace
+
+ operations/common/color-enhance.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
+
+commit 6f93ae2ad2db567ebe9ffbe95019e25465cf6e8b
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 13:51:55 2018 +0200
+
+    c2g: propagate BablSpace
+
+ operations/common/c2g.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
+
+commit ae90edd3c31c2eb23352a72de4577b5660151c20
+Author: Michael Schumacher <schumaml@gmx.net>
+Date:   Thu Jul 5 11:52:20 2018 +0000
+
+    tests: use GEGL_THREADS=1 to check if this fixes the mipmap rotate
+    output
+
+ tests/mipmap/rotate.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit dcd7ef04e3ea7854f8689b649164e0783f2f5956
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 13:51:14 2018 +0200
+
+    brightness-contrast: propagate BablSpace
+
+ operations/common/brightness-contrast.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 1ca31b1e31ad692142d408f535e77d4c9106ea7d
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 13:44:48 2018 +0200
+
+    box-blur: propagate BablSpace
+
+ operations/common/box-blur.c | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
+
+commit 7a44050f0497737faa4959ad85fc6d90e8369703
+Author: Michael Schumacher <schumaml@gmx.net>
+Date:   Thu Jul 5 11:44:50 2018 +0000
+
+    tests: use GEGL_THREADS=1 to check if this fixes the mipmap rotate
+    output
+
+ tests/mipmap/rotate-crop.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 879681c31f8fed0b7a1f94131fc8b550efb00762
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 13:42:44 2018 +0200
+
+    bilateral-filter: propagate BablSpace
+
+ operations/common/bilateral-filter.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
+
+commit 1bdbb41e24365a27a34f293fb8a0e95dcf104cb8
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 13:38:42 2018 +0200
+
+    alien-map: propagate BablSpace
+
+ operations/common/alien-map.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+commit ab4698daccf7beee63cb2fea426068b80b6730b3
+Author: Ell <ell_se@yahoo.com>
+Date:   Thu Jul 5 06:22:10 2018 -0400
+
+    Issue #90 - Functions for Green and Blue check boxes are swapped ...
+
+    ... in Convolution Matrix dialog box
+
+    The effect of the "green" and "blue" properties of
+    gegl:convolution-matrix was swapped.
+
+ operations/common/convolution-matrix.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+commit dee66ccee9f66f742a170c4b042f12dda58cb38b
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Jul 5 00:26:41 2018 +0200
+
+    transform: do not rely on space in invalidated_by_change
+
+ operations/transform/transform-core.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+commit b39d25f6e71854fc8c4b0cd9f5470c5f09bddc41
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 22:45:28 2018 +0200
+
+    operations/transform: initialize samplers with space
+
+ operations/transform/transform-core.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
+
+commit 78df1dda98ad7bd23a5d27f2574e3d3f33e3f97d
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 19:46:16 2018 +0200
+
+    operations: pass space on in generated ops
+
+ operations/generated/add.c                 | 8 ++++++--
+ operations/generated/clear.c               | 7 +++++--
+ operations/generated/color-burn.c          | 7 +++++--
+ operations/generated/color-dodge.c         | 7 +++++--
+ operations/generated/darken.c              | 7 +++++--
+ operations/generated/difference.c          | 7 +++++--
+ operations/generated/divide.c              | 8 ++++++--
+ operations/generated/dst-atop.c            | 7 +++++--
+ operations/generated/dst-in.c              | 7 +++++--
+ operations/generated/dst-out.c             | 7 +++++--
+ operations/generated/dst-over.c            | 7 +++++--
+ operations/generated/dst.c                 | 7 +++++--
+ operations/generated/exclusion.c           | 7 +++++--
+ operations/generated/gamma.c               | 8 ++++++--
+ operations/generated/hard-light.c          | 7 +++++--
+ operations/generated/lighten.c             | 7 +++++--
+ operations/generated/math.rb               | 8 ++++++--
+ operations/generated/multiply.c            | 8 ++++++--
+ operations/generated/overlay.c             | 7 +++++--
+ operations/generated/plus.c                | 7 +++++--
+ operations/generated/screen.c              | 7 +++++--
+ operations/generated/soft-light.c          | 7 +++++--
+ operations/generated/src-atop.c            | 7 +++++--
+ operations/generated/src-in.c              | 7 +++++--
+ operations/generated/src-out.c             | 7 +++++--
+ operations/generated/src.c                 | 7 +++++--
+ operations/generated/subtract.c            | 8 ++++++--
+ operations/generated/svg-12-blend.rb       | 7 +++++--
+ operations/generated/svg-12-porter-duff.rb | 7 +++++--
+ operations/generated/xor.c                 | 7 +++++--
+ 30 files changed, 156 insertions(+), 60 deletions(-)
+
+commit 3ca88100ff31b9beddcba364cfa8c911f695cd21
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 19:45:57 2018 +0200
+
+    operations: pass space on in transform ops
+
+ operations/transform/transform-core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 1e28d685f2ad25134022891697be56d7040fd1d9
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 19:45:38 2018 +0200
+
+    gegl: pass space on in operation base classes
+
+ gegl/operation/gegl-operation-area-filter.c     |  4 +++-
+ gegl/operation/gegl-operation-point-composer.c  |  8 +++++++-
+ gegl/operation/gegl-operation-point-composer3.c | 10 +++++++++-
+ gegl/operation/gegl-operation-point-filter.c    |  4 +++-
+ gegl/operation/gegl-operation-temporal.c        |  3 ++-
+ 5 files changed, 24 insertions(+), 5 deletions(-)
+
+commit 9cc17e1578d5598a73cdfe032aff0efb29abc1d8
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 19:43:11 2018 +0200
+
+    gegl: add gegl_operation_get_source_space
+
+    For use in prepare when rigging up babl formats aware of BablSpace
+    the buffer flowing through the graph has.
+
+ gegl/operation/gegl-operation.c | 9 +++++++++
+ gegl/operation/gegl-operation.h | 3 +++
+ 2 files changed, 12 insertions(+)
+
+commit 31e4a694658a346332abc4d7d7d2490a20d8d4f7
+Author: Alan Mortensen <alanmortensen.am@gmail.com>
+Date:   Wed Jul 4 19:38:13 2018 +0200
+
+    Updated Danish translation
+
+ po/da.po | 158
+ ++++++++++++++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 107 insertions(+), 51 deletions(-)
+
+commit 40b484535ba296c6475683b0a5c60d737a6e255c
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 19:31:03 2018 +0200
+
+    brightness-contrast: add comment about prepare not needed
+
+    Though for illustrating generically how to write GEGL ops, it
+    is good to have in this example.
+
+ operations/common/brightness-contrast.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+commit b3b18d5ed55b2dd1cf6fbccfb719074e7cdcca13
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 19:30:37 2018 +0200
+
+    spherize: use parent class' prepare
+
+ operations/common/spherize.c | 8 --------
+ 1 file changed, 8 deletions(-)
+
+commit 48f8baa07a872e4bb16ea59ae15db73c5dcef889
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 19:27:07 2018 +0200
+
+    tile-paper: user parent class' prepare
+
+ operations/common-gpl3+/tile-paper.c | 8 --------
+ 1 file changed, 8 deletions(-)
+
+commit 77acde2a9186bba64df62bb016cd650e1c6b8e44
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 19:26:47 2018 +0200
+
+    lens-distortion: user parent class' prepare
+
+ operations/common-gpl3+/lens-distortion.c | 8 --------
+ 1 file changed, 8 deletions(-)
+
+commit a25d1d5f6deb0c4ad14218b6184850f18b45a110
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 19:26:30 2018 +0200
+
+    fractal-trace: user parent class' prepare
+
+ operations/common-gpl3+/fractal-trace.c | 8 --------
+ 1 file changed, 8 deletions(-)
+
+commit 8f3be410e5a9e24c9ba71a41cfe43585311755ca
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 19:26:18 2018 +0200
+
+    cartoon: use parent class' prepare
+
+ operations/common-gpl3+/cartoon.c | 8 --------
+ 1 file changed, 8 deletions(-)
+
+commit 79fd315f3df779a29db4623f6a07f3cb9553bd19
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 19:22:48 2018 +0200
+
+    gegl: make filter base class default to RGBA formats
+
+ gegl/operation/gegl-operation-filter.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+commit 905f83f4d1b62561b052529fd6cfe5ce7e31137e
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 19:07:40 2018 +0200
+
+    tests: update mipmap tests for new unsharp defaults
+
+ tests/mipmap/unsharp-crop-reference.png | Bin 15894 -> 14698 bytes
+ tests/mipmap/unsharp-reference.png      | Bin 74954 -> 92440 bytes
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 3d9f63154718efd129f063eb2f35f0f871a348dd
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 19:00:59 2018 +0200
+
+    weighted-blend: use parent class' prepare
+
+ operations/common/weighted-blend.c | 10 ----------
+ 1 file changed, 10 deletions(-)
+
+commit 55bc4579585a8b3978db0cc8c8e97b70dafdb8d0
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 18:59:16 2018 +0200
+
+    newsprint: use parent class' prepare
+
+ operations/common/newsprint.c | 8 --------
+ 1 file changed, 8 deletions(-)
+
+commit 5115f856d573b5596b578a76ffeeeec83d32829b
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 18:57:32 2018 +0200
+
+    color-temperature: use parent class' prepare
+
+ operations/common/color-temperature.c | 9 ---------
+ 1 file changed, 9 deletions(-)
+
+commit 3bf01fd7e8e39169c1577fa72b7c1d2a2f745d81
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 17:20:59 2018 +0200
+
+    panorama-projection: remove little-planet toggle
+
+ operations/common/panorama-projection.c | 110
+ ++------------------------------
+ 1 file changed, 6 insertions(+), 104 deletions(-)
+
+commit 3340762cd75190e61bbfa751cc65cca21ddaeb81
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 15:24:46 2018 +0200
+
+    little-planet: add new op that does stereographic projection
+
+    Made by copying and simplifying the panorama-projection op.
+
+ operations/common/Makefile.am     |   1 +
+ operations/common/little-planet.c | 498
+ ++++++++++++++++++++++++++++++++++++++
+ po/POTFILES.in                    |   1 +
+ 3 files changed, 500 insertions(+)
+
+commit b1e78907a0252d7b37a7a68b72156bec286db715
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 02:10:28 2018 +0200
+
+    post-release version bump
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit e786ee8f5a357c7a153ef9f1a76b61e2604960f7
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Jul 4 02:09:36 2018 +0200
+
+    release 0.4.4
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 commit 690699bf61e0842ddea576b21121f88895f014a7
 Author: Øyvind Kolås <pippin@gimp.org>
 Date:   Wed Jul 4 01:56:49 2018 +0200
