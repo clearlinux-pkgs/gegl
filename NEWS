@@ -1,3 +1,23 @@
+GEGL-0.4.8 2018-08-17
+
+Core/GeglBuffer
+
+Fixes to races during buffer/tile storage destruction, improve swap
+usage for stored empty tiles.
+
+Operations
+
+motion-blur-circular - improve/clarify property ui
+median-blur          - added abyss-policy property
+long-shadow          - new operation
+little-planet        - adapt reference composition
+
+Contributors to this release
+
+Alexandre Prokoudine, Anders Jonsson, Daniel Mustieles, Ell, Marco
+Ciampa, Martin Srebotnjak, Matej Urbančič, Øyvind Kolås, Piotr Drąg,
+and Rodrigo Lledó
+
 GEGL-0.4.6 2018-07-23
 
 Up until now GEGL has been using a color space corresponding to scRGB
@@ -86,6 +106,12 @@ litte-planet: stereographic-mapping split out of the panorama-projection
 New operation in workshop:
 
 acrs-rrt: ACES RRT based HDR to SDR proof/preview point-filter tonemapping op.
+
+Contributors to this release:
+
+Alan Mortensen, Daniel Korostil, Daniel Mustieles, Ell, Francisco
+Mariano-Neto, Marco Ciampa, Matej Urbančič, Michael Natterer, Michael
+Schumacher, Øyvind Kolås, Piotr Drąg, Rodrigo and Snehalata B Shirude.
 
 GEGL-0.4.4 2018-07-04
 
@@ -1409,4 +1435,4 @@ Calvin Williamson, Caroline Dahloff Daniel Rogers, Garry R. Osgood, Jay
 Cox and Sven Neumann
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Last updated 2018-07-23 04:19:41 CEST
+Last updated 2018-08-18 12:18:34 CEST

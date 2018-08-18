@@ -1,3 +1,565 @@
+commit 4d634fe907eb7973c732b34b0d5641943f93e086
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Sat Aug 18 12:11:56 2018 +0200
+
+    release 0.4.6
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit d9cec1cd9bd1beb90813d857e3fe8f522ba3ca27
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Sat Aug 18 12:12:52 2018 +0200
+
+    update NEWS
+
+ docs/NEWS.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 17b34df868844fdbdbbcf9284da2ee29e8bff9d0
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Sat Aug 18 12:18:22 2018 +0200
+
+    configure: add warning about enabling of workshop to --help
+
+ configure.ac                  | 2 +-
+ operations/workshop/inpaint.c | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+commit c5c8198b2e45d9c98f7d3922d4a643f6d2844227
+Author: Tim Sabsch <tim@sabsch.com>
+Date:   Fri Aug 17 16:48:22 2018 +0000
+
+    Update German translation
+
+ po/de.po | 1842
+ ++++++++++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 1081 insertions(+), 761 deletions(-)
+
+commit 0ba3d30aa2e087886fb79ab3d1da9daa754ab7fe
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Aug 17 11:58:05 2018 +0200
+
+    NEWS: update
+
+ docs/NEWS.txt | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
+commit 14fc79698ffdd17665a09632a11c547071638e8f
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Aug 17 11:47:14 2018 +0200
+
+    bin: update with api changes in mrg
+
+ bin/ui.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 9463fe1082b1614dd7969599b602baf6b718ab05
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Aug 17 11:46:38 2018 +0200
+
+    examples: update lua/gobject introspection draft
+
+ examples/{lgi.lua => lgitest.lua} | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 33fef8a4b4ab0dac35f7d261ca0289312e4f7c04
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Thu Aug 16 19:58:03 2018 +0200
+
+    Update MSGID_BUGS_ADDRESS in po/Makevars
+
+ po/Makevars | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 9bd3d353057156975fefc9b67d00751150ab8248
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Aug 16 16:31:29 2018 +0200
+
+    little-planet: fix reference composition, and add a compat-name
+
+    permit gegl:little-planet in addition to gegl:stereographic-projection
+    also use this op in its reference composition - it was still rendering
+    panorama-projection.
+
+ operations/common/little-planet.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 76c5f69bb15fb2f17c19d639b055a3c0de3818bf
+Author: Ell <ell_se@yahoo.com>
+Date:   Thu Aug 16 07:37:15 2018 -0400
+
+    buffer: improve swap backend shutdown
+
+    When shutting down the swap backend, cleanly exit the writer thread
+    and free the queue/gap list even when the swap wasn't actually
+    used, and no swap file was created.
+
+    Additionally, when shutting down the writer thread, lock the queue
+    mutex while setting the exit_thread flag and signalling the queue
+    condition variable, to avoid a potential deadlock while joining the
+    thread.
+
+ gegl/buffer/gegl-tile-backend-swap.c | 57
+ +++++++++++++++++++++++-------------
+ 1 file changed, 36 insertions(+), 21 deletions(-)
+
+commit 7ab21c10084984fe8b8beebb83561c6b28766cf1
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Aug 14 18:32:32 2018 +0200
+
+    configure: depend on babl 0.1.56
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit f6b5b17ac3435c607d54ab6f1b3c3ca84c62cdea
+Author: Ell <ell_se@yahoo.com>
+Date:   Tue Aug 14 03:54:51 2018 -0400
+
+    buffer: don't store empty tiles in the swap
+
+    In GeglTileBackendSwap, void any existing tile upon SETting an
+    empty tile, instead of writing the empty tile data to disk.  The
+    empty tile will be recreated by the empty-tile handler upon
+    request.
+
+ gegl/buffer/gegl-tile-backend-swap.c | 38
+ ++++++++++++++++++++++++------------
+ 1 file changed, 25 insertions(+), 13 deletions(-)
+
+commit 5a8c84e7711636099efedce70bd4c34c459cafdf
+Author: Ell <ell_se@yahoo.com>
+Date:   Tue Aug 14 03:42:03 2018 -0400
+
+    buffer: always increase revision of duplicate tiles, even empty
+
+    In gegl_tile_dup(), increate the revision of the newly-created
+    duplicate tile unconditionally, even if it's empty, so that it gets
+    stored.
+
+    Instead of special-casing empty tiles in the above function, mark
+    newly-craeted empty tiles as stored in the empty-tile handler.
+    This way, newly-created empty tiles are not stored, but copied
+    empty tiles are, since we might need them to replace outdated data
+    in the tile backend.  Tile backends may, in turn, test for empty
+    tiles upon a SET command, and drop the existing tile instead of
+    storing the empty tile.
+
+    Remove the now-unnecessary revision bump in gegl_buffer_copy().
+
+ gegl/buffer/gegl-buffer-access.c      | 1 -
+ gegl/buffer/gegl-tile-handler-empty.c | 9 ++++++++-
+ gegl/buffer/gegl-tile.c               | 8 +++-----
+ 3 files changed, 11 insertions(+), 7 deletions(-)
+
+commit 3275239e26e659b48933ba415a3c7c165f57a31f
+Author: Ell <ell_se@yahoo.com>
+Date:   Sat Aug 11 09:13:22 2018 -0400
+
+    buffer: in GeglTileBackendSwap, move reused OP_DESTROY to the top
+
+    In gegl_tile_backend_swap_entry_destroy(), when reusing an existing
+    queued op as an OP_DESTROY, move the op to the top of the queue, so
+    that the corresponding storage is reclaimed before any pending
+    WRITE ops.  This used to be the behavior before last commit, which
+    accidentally removed it.
+
+ gegl/buffer/gegl-tile-backend-swap.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+commit 4241b0fd5b39cee9bd9e84cdbc30a31e50ff8bf9
+Author: Ell <ell_se@yahoo.com>
+Date:   Sat Aug 11 08:37:22 2018 -0400
+
+    buffer: fix potential race condition during tile-swap entry
+    destruction
+
+    In gegl_tile_backend_swap_entry_destroy(), don't free the entry in
+    the calling thread when it has a pending op in the queue, but no
+    allocated storage, since the test for whether the entry has
+    allocated storage introduces a race condition between the calling
+    thread and the writer thread, where storage allocation happens.
+    Instead, always convert the existing op to an OP_DESTROY.
+
+    In particular, this could lead to a use-after-free and/or swap-
+    space leak, if a TILE_SET command is issued for a tile while it is
+    being written to the swap by the writer thread (after the
+    corresponding OP_WRITE has been dequeued).  In this case, another
+    OP_WRITE is pushed to the queue.  If the corresponding entry
+    doesn't have storage allocated yet, and is then destroyed, the
+    entry will be freed while the writer thread is still potentially
+    using it while serving the earlier OP_WRITE, and the storage
+    subsequently allocated for it will never be reclaimed.
+
+ gegl/buffer/gegl-tile-backend-swap.c | 28 ++++++----------------------
+ 1 file changed, 6 insertions(+), 22 deletions(-)
+
+commit 02a1288c480c8e8372fc81b3006ab14b1ac5f570
+Author: Martin Srebotnjak <miles@filmsi.net>
+Date:   Fri Aug 10 20:48:09 2018 +0200
+
+    Updated Slovenian translation
+
+ po/sl.po | 455
+ ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 248 insertions(+), 207 deletions(-)
+
+commit 95b0f79124b7c4508538aa03c9b6bf01241ce8e4
+Author: Ell <ell_se@yahoo.com>
+Date:   Fri Aug 10 09:14:41 2018 -0400
+
+    long-shadow: process output in-place
+
+    After commit a5ce7c7051b98dc6b7149bd1c08d69bb79df0197b, we no
+    longer use a sampler in the finite-shadow case, and so we can
+    process the output in-place in this case too, which allows us to
+    safely set GeglOperation::want_in_place to TRUE.
+
+ operations/common/long-shadow.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+
+commit d16ed56a738371bb7de64f703323b136fdd59f8f
+Author: Ell <ell_se@yahoo.com>
+Date:   Thu Aug 9 18:45:18 2018 -0400
+
+    long-shadow: add reference hash
+
+ operations/common/long-shadow.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+commit 59d3b76a609f0f480e0c725390b2c2bb4831337f
+Author: Ell <ell_se@yahoo.com>
+Date:   Thu Aug 9 18:36:30 2018 -0400
+
+    long-shadow: move from workshop to common
+
+ operations/common/Makefile.am                 | 1 +
+ operations/{workshop => common}/long-shadow.c | 0
+ operations/workshop/Makefile.am               | 1 -
+ po/POTFILES.in                                | 2 +-
+ 4 files changed, 2 insertions(+), 2 deletions(-)
+
+commit a5ce7c7051b98dc6b7149bd1c08d69bb79df0197
+Author: Ell <ell_se@yahoo.com>
+Date:   Thu Aug 9 18:27:19 2018 -0400
+
+    long-shadow: various fixes and improvements
+
+    A bunch of logic fixes and speed improvements, before moving to
+    common.
+
+ operations/workshop/long-shadow.c | 392
+ ++++++++++++++++++++------------------
+ 1 file changed, 205 insertions(+), 187 deletions(-)
+
+commit 827d5b024e0045c632d417ace013bbfd81ea51d8
+Author: Anders Jonsson <anders.jonsson@norsjovallen.se>
+Date:   Thu Aug 9 18:23:21 2018 +0000
+
+    Update Swedish translation
+
+ po/sv.po | 21 ++++++++-------------
+ 1 file changed, 8 insertions(+), 13 deletions(-)
+
+commit a36e6fa4e74489d0f763b43531cf5168cfa76e1e
+Author: Anders Jonsson <anders.jonsson@norsjovallen.se>
+Date:   Thu Aug 9 13:07:26 2018 +0000
+
+    Update Swedish translation
+
+ po/sv.po | 1527
+ ++++++++++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 888 insertions(+), 639 deletions(-)
+
+commit 46fbf15eaf730ded64af684f400db3600619b376
+Author: Ell <ell_se@yahoo.com>
+Date:   Mon Aug 6 10:07:51 2018 -0400
+
+    long-shadow: fix output for level > 0
+
+    ... by incorporating the scale factor into the image <-> filter
+    coordinate transformation.
+
+ operations/workshop/long-shadow.c | 54
+ +++++++++++++++++++++++++++++++--------
+ 1 file changed, 43 insertions(+), 11 deletions(-)
+
+commit 1fad8a77b6f1961402d24cb4211af2c8274d8def
+Author: Ell <ell_se@yahoo.com>
+Date:   Mon Aug 6 10:06:06 2018 -0400
+
+    long-shadow: avoid writing preprocessing rows to output buffer
+
+ operations/workshop/long-shadow.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit b46a008ae7faccde52b0de3d0e075db613bd2899
+Author: Ell <ell_se@yahoo.com>
+Date:   Mon Aug 6 10:05:36 2018 -0400
+
+    long-shadow: indentation fix
+
+ operations/workshop/long-shadow.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 14399fed3b7ac762dea499603d8bd27145fc8786
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Sun Aug 5 19:04:00 2018 +0200
+
+    Update Polish translation
+
+ po/pl.po | 390
+ +++++++++++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 229 insertions(+), 161 deletions(-)
+
+commit bf846eca27c2f14581cae3794defdf9f40936ae9
+Author: Matej Urbančič <mateju@svn.gnome.org>
+Date:   Fri Aug 3 12:18:25 2018 +0200
+
+    Added Slovenian translation
+
+ po/sl.po | 8893
+ +++++++++++++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 6479 insertions(+), 2414 deletions(-)
+
+commit 1d4f11de1898f8c5260f953dd42c992faa406126
+Author: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>
+Date:   Thu Aug 2 23:56:02 2018 +0300
+
+    Update Russian translation
+
+ po/ru.po | 1109
+ ++++++++++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 648 insertions(+), 461 deletions(-)
+
+commit da936eceee1fce32e27ed13ec3adcc9da2022b96
+Author: Ell <ell_se@yahoo.com>
+Date:   Tue Jul 31 08:39:03 2018 -0400
+
+    long-shadow: fix finite shadow accumulation
+
+    For finite shadows, when replacing the current shadow value of a
+    screen pixel, clear the pixel's now-irrelevant shadow queue, and
+    correct the active-pixel count.  Note that failing to do either of
+    these doesn't actually produce wrong results, but performance
+    should be better in some cases now.
+
+ operations/workshop/long-shadow.c | 39
+ ++++++++++++++++++++++++---------------
+ 1 file changed, 24 insertions(+), 15 deletions(-)
+
+commit e4ac3f454347665ba0b61f2788f394343ea63d7f
+Author: Rodrigo Lledó <rodhos92@gmail.com>
+Date:   Tue Jul 31 10:07:37 2018 +0000
+
+    Update Spanish translation
+
+ po/es.po | 128
+ +++++++++++++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 101 insertions(+), 27 deletions(-)
+
+commit d13895edc11fcd1c88a404a6401e2b9dc41d45e4
+Author: Ell <ell_se@yahoo.com>
+Date:   Mon Jul 30 13:58:10 2018 -0400
+
+    long-shadow: fix buffer overflow; add "needs-alpha" key
+
+ operations/workshop/long-shadow.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+commit ef6a3e948eedcee271b7fa5a6aa7d77654bddd99
+Author: Ell <ell_se@yahoo.com>
+Date:   Mon Jul 30 11:51:54 2018 -0400
+
+    long-shadow: add new operation to workshop
+
+    Add a gegl:long-shadow operation, which (surprise surprise) creates
+    a long-shadow effect.  The operation supports three shadow styles:
+    finite, infinite, and fading.  The shadow's color, angle, length
+    (for finite shadows), and midpoint (for fading shadows) are
+    controllable.
+
+    Additionally, the output composition is also controllable, and can
+    be one of:
+
+      - Shadow plus image:  Both the shadow and the input image are
+        included in the output.
+
+      - Shadow only:  Only the shadow is included in the output.
+
+      - Shadow minus image:  Only the parts of the shadow that aren't
+        obscured by the input image are included in the input.  In
+        GIMP, such output can be combined with the original layer using
+        "Merge" layer mode, to achieve the same result as "Shadow plus
+        image", using separate layers for the image and the shadow.
+
+    The operation preserves partial-transparency, and produces anti-
+    aliased results.
+
+ operations/workshop/Makefile.am   |    1 +
+ operations/workshop/long-shadow.c | 1106
+ +++++++++++++++++++++++++++++++++++++
+ po/POTFILES.in                    |    1 +
+ 3 files changed, 1108 insertions(+)
+
+commit 31ee079d114547172fbecb8f319cf865e48cf11a
+Author: Ell <ell_se@yahoo.com>
+Date:   Mon Jul 30 07:12:29 2018 -0400
+
+    median-blur: add "abyss-policy" property
+
+    Add an "abyss-policy" property to gegl:median-blur, which controls
+    the input's abyss policy, and can be one of NONE or CLAMP, for now.
+    When the abyss policy is NONE, the op's bounding box is expanded
+    according to the blur radius, while when the abyss policy is CLAMP,
+    the op's bounding box is clamped to the input bounding box.
+
+    The default abyss policy is CLAMP, to keep the current behavior.
+
+ operations/common/median-blur.c | 57
+ ++++++++++++++++++++++++++++++++---------
+ 1 file changed, 45 insertions(+), 12 deletions(-)
+
+commit 43979a097b6ab4af8ee381556b7a1075103ed686
+Author: Rodrigo Lledó <rodhos92@gmail.com>
+Date:   Mon Jul 30 11:07:49 2018 +0000
+
+    Update Spanish translation
+
+ po/es.po | 49 +++++++++++++++++++++++++++++--------------------
+ 1 file changed, 29 insertions(+), 20 deletions(-)
+
+commit ff0ff63650370db8a431ac62bc9edc3dcf207431
+Author: Rodrigo Lledó <rodhos92@gmail.com>
+Date:   Mon Jul 30 09:54:57 2018 +0000
+
+    Update Spanish translation
+
+ po/es.po | 135
+ ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 74 insertions(+), 61 deletions(-)
+
+commit e6512cd4218d791934f8837f342749074b545ab6
+Author: Marco Ciampa <ciampix@posteo.net>
+Date:   Sat Jul 28 17:47:38 2018 +0200
+
+    Updated Italian translation
+
+ po/it.po | 323
+ +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 168 insertions(+), 155 deletions(-)
+
+commit b8e50821c5561dba285a41fdc1bbd00e17a4bf1f
+Author: Rodrigo Lledó <rodhos92@gmail.com>
+Date:   Fri Jul 27 11:04:41 2018 +0000
+
+    Update Spanish translation
+
+ po/es.po | 280
+ +++++++++++++++++++--------------------------------------------
+ 1 file changed, 83 insertions(+), 197 deletions(-)
+
+commit 6350185eb7d3caef8f083fc0bf374efab2ef4cba
+Author: Rodrigo Lledó <rodhos92@gmail.com>
+Date:   Thu Jul 26 10:18:51 2018 +0000
+
+    Update Spanish translation
+
+ po/es.po | 214
+ +++++++++++++++++++++++++++------------------------------------
+ 1 file changed, 90 insertions(+), 124 deletions(-)
+
+commit 5c1f698ba64e4cb953fec81ea77203dd23dbd29e
+Author: Rodrigo Lledó <rodhos92@gmail.com>
+Date:   Wed Jul 25 13:00:07 2018 +0000
+
+    Update Spanish translation
+
+ po/es.po | 207
+ +++++++++++++++++++++++++++++----------------------------------
+ 1 file changed, 96 insertions(+), 111 deletions(-)
+
+commit ddefb289ed5629643640af7a789c5a8a6121e911
+Author: Rodrigo Lledó <rodhos92@gmail.com>
+Date:   Tue Jul 24 10:30:16 2018 +0000
+
+    Update Spanish translation
+
+ po/es.po | 373
+ ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 192 insertions(+), 181 deletions(-)
+
+commit ef13a5b59149721a448292972ddd6660d5c5ab6f
+Author: Daniel Mustieles <daniel.mustieles.contractor@bbva.com>
+Date:   Tue Jul 24 10:20:09 2018 +0200
+
+    Updated Spanish translation
+
+ po/es.po | 60
+ ++++++++++++++++++++++++++----------------------------------
+ 1 file changed, 26 insertions(+), 34 deletions(-)
+
+commit 3248572b79f5f0c4c43a514cab6aa5d75de93942
+Author: Ell <ell_se@yahoo.com>
+Date:   Tue Jul 24 01:39:38 2018 -0400
+
+    motion-blur-circular: fix "angle" property range
+
+    Change the range of the "angle" property of
+    gegl:motion-blur-circular from [-180,180] to [0,360] -- it's not
+    directional, so negative values don't make sense for it.
+
+ operations/common-gpl3+/motion-blur-circular.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+commit 7b0578073a0f20334b5a8a8fe57b649d9f302454
+Author: Ell <ell_se@yahoo.com>
+Date:   Tue Jul 24 01:34:19 2018 -0400
+
+    operations: annotate angle properties with "direction" ui-meta
+
+    Annotate all directional angle properties with a "direction" UI-
+    meta, specifying whether the angle is measured clockwise ("cw") or
+    counter-clockwise ("ccw").  This allows directionality-dependent
+    UI, such as GIMP's dial widget, to use the correct direction.
+
+ operations/common-gpl3+/bump-map.c          | 1 +
+ operations/common-gpl3+/emboss.c            | 1 +
+ operations/common-gpl3+/mosaic.c            | 1 +
+ operations/common-gpl3+/polar-coordinates.c | 1 +
+ operations/common-gpl3+/ripple.c            | 1 +
+ operations/common-gpl3+/spiral.c            | 1 +
+ operations/common-gpl3+/whirl-pinch.c       | 1 +
+ operations/common/little-planet.c           | 3 +++
+ operations/common/mirrors.c                 | 2 ++
+ operations/common/motion-blur-linear.c      | 1 +
+ operations/common/newsprint.c               | 4 ++++
+ operations/common/panorama-projection.c     | 3 +++
+ operations/common/vignette.c                | 1 +
+ operations/transform/rotate.c               | 1 +
+ operations/workshop/linear-sinusoid.c       | 2 ++
+ 15 files changed, 24 insertions(+)
+
+commit 2e0f4234e43618a02c76539b9189361469b56954
+Author: Rodrigo Lledó <rodhos92@gmail.com>
+Date:   Mon Jul 23 12:54:38 2018 +0000
+
+    Update Spanish translation
+
+ po/es.po | 147
+ +++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 72 insertions(+), 75 deletions(-)
+
+commit 4e4f796a2dce6a1765cbd9fb09b07ffe3e13f8c6
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 23 04:31:16 2018 +0200
+
+    postrelease version bump
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 commit 0c404a826c5ada5b5120983491bc09ddc05b250b
 Author: Øyvind Kolås <pippin@gimp.org>
 Date:   Mon Jul 23 04:15:47 2018 +0200
