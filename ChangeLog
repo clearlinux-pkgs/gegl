@@ -1,3 +1,2048 @@
+commit bb37399a9fd7fa375336b5754bdcd03e1a9b4243
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Oct 16 18:36:24 2018 +0200
+
+    release 0.4.10
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 367fee50e0c2e7557ff9c956fcdacc63287f7566
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Oct 16 18:06:30 2018 +0200
+
+    NEWS: update
+
+ docs/NEWS.txt | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+
+commit 21f7d15ae957edb08aca61b214c08300198b9ab3
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Oct 15 19:55:44 2018 +0200
+
+    unsharp-mask: raise max radius to max of gaussian-blur
+
+    Very large radiuses for unsharp mask are useful as a crude tonemapper,
+    maxing out the possible value, this doesn't change the default
+    ui range,
+    only the max permitted value.
+
+ operations/common/unsharp-mask.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 3114a74c6d7cb42293b68b3cfed3c77d1522e6b1
+Author: Ell <ell_se@yahoo.com>
+Date:   Mon Oct 15 03:05:25 2018 -0400
+
+    buffer: round alpha component during u8 bilinear/box filtering
+
+    In gegl_{bilinear,boxfilter}_u8_nl_alpha(), round the resulting
+    alpha component to the nearest integer, instead of truncating it.
+    This improves the numerical stability of the algothims, and, in
+    particular, avoids potential discrepancies between the color and
+    alpha components, which can be particularly problematic with
+    premultiplied-alpha formats.
+
+ gegl/buffer/gegl-algorithms.c | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
+
+commit 06ffd331fd484b9b9178265170f5e07394c80ded
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Sun Oct 14 17:24:37 2018 +0200
+
+    Update Polish translation
+
+ po/pl.po | 245
+ +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 127 insertions(+), 118 deletions(-)
+
+commit cb0acb7c7b4f60bfc4573e7a56b83800e7e2b44a
+Author: Ell <ell_se@yahoo.com>
+Date:   Sun Oct 14 08:14:50 2018 -0400
+
+    buffer: avoid allocation/chunking when downsampling by a power of 2
+
+    In _gegl_buffer_get_unlocked(), we already avoid filtering when
+    downsampling by a power of 2, but let's also avoid allocating a
+    sample buffer and chunking altogether.
+
+ gegl/buffer/gegl-buffer-access.c | 52
+ +++++++++++++++++++++++-----------------
+ 1 file changed, 30 insertions(+), 22 deletions(-)
+
+commit e7cfe11973e6dadda1532bdf25fd9469304a9934
+Author: Ell <ell_se@yahoo.com>
+Date:   Sun Oct 14 07:39:30 2018 -0400
+
+    buffer: only zero border pixels when performing filtering
+
+    In _gegl_buffer_get_unlocked(), don't use g_malloc0() when
+    allocating the sample buffer while performing linear- or box-
+    filtering.  Rather, always use g_malloc(), and only zero the non-
+    sampled "border" pixels in these cases, to avoid unnecessarily
+    zeroing pixels that would be overwritten.
+
+ gegl/buffer/gegl-buffer-access.c | 57
+ ++++++++++++++++++++++++++++++----------
+ 1 file changed, 43 insertions(+), 14 deletions(-)
+
+commit a7c730cf6e841a46d3b4546b86a234ae59206e9c
+Author: Ell <ell_se@yahoo.com>
+Date:   Sun Oct 14 07:32:57 2018 -0400
+
+    buffer: fix source rect passed to gegl_resample_{linear,boxfilter}()
+
+    In _gegl_buffer_get_unlocked(), when performing linear- or box-
+    filtering, don't include the source-buffer "border" pixels in the
+    source rect passed to gegl_resample_linear() and
+    gegl_resample_boxfilter(), respectively.  These pixels are needed
+    since they might be involved in the arithmeric, but they shouldn't
+    be taken into account when transforming coordinates between the
+    source and destination coordinate systems.
+
+    Update affected mipmap test output.
+
+ gegl/buffer/gegl-buffer-access.c  |  16 +++++++---------
+ tests/mipmap/rotate-reference.png | Bin 84628 -> 84631 bytes
+ 2 files changed, 7 insertions(+), 9 deletions(-)
+
+commit 687508cc37902287e0b66d291320a65d47315ed7
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Oct 12 15:44:37 2018 +0200
+
+    buffer: fix 32bit integer boxfilter overflow
+
+    In the existing implementation we overflow due to the imprecision
+    introduced by
+    using single precision floating point in the template. We introduce
+    a temp type
+    that can be used for computations, as well as do an upper bounds
+    check when
+    doing the rounding/converting of the final result. This fixes
+    overflows but not
+    the imprecision; that only applies for 32bit integer precision and
+    in code
+    paths primarily used for display rather than processing.
+
+    Fixing issue #103
+
+ gegl/buffer/gegl-algorithms-boxfilter.inc | 70
+ ++++++++++++++++---------------
+ gegl/buffer/gegl-algorithms.c             | 19 ++++++++-
+ 2 files changed, 54 insertions(+), 35 deletions(-)
+
+commit 8a91950c23206630ce73f728e09ccadb2b52850a
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Oct 11 22:37:17 2018 +0200
+
+    NEWS: update
+
+ docs/NEWS.txt | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+commit 1cf35de73509aaca26a834e75c7035622268514f
+Author: Jehan <jehan@girinstud.io>
+Date:   Thu Oct 11 09:22:41 2018 +0200
+
+    operations: improve gegl:watershed-transform description.
+
+    It is completely unobvious how to use the operation without looking at
+    the code (in particular the fact that it uses the alpha channel to
+    detect what is labelled or not, and also the babl formats it will work
+    on since you likely don't want your labels converted). Let's add a
+    slightly more descriptive text.
+
+ operations/common/watershed-transform.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+commit e15be793ac2ee605cc288b95e0b1b04aa43f45a0
+Author: Marco Ciampa <ciampix@posteo.net>
+Date:   Wed Oct 10 14:47:43 2018 +0200
+
+    Updated Italian translation
+
+ po/it.po | 936
+ +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 484 insertions(+), 452 deletions(-)
+
+commit d74f6fb4c7e93908f7fb81671554d7972faf383a
+Author: Massimo Valentini <mvalentini@src.gnome.org>
+Date:   Tue Oct 9 13:39:57 2018 +0200
+
+    maniuk06: use double precision variables, functions and constants
+
+    When computing 'l_min' and 'l_max' fixing #94
+
+ operations/common/mantiuk06.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
+
+commit fa55a1800273486ffe44b2cb53a64184df7848a8
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Oct 5 16:23:30 2018 +0200
+
+    build: depend on babl-0.1.58
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit b0060e71f18485fac3050a661d5af1c024b5c53b
+Author: Massimo Valentini <mvalentini@src.gnome.org>
+Date:   Tue Oct 2 17:03:57 2018 +0200
+
+    opencl: regenerate files
+
+ opencl/alien-map.cl.h             | 2 +-
+ opencl/bilateral-filter-fast.cl.h | 2 +-
+ opencl/color-exchange.cl.h        | 2 +-
+ opencl/colors-8bit-lut.cl.h       | 2 +-
+ opencl/colors.cl.h                | 2 +-
+ opencl/contrast-curve.cl.h        | 2 +-
+ opencl/gblur-1d.cl.h              | 2 +-
+ opencl/motion-blur-linear.cl.h    | 1 -
+ opencl/noise-hsv.cl.h             | 2 +-
+ opencl/noise-hurl.cl.h            | 2 +-
+ opencl/pixelize.cl.h              | 2 +-
+ opencl/posterize.cl.h             | 2 +-
+ opencl/random.cl.h                | 2 +-
+ opencl/red-eye-removal.cl.h       | 2 +-
+ opencl/stretch-contrast.cl.h      | 2 +-
+ 15 files changed, 14 insertions(+), 15 deletions(-)
+
+commit 2d0cf0e9e87292c7f01357e5bfe6f21746dcf977
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Oct 2 16:58:29 2018 +0200
+
+    gif-load: add libs/cflags fixing build on some platforms
+
+ operations/external/Makefile.am | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit a426db1a275926d8b1ae14b4300670a2a59c714b
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Mon Oct 1 18:39:57 2018 +0200
+
+    Update POTFILES.in
+
+ po/POTFILES.in | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit cc7028d85db62e89bdccaa94704c574414a7da03
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Oct 1 14:43:33 2018 +0200
+
+    buffer: move definitions of GeglRectangle and buffer enums to buffer
+
+    This reverts earlier indentation breaking changes when GeglRectangle
+    was
+    renamed GeglBufferRectangle this change also retains the existing
+    released API
+    and ABI more exactly.
+
+ gegl/Makefile.am                           |   2 +
+ gegl/buffer/Makefile.am                    |   4 +
+ gegl/buffer/gegl-algorithms-bilinear.inc   |  12 +-
+ gegl/buffer/gegl-algorithms-boxfilter.inc  |  12 +-
+ gegl/buffer/gegl-algorithms.c              | 146 +++++----
+ gegl/buffer/gegl-algorithms.h              | 231 +++++++-------
+ gegl/buffer/gegl-buffer-access.c           | 463
+ +++++++++++++++--------------
+ gegl/buffer/gegl-buffer-backend.h          |   5 +-
+ gegl/buffer/gegl-buffer-config.c           |   3 +-
+ gegl/buffer/gegl-buffer-enums.c            | 107 +++++++
+ gegl/buffer/gegl-buffer-enums.h            |  92 ++++++
+ gegl/buffer/gegl-buffer-formats.h          |   7 +-
+ gegl/buffer/gegl-buffer-iterator.c         |  61 ++--
+ gegl/buffer/gegl-buffer-iterator.h         |  32 +-
+ gegl/buffer/gegl-buffer-iterator2.c        |  74 ++---
+ gegl/buffer/gegl-buffer-iterator2.h        |  34 +--
+ gegl/buffer/gegl-buffer-linear.c           |  35 +--
+ gegl/buffer/gegl-buffer-load.c             |   2 +-
+ gegl/buffer/gegl-buffer-private.h          |  73 +++--
+ gegl/buffer/gegl-buffer-save.c             |   8 +-
+ gegl/buffer/gegl-buffer-types.h            |  22 +-
+ gegl/buffer/gegl-buffer.c                  |  60 ++--
+ gegl/buffer/gegl-buffer.h                  | 206 +++++++------
+ gegl/buffer/gegl-rectangle.c               | 367 +++++++++++++++++++++++
+ gegl/buffer/gegl-rectangle.h               | 261 ++++++++++++++++
+ gegl/buffer/gegl-sampler-cubic.c           |   2 +-
+ gegl/buffer/gegl-sampler-linear.c          |   2 +-
+ gegl/buffer/gegl-sampler-lohalo.c          |   2 +-
+ gegl/buffer/gegl-sampler-nearest.c         |   4 +-
+ gegl/buffer/gegl-sampler-nohalo.c          |   2 +-
+ gegl/buffer/gegl-sampler.c                 |  29 +-
+ gegl/buffer/gegl-sampler.h                 |  18 +-
+ gegl/buffer/gegl-tile-backend-buffer.c     |   2 +-
+ gegl/buffer/gegl-tile-backend-file-async.c |   8 +-
+ gegl/buffer/gegl-tile-backend-swap.c       |   2 +-
+ gegl/buffer/gegl-tile-backend.c            |   6 +-
+ gegl/buffer/gegl-tile-backend.h            |   7 +-
+ gegl/buffer/gegl-tile-handler.c            |   4 +-
+ gegl/buffer/gegl-tile-handler.h            |   4 +-
+ gegl/buffer/gegl-tile.c                    |   2 +-
+ gegl/gegl-enums.c                          |  84 ------
+ gegl/gegl-enums.h                          |  53 ----
+ gegl/gegl-types.h                          |  30 --
+ gegl/gegl-utils.c                          | 342 ---------------------
+ gegl/gegl-utils.h                          | 250 +---------------
+ gegl/graph/gegl-cache.c                    |   1 +
+ gegl/graph/gegl-cache.h                    |   1 +
+ 47 files changed, 1645 insertions(+), 1529 deletions(-)
+
+commit e98f33c377ec2f3afda9548188443b333357e421
+Author: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>
+Date:   Sat Sep 29 17:19:17 2018 +0300
+
+    Update NEWS
+
+ docs/NEWS.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 54b340cbd64e7fb1027cc130f439a780ed927936
+Author: Anders Jonsson <anders.jonsson@norsjovallen.se>
+Date:   Fri Sep 28 21:11:52 2018 +0000
+
+    Update Swedish translation
+
+ po/sv.po | 969
+ +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 506 insertions(+), 463 deletions(-)
+
+commit 4fdf9ebfb4f852d2e7e32ddf95b6041d90c21757
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Sep 27 23:19:36 2018 +0200
+
+    buffer: add gegl-buffer-formats.h and gegl-bufefr-matrix2.h
+
+    The 2x2 matrix is only used by GeglBuffer and its API, gimp-2.10
+    does not
+    use the symbols - we are remaining abi compatible but are rearranging
+    locations of symbols.
+
+ gegl/Makefile.am                            |  1 +
+ gegl/buffer/Makefile.am                     |  3 ++
+ gegl/buffer/gegl-algorithms.c               |  2 +-
+ gegl/buffer/gegl-buffer-access.c            |  2 +-
+ gegl/buffer/gegl-buffer-formats.h           | 84
+ +++++++++++++++++++++++++++++
+ gegl/buffer/gegl-buffer-linear.c            |  2 +-
+ gegl/buffer/gegl-buffer-matrix2.c           | 35 ++++++++++++
+ gegl/buffer/gegl-buffer-matrix2.h           | 56 +++++++++++++++++++
+ gegl/buffer/gegl-buffer.c                   |  6 +--
+ gegl/buffer/gegl-buffer.h                   | 71 +++++++++++-------------
+ gegl/buffer/gegl-sampler-cubic.c            | 16 +++---
+ gegl/buffer/gegl-sampler-linear.c           | 12 ++---
+ gegl/buffer/gegl-sampler-lohalo.c           |  6 +--
+ gegl/buffer/gegl-sampler-nearest.c          |  6 +--
+ gegl/buffer/gegl-sampler-nohalo.c           |  6 +--
+ gegl/buffer/gegl-sampler.c                  | 66 +++++++++++------------
+ gegl/buffer/gegl-sampler.h                  |  6 +--
+ gegl/gegl-matrix.c                          | 14 -----
+ gegl/gegl-matrix.h                          | 26 +--------
+ gegl/gegl-utils.h                           | 13 +++++
+ operations/common-gpl3+/fractal-trace.c     |  2 +-
+ operations/common-gpl3+/polar-coordinates.c |  2 +-
+ operations/common-gpl3+/whirl-pinch.c       |  2 +-
+ operations/common/little-planet.c           |  4 +-
+ operations/common/panorama-projection.c     |  4 +-
+ operations/transform/transform-core.c       |  4 +-
+ 26 files changed, 295 insertions(+), 156 deletions(-)
+
+commit a6a6ba6ff5c8e75a85e7c3bb8108fd16cd2f6b35
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Sep 27 18:07:49 2018 +0200
+
+    buffer: use GeglBufferRectangle inside GeglBuffer
+
+    The typedef for GeglRectangle is now:
+      typedef struct _GeglBufferRectangle GeglRectangle;
+
+ gegl/buffer/gegl-algorithms.c              | 145 ++++-----
+ gegl/buffer/gegl-algorithms.h              | 230 +++++++--------
+ gegl/buffer/gegl-buffer-access.c           | 459
+ ++++++++++++++---------------
+ gegl/buffer/gegl-buffer-iterator.c         |  58 ++--
+ gegl/buffer/gegl-buffer-iterator.h         |  32 +-
+ gegl/buffer/gegl-buffer-iterator2.c        |  62 ++--
+ gegl/buffer/gegl-buffer-iterator2.h        |  34 +--
+ gegl/buffer/gegl-buffer-linear.c           |  32 +-
+ gegl/buffer/gegl-buffer-private.h          |  72 ++---
+ gegl/buffer/gegl-buffer-save.c             |   6 +-
+ gegl/buffer/gegl-buffer-types.h            |  21 +-
+ gegl/buffer/gegl-buffer.c                  |  58 ++--
+ gegl/buffer/gegl-buffer.h                  | 160 ++++++----
+ gegl/buffer/gegl-sampler-nearest.c         |   2 +-
+ gegl/buffer/gegl-sampler.c                 |  26 +-
+ gegl/buffer/gegl-sampler.h                 |  18 +-
+ gegl/buffer/gegl-tile-backend-buffer.c     |   2 +-
+ gegl/buffer/gegl-tile-backend-file-async.c |   6 +-
+ gegl/buffer/gegl-tile-backend.c            |   6 +-
+ gegl/buffer/gegl-tile-backend.h            |  10 +-
+ gegl/buffer/gegl-tile-handler.c            |   4 +-
+ gegl/buffer/gegl-tile-handler.h            |   4 +-
+ gegl/gegl-types.h                          |  64 ++--
+ 23 files changed, 771 insertions(+), 740 deletions(-)
+
+commit 125aa873eaea0a9b81dbe2db94f339573181ceeb
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Sep 27 14:27:27 2018 +0200
+
+    buffer: move gegl_buffer_set_color out of geglbuffer.so
+
+ gegl/buffer/gegl-buffer-access.c | 14 --------------
+ gegl/buffer/gegl-buffer.h        |  1 -
+ gegl/gegl-utils.c                | 17 +++++++++++++++++
+ 3 files changed, 17 insertions(+), 15 deletions(-)
+
+commit 443e0c1c3b80fe05b6b6c01b5857dfc570fe65c5
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Sep 27 14:22:16 2018 +0200
+
+    buffer: make gegl_buffer_set_color_from_pixel public
+
+ gegl/buffer/gegl-buffer-access.c | 19 ++++++++++---------
+ gegl/buffer/gegl-buffer.h        | 17 +++++++++++++++++
+ 2 files changed, 27 insertions(+), 9 deletions(-)
+
+commit 0fc355ef195626f1074f8921bdacc312c2970c7f
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Sep 27 13:42:51 2018 +0200
+
+    gegl/buffer: shuffle types between gegl and buffer headers
+
+ gegl/buffer/gegl-buffer-types.h        |  2 --
+ gegl/buffer/gegl-buffer.c              |  2 +-
+ gegl/buffer/gegl-buffer.h              | 17 +++++++++++++++++
+ gegl/buffer/gegl-tile-backend-buffer.c |  1 +
+ gegl/buffer/gegl-tile-backend-ram.c    |  1 +
+ gegl/buffer/gegl-tile-backend.c        |  1 +
+ gegl/buffer/gegl-tile-handler-chain.c  |  1 +
+ gegl/buffer/gegl-tile-handler-empty.c  |  1 +
+ gegl/buffer/gegl-tile-handler-log.c    |  1 +
+ gegl/buffer/gegl-tile-handler-zoom.c   |  1 +
+ gegl/buffer/gegl-tile-handler.c        |  1 +
+ gegl/buffer/gegl-tile-source.c         |  1 +
+ gegl/buffer/gegl-tile-storage.c        |  1 +
+ gegl/buffer/gegl-tile-storage.h        |  1 +
+ gegl/buffer/gegl-tile.c                |  1 +
+ gegl/gegl-types-internal.h             |  3 ++-
+ gegl/gegl-types.h                      | 12 ++----------
+ gegl/graph/gegl-region.h               |  2 +-
+ 18 files changed, 35 insertions(+), 15 deletions(-)
+
+commit b5541fd169b5ead15bbcb088310ea783ed4dc464
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Sep 27 13:16:59 2018 +0200
+
+    buffer: abstract gegl_buffer_set_value out of  gegl_buffer_set_color
+
+    Avoding to use the type GeglColor in GeglBuffer's API will further
+    reduce
+    coupling.
+
+ gegl/buffer/gegl-buffer-access.c | 32 ++++++++++++++++++++++----------
+ 1 file changed, 22 insertions(+), 10 deletions(-)
+
+commit 6aa889ca49170d5ea294505d6934f11b57cec901
+Author: Marco Ciampa <ciampix@posteo.net>
+Date:   Tue Sep 25 22:40:49 2018 +0200
+
+    Updated Italian translation
+
+ po/it.po | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
+
+commit 8557f2f8787cfad649631af0927db247e163d339
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 24 18:59:17 2018 +0200
+
+    gegl: move region code from buffer subdir to graph
+
+ gegl/buffer/Makefile.am                      | 3 ---
+ gegl/buffer/gegl-buffer-types.h              | 1 -
+ gegl/gegl-types-internal.h                   | 1 +
+ gegl/graph/Makefile.am                       | 3 +++
+ gegl/graph/gegl-cache.c                      | 1 +
+ gegl/graph/gegl-cache.h                      | 1 +
+ gegl/graph/gegl-node.c                       | 2 +-
+ gegl/{buffer => graph}/gegl-region-generic.c | 0
+ gegl/{buffer => graph}/gegl-region-generic.h | 0
+ gegl/{buffer => graph}/gegl-region.h         | 0
+ gegl/process/gegl-graph-traversal.c          | 2 +-
+ gegl/process/gegl-processor.c                | 2 +-
+ 12 files changed, 9 insertions(+), 7 deletions(-)
+
+commit 9458b55c0262fdc16aaf4ee29330ae31276d4733
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 24 17:10:22 2018 +0200
+
+    gegl: move gegl-cache.[ch] to more proper location in tree
+
+    Even if it derives from buffer, where it is used by node/the graph
+    code, no
+    code in the buffer link nor make use of this cache code.
+
+ gegl/buffer/Makefile.am             | 2 --
+ gegl/graph/Makefile.am              | 2 ++
+ gegl/{buffer => graph}/gegl-cache.c | 0
+ gegl/{buffer => graph}/gegl-cache.h | 0
+ 4 files changed, 2 insertions(+), 2 deletions(-)
+
+commit d3be2b44ad023c8d9e0a7ce3b316ba313dedd9fd
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 24 16:59:08 2018 +0200
+
+    gegl: drop internal gegl_clear_pointer and use g_clear_pointer
+    directly
+
+    The warnings were due to excessive casting in the call invoking
+    g_clear_pointer
+    previously.
+
+ gegl/gegl-utils.h                | 8 --------
+ gegl/module/geglmodule.c         | 2 +-
+ gegl/process/gegl-eval-manager.c | 2 +-
+ gegl/process/gegl-processor.c    | 6 +++---
+ 4 files changed, 5 insertions(+), 13 deletions(-)
+
+commit d903c54895972ac6849c8c4414f765ad279d95d2
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 24 15:49:37 2018 +0200
+
+    buffer: add files missing from previous commit
+
+ gegl/buffer/gegl-buffer-config.c | 206
+ +++++++++++++++++++++++++++++++++++++++
+ gegl/buffer/gegl-buffer-config.h |  62 ++++++++++++
+ 2 files changed, 268 insertions(+)
+
+commit d6dcdd6617afc9f29391932bf38005f960b14664
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Sep 20 23:15:21 2018 +0200
+
+    buffer: use a separate config object for gegl buffer
+
+    A config object similar to GEGLs GeglConfig has been added for
+    gegl-buffer, making the files in the buffer directory more
+    independent of the rest of the GEGL code base. All properties
+    of GeglBufferConfig are bi-directionally bound to their
+    counterparts in GeglConfig
+
+ gegl/buffer/Makefile.am                    |  2 ++
+ gegl/buffer/gegl-buffer.c                  |  8 ++++----
+ gegl/buffer/gegl-tile-backend-file-async.c |  6 +++---
+ gegl/buffer/gegl-tile-backend-swap.c       | 10 +++++-----
+ gegl/buffer/gegl-tile-backend.c            |  4 ++--
+ gegl/buffer/gegl-tile-handler-cache.c      | 22 +++++++++++-----------
+ gegl/gegl-config.c                         | 11 +++++++++++
+ 7 files changed, 38 insertions(+), 25 deletions(-)
+
+commit bc88517514dfa2c172f97ec8f5db46b9b2318bb3
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 24 15:07:29 2018 +0200
+
+    lcms-from-profile: use new iterator api
+
+ operations/external/lcms-from-profile.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+commit 7517e42ed0cb5dee70e74595cca414462ffc1878
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 24 15:05:10 2018 +0200
+
+    tiff-load: use new iterator API
+
+ operations/external/tiff-load.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+commit b96b515c8c12590a5aa4c332ea64bdae49de9387
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 24 15:01:49 2018 +0200
+
+    raw-load: avoid warning instances of g_clear_pointer
+
+ operations/external/raw-load.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+commit 77382d0cbb03805372f4ebd83898057d7a8ace78
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 24 14:55:10 2018 +0200
+
+    gegl: use gegl_clear_pointer instead of some g_clear_pointer
+
+    Thus avoding warnings on types caused by stricter expectation in glib
+    implementation.
+
+ gegl/gegl-utils.h                | 9 +++++++++
+ gegl/module/geglmodule.c         | 2 +-
+ gegl/process/gegl-eval-manager.c | 2 +-
+ gegl/process/gegl-processor.c    | 7 ++++---
+ 4 files changed, 15 insertions(+), 5 deletions(-)
+
+commit 106390f6d58a87bff9f24bcbeab00b918b7a2ace
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 24 14:54:04 2018 +0200
+
+    webp-load: avoid warning by not using g_clear_pointer
+
+ operations/external/webp-load.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+commit a419173bc4b054c194c23413444e8bf3889e9eca
+Author: Rodrigo Lledó <rodhos92@gmail.com>
+Date:   Mon Sep 24 10:22:24 2018 +0000
+
+    Update Spanish translation
+
+ po/es.po | 798
+ +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 415 insertions(+), 383 deletions(-)
+
+commit bc0ac5f5482b156230c61a33e2de6f1be554c816
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Sat Sep 22 16:42:29 2018 +0200
+
+    NEWS: update
+
+ docs/NEWS.txt | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+commit d315fe35b34ba835119e10d2a21542668359f958
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Thu Sep 20 22:55:00 2018 +0200
+
+    Revert "gegl-config: remove tile_width/tile_height"
+
+    This reverts commit 628887b53b6811eaf3e47b122e1b69424fe174ad.
+
+    Will do this in a different manner, using a config object for
+    gegl-buffer.
+
+ gegl/buffer/gegl-buffer.c | 33 ++++++++++-----------------------
+ gegl/gegl-config.c        | 33 +++++++++++++++++++++++++++++++++
+ gegl/gegl-config.h        |  2 ++
+ gegl/gegl-init.c          | 23 +++++++++++++++++++++++
+ 4 files changed, 68 insertions(+), 23 deletions(-)
+
+commit 64e1cf2f57a22b348e86a01d44d877f3c5a6e8bc
+Author: Ell <ell_se@yahoo.com>
+Date:   Fri Sep 21 03:29:11 2018 -0400
+
+    tests: don't use GeglConfig::tile-{width,height}
+
+    ... which were removed in commit
+    628887b53b6811eaf3e47b122e1b69424fe174ad.
+
+ tests/simple/test-buffer-hot-tile.c          | 15 ++++----
+ tests/simple/test-buffer-iterator-aliasing.c | 51
+ ++++++++++++++++++----------
+ tests/simple/test-buffer-unaligned-access.c  | 20 ++++++-----
+ 3 files changed, 53 insertions(+), 33 deletions(-)
+
+commit 897a692fd25c5d88b72ca9e11e625892e9e0b05c
+Author: Ell <ell_se@yahoo.com>
+Date:   Fri Sep 21 03:25:39 2018 -0400
+
+    buffer: match source buffer more closely in gegl_buffer_dup()
+
+    In gegl_buffer_dup(), use the same abyss, shift, and tile size for
+    the duplicated buffer, in addition to the same extent and format,
+    so that we use COW even when these properties don't use the default
+    values.
+
+ gegl/buffer/gegl-buffer-access.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
+
+commit b36b064c4ffcf91b62c147995582fa945a172ccb
+Author: Ell <ell_se@yahoo.com>
+Date:   Fri Sep 21 01:54:11 2018 -0400
+
+    long-shadow: *actually* disable fixed-rate fading style
+
+    Should have been part of last commit.
+
+ operations/common/long-shadow.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit c6d03fc4d82dd27927787d61365e6900e7363135
+Author: Ell <ell_se@yahoo.com>
+Date:   Fri Sep 21 01:41:47 2018 -0400
+
+    long-shadow: disable fixed-rate fading style
+
+    The fixed-rate fading shadow style's interaction with the midpoint
+    parameter is problematic, having a discontinuity at midpoint=1.  It
+    may also be problematic w.r.t. some future directions for the op.
+    Let's disable it for now, especially since the fixed-length fading
+    style is probably the more useful one.
+
+    Note that the code for the fixed-rate style is all still there,
+    it's simply made inaccessible.
+
+ operations/common/long-shadow.c | 31 ++++++++++++++++++++++---------
+ 1 file changed, 22 insertions(+), 9 deletions(-)
+
+commit 0ccccc1f389b26372efed42167caac65aceb1cf4
+Author: Ell <ell_se@yahoo.com>
+Date:   Fri Sep 21 01:35:36 2018 -0400
+
+    gegl: in gegl-op.h, add enum_value_skip() macro
+
+    ... which defines an enum value, without registring it with GLib.
+    Can be useful for defining internal enum values, or for temporarily
+    disabling the availability of enum values without changing the
+    code.
+
+ gegl/gegl-op.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+commit 040e9490b9128955f32ba79de64c9797cc385206
+Author: Ell <ell_se@yahoo.com>
+Date:   Thu Sep 20 11:15:56 2018 -0400
+
+    gegl: don't use g_type_class_add_private() ...
+
+    ... and G_TYPE_INSTANCE_GET_PRIVATE()
+
+    g_type_class_add_private() and G_TYPE_INSTANCE_GET_PRIVATE() were
+    deprecated in GLib 2.58.  Instead, use
+    G_DEFINE_TYPE_WITH_PRIVATE(), and G_ADD_PRIVATE(), and the
+    implictly-defined foo_get_instance_private() functions, all of
+    which are available in the GLib version we depend on.
+
+ gegl/buffer/gegl-tile-backend.c           |  9 +++------
+ gegl/buffer/gegl-tile-handler.c           |  9 +++------
+ gegl/gegl-dot-visitor.c                   | 10 +++-------
+ gegl/gegl-dot-visitor.h                   |  8 ++++----
+ gegl/graph/gegl-node.c                    |  7 ++-----
+ gegl/operation/gegl-operation-temporal.c  |  9 +++------
+ gegl/property-types/gegl-audio-fragment.c |  7 +++----
+ gegl/property-types/gegl-color.c          |  6 ++----
+ gegl/property-types/gegl-curve.c          |  8 +++-----
+ gegl/property-types/gegl-path.c           |  9 ++++-----
+ 10 files changed, 30 insertions(+), 52 deletions(-)
+
+commit 628887b53b6811eaf3e47b122e1b69424fe174ad
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Sep 19 22:54:12 2018 +0200
+
+    gegl-config: remove tile_width/tile_height
+
+    The default tile_width/tile_height can still be set with the
+    environment
+    variable GEGL_TILE_SIZE as before, it is however now initialized
+    locally
+    in GeglBuffer instead of looked up via gegl_config()
+
+ gegl/buffer/gegl-buffer.c | 33 +++++++++++++++++++++++----------
+ gegl/gegl-config.c        | 33 ---------------------------------
+ gegl/gegl-config.h        |  2 --
+ gegl/gegl-init.c          | 23 -----------------------
+ 4 files changed, 23 insertions(+), 68 deletions(-)
+
+commit 50fe0e6202892c698017b9d3d9f7ab8ff6e0bbd6
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Sep 19 22:53:32 2018 +0200
+
+    buffer: fix documentation strings to be separate from other iterator
+
+ gegl/buffer/gegl-buffer-iterator2.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit c8a0b9eff07c8d9122f55f7b7527d51788ae4575
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Sep 19 15:56:23 2018 +0200
+
+    gegl-buffer: always do locking
+
+    This reduces the throughpput of gegl buffer accessors and more
+    slightly in
+    the single-threaded case, which is now becoming rare - at least
+    when GEGL
+    is operated through GIMP.
+
+    Relying less on this dynamically changing parameter from gegl_config()
+    will also make it easier to split GeglBuffer out in its own project.
+
+ gegl/buffer/gegl-buffer-access.c       | 73
+ +++++++++++-----------------------
+ gegl/buffer/gegl-buffer-iterator.c     |  5 ---
+ gegl/buffer/gegl-buffer-iterator2.c    |  5 ---
+ gegl/buffer/gegl-buffer.c              | 54 ++++++++-----------------
+ gegl/buffer/gegl-sampler-nearest.c     |  7 +---
+ gegl/buffer/gegl-sampler.c             |  1 -
+ gegl/buffer/gegl-tile-backend-buffer.c | 14 ++-----
+ gegl/buffer/gegl-tile-handler-cache.c  | 11 ++---
+ gegl/buffer/gegl-tile-handler.c        |  7 +---
+ gegl/buffer/gegl-tile-storage.c        | 55 ++++++-------------------
+ gegl/buffer/gegl-tile.c                | 23 ++++-------
+ 11 files changed, 74 insertions(+), 181 deletions(-)
+
+commit bf9b962935c5e947bff85a2bff596aaf276eaad5
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Sep 19 15:22:18 2018 +0200
+
+    libs/libnsgif: add libnsgif files to tarball
+
+ libs/Makefile.am | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+commit 987b32a03838201036fa35c1e92c05ff8608613a
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Sep 19 13:07:49 2018 +0200
+
+    update NEWS
+
+ docs/NEWS.txt | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
+
+commit 6ae52c3f87a84fc1e9e85c11160279e6ed80558f
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Sep 19 12:45:47 2018 +0200
+
+    move gif-load from workshop to external
+
+ operations/external/Makefile.am              | 2 ++
+ operations/{workshop => external}/gif-load.c | 0
+ operations/workshop/Makefile.am              | 1 -
+ po/POTFILES.in                               | 2 +-
+ 4 files changed, 3 insertions(+), 2 deletions(-)
+
+commit 55999d4a06617791634140820dee58f886cfc9ac
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Sep 19 12:41:01 2018 +0200
+
+    libs: improvements to animated gif handling
+
+    Deal with frame delays and automatically loop in the gegl commandline
+    image viewer. A copy of libnsgif now lives in the libs folder, with
+    minimal modifications from upstream.
+
+ bin/ui.c                       |   50 +-
+ libs/libnsgif/COPYING          |   20 +
+ libs/libnsgif/README           |   36 ++
+ libs/libnsgif/libnsgif.c       | 1169 +++++++++++++++++++++++++++++++++++
+ libs/libnsgif/libnsgif.h       |  183 ++++++
+ libs/libnsgif/libnsgif.pc.in   |   10 +
+ libs/libnsgif/log.h            |   21 +
+ libs/libnsgif/lzw.c            |  377 ++++++++++++
+ libs/libnsgif/lzw.h            |  105 ++++
+ operations/workshop/gif-load.c |    7 +-
+ operations/workshop/libnsgif.c | 1308
+ ----------------------------------------
+ operations/workshop/libnsgif.h |  108 ----
+ 12 files changed, 1968 insertions(+), 1426 deletions(-)
+
+commit edeb35ebbf486d703584ccb4264e64c323e9f41a
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 17 23:25:27 2018 +0200
+
+    docs: fix a typo
+
+ docs/index.txt.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 83f1a2a80fb213595b0fd97cff86596ebdb83cf8
+Author: Dimitris Spingos <dmtrs32@gmail.com>
+Date:   Tue Sep 18 13:22:54 2018 +0300
+
+    Updated Greek translation
+
+ po/el.po | 1858
+ ++++++++++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 1078 insertions(+), 780 deletions(-)
+
+commit 4294bad2e543040a9d7443e4eaa6c926ac4715dd
+Author: Ell <ell_se@yahoo.com>
+Date:   Mon Sep 17 13:40:26 2018 -0400
+
+    buffer, tests: specify iterator aliasing rules, and prevent deadlocks
+
+    Specify the rules under which aliased buffers, i.e., buffers
+    sharing the same tile storage, may be added to the same iterator.
+    The rules state that if a buffer is acessed for writing, then the
+    iterated-over areas of each of its aliases must either overlap its
+    iterated-over area completely, or not at all, and that none of the
+    other overlapping aliases may be accessed for writing as well.
+
+    Make sure that when these rules are followed, no deadlocks occur
+    during iteration, regardless of the order in which the buffers are
+    added to the iterator.  This is done by locking all the write-
+    accessed tiles before the read-accessed tiles, and unlocking all
+    the read-accessed tiles before unlocking/gegl_buffer_set()ing the
+    write-accessed tiles.
+
+    Add a test case, checking that no deadlocks occur.
+
+ gegl/buffer/gegl-buffer-iterator2.c          | 159 +++++++++++++--------
+ gegl/buffer/gegl-buffer-iterator2.h          |  10 ++
+ tests/simple/Makefile.am                     |   1 +
+ tests/simple/test-buffer-iterator-aliasing.c | 205
+ +++++++++++++++++++++++++++
+ 4 files changed, 317 insertions(+), 58 deletions(-)
+
+commit 3693cda248bd016ae4a7821bf19d9a63c426dbf6
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Sun Sep 16 17:21:24 2018 +0200
+
+    Update Polish translation
+
+ po/pl.po | 762
+ +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 395 insertions(+), 367 deletions(-)
+
+commit 7d7875d86f2221db0e5947fbc4b7c46c7bc59b9a
+Author: Tim Sabsch <tim@sabsch.com>
+Date:   Sat Sep 15 22:27:37 2018 +0000
+
+    Update German translation
+
+ po/de.po | 839
+ ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 450 insertions(+), 389 deletions(-)
+
+commit cf7eacb750dc469356b13019564bc1b929133905
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Sep 12 18:04:05 2018 +0200
+
+    gif-load: return decoded frames duration in an out property
+
+ operations/workshop/gif-load.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+commit 92a3408ceb871341d7dd2cf602fb3609369ce25a
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Wed Sep 12 17:28:22 2018 +0200
+
+    workshop: add gif-load using libnsgif
+
+    Also including a version of libnsgif that has been made self-contained
+    by
+    inlining (might be old and not contain the latest fixes in libnsgif)
+    the few
+    source files it depends on, having a direct copy of the libnsgif
+    directory in
+    the gegl source tree might be better, unless distributions start
+    packaging
+    libnsgif.
+
+ bin/gegl.c                      |    4 +-
+ operations/workshop/Makefile.am |    1 +
+ operations/workshop/gif-load.c  |  245 ++++++++
+ operations/workshop/libnsgif.c  | 1308
+ +++++++++++++++++++++++++++++++++++++++
+ operations/workshop/libnsgif.h  |  108 ++++
+ po/POTFILES.in                  |    1 +
+ 6 files changed, 1665 insertions(+), 2 deletions(-)
+
+commit dfdec2063f0053e1e30527c0c90c219ddd3db153
+Author: Ell <ell_se@yahoo.com>
+Date:   Tue Sep 11 13:34:53 2018 -0400
+
+    Issue #97 - Drop Shadow crashes GIMP if opacity is adjusted to
+    1.000 ...
+
+    ... with the GUI arrow buttons
+
+    In gegl:opacity, use fuzzy comparisson for checking if the "value"
+    property equals 1, and the op is a pass-through.
+
+    This test was previously performed using exact comparison, in a
+    context where "value" is a double, and then later asserted-on in a
+    context where "value" is a float, which could lead to a different
+    result, aborting the program.  This commit performs all such tests
+    with "value" as a float, and removes the assertion.
+
+ operations/common/opacity.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
+
+commit 96e601a6a3a7382bbbb5f4e11319aa61c3e97867
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Sep 11 02:41:28 2018 +0200
+
+    workshop: migrate ops to new iterator api
+
+ operations/workshop/enlarge.c        |  1 +
+ operations/workshop/inpaint.c        |  1 +
+ operations/workshop/pixel-duster.h   | 14 +++++++-------
+ operations/workshop/segment-kmeans.c | 13 +++++++------
+ 4 files changed, 16 insertions(+), 13 deletions(-)
+
+commit 749443cc2a517fed1e5677a767018196965fae17
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Sep 11 00:13:25 2018 +0200
+
+    buffer: fix migration define for gegl_buffer_iterator_empty_new
+
+ gegl/buffer/gegl-buffer-iterator.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 6475cc8d480b3d9c3696ac82badedf9ca0551b1a
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 23:36:13 2018 +0200
+
+    buffer: mark old gegl_buffer_iterator_new function as deprecated
+
+    The way to get rid of deprecation warnings is to, at the top of the
+    file before
+    gegl-buffer-iterator2.h the 2 suffix is not to be used, effectively
+    this means
+    that the constructor now takes an additional argument which is
+    the maximum
+    number of buffers the iterator should be allocated to support,
+    and access to
+    roi/data members need to be adjusted to be fields of the new array
+    items.
+
+    When we've gotten rid of all warnings in GIMP the following release
+    of GEGL,
+    gegl-buffer-iterator2.h will be copied over gegl-buffer-iterator.h
+    and the
+    macro will no longer add the 2 suffix.
+
+ gegl/buffer/gegl-buffer-iterator.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 8fa0839798846b5a7d7b7deb93ebc7397c13fea7
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 23:34:57 2018 +0200
+
+    gegl: install gegl-buffer-iterator2.h header
+
+ gegl/Makefile.am | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 6cb220dcbb97d9dfda28a584ef0bc88aa1bb9bca
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:36:23 2018 +0200
+
+    watershed-transform: use new iterator api
+
+ operations/common/watershed-transform.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
+
+commit c5afbb9ad0fb837d6d644095b76eafa219fdfa77
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:36:23 2018 +0200
+
+    waterpixels: use new iterator api
+
+ operations/common/waterpixels.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
+
+commit c24189004206dd3431b21af845aa4b9e9f7f5d56
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:36:23 2018 +0200
+
+    tile-seamless: use new iterator api
+
+ operations/common/tile-seamless.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
+
+commit 277896696fe9e83546f127fa79b4f6f0fce3e4dc
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:36:23 2018 +0200
+
+    stretch-contrast: use new iterator api
+
+ operations/common/stretch-contrast.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+commit 76eddedd1bcf5e9d4582539f76d5ef1bd03abbfb
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:36:23 2018 +0200
+
+    stretch-contrast-hsv: use new iterator api
+
+ operations/common/stretch-contrast-hsv.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+commit 2d89ea9cfd79286ccaab26e3f08017a087567ecd
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:36:23 2018 +0200
+
+    stress: use new iterator api
+
+ operations/common/stress.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
+
+commit bbe98ed79df18c77c434f582f2f517452cd3999e
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:36:23 2018 +0200
+
+    spherize: use new iterator api
+
+ operations/common/spherize.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
+
+commit 7dcd5a31231d105c9522bd3d19266ae17229e24d
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:36:23 2018 +0200
+
+    slic: use new iterator api
+
+ operations/common/slic.c | 26 ++++++++++++++------------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
+
+commit 6c972721d7e2a5f1796005e2135a02b4c80f80dc
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:36:23 2018 +0200
+
+    pixelize: use new iterator api
+
+ operations/common/pixelize.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+commit 5c7c753859fb703f965fec9f3329b171b1f1e047
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:36:23 2018 +0200
+
+    panorama-projection: use new iterator api
+
+ operations/common/panorama-projection.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
+
+commit 2333dc36cb34907b2f5b415a77078fbb1a9fb82e
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:36:23 2018 +0200
+
+    noise-spread: use new iterator api
+
+ operations/common/noise-spread.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+commit 078b87d62f5a37103e7fb17239b37b0a55f1904f
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:36:23 2018 +0200
+
+    noise-simplex: use new iterator api
+
+ operations/common/noise-simplex.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 581afb02ccce5e8279f323cba61abd96077316b5
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:36:23 2018 +0200
+
+    noise-pick: use new iterator api
+
+ operations/common/noise-pick.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+commit ab6ada5f225080bfdb1f783dc1eaecf2cbae7725
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:36:23 2018 +0200
+
+    noise-cell: use new iterator api
+
+ operations/common/noise-cell.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit dc67729637ff5fb743784e4a3735e7134beb5a43
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:36:23 2018 +0200
+
+    map-relative: use new iterator api
+
+ operations/common/map-relative.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
+
+commit 005a2a442d8d42fdf09f58f8d06200e4760770ea
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:36:23 2018 +0200
+
+    map-absolute: use new iterator api
+
+ operations/common/map-absolute.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
+
+commit 2f2de1037cdf09fed895d81625b665a5d5fbf50d
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:36:23 2018 +0200
+
+    little-planet: use new iterator api
+
+ operations/common/little-planet.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
+
+commit be29cdab3b7f948788771738bd8fe900a46b9cf8
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:36:23 2018 +0200
+
+    image-compare: use new iterator api
+
+ operations/common/image-compare.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
+
+commit 53b966675a3b9a74967754e3857ab51a8c781e52
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:36:23 2018 +0200
+
+    dither: use new iterator api
+
+ operations/common/dither.c | 120
+ ++++++++++++++++++++++++---------------------
+ 1 file changed, 65 insertions(+), 55 deletions(-)
+
+commit d4c171d5aee6d7038c970b97dbaa064a0cfd437d
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:36:23 2018 +0200
+
+    color-enhance: use new iterator api
+
+ operations/common/color-enhance.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
+
+commit c0d609ff88ebf3ebb8d1b5f2f422ecc30d6ef356
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:36:23 2018 +0200
+
+    checkerboard: use new iterator api
+
+ operations/common/checkerboard.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+commit b2383b6a716915307a10c9600b825120ea8a709a
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:36:23 2018 +0200
+
+    c2g: use new iterator api
+
+ operations/common/c2g.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
+
+commit 00dc89096c0a28665df7cc2bdb9cb29d11314847
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:35:09 2018 +0200
+
+    transform-ops: use new iterator api
+
+ operations/transform/transform-core.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
+
+commit 4b8d34a1c47dfc2ac54a37b3bd74f47636b8835c
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 22:34:45 2018 +0200
+
+    seamless-clone: use new iterator api
+
+ seamless-clone/sc-context.c | 29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
+
+commit e88f7adbe62a6a988d0e725a7ef47e25ea14ecea
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 17:23:46 2018 +0200
+
+    examples: use new buffer iterator api in sdl-draw
+
+ examples/sdl-draw.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+commit 37092fc81194d0216a8163e3b789b3961c3ba5eb
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 17:22:05 2018 +0200
+
+    gcut: use new buffer iterator api
+
+ gcut/iconographer.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+commit a73ed991efc618bfa22c05f08b0ce7435a503d37
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 16:49:06 2018 +0200
+
+    waves: use new iterator api
+
+ operations/common-gpl3+/waves.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+commit c5098419df29c64c6698cd07d4ea650fa3057172
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 16:49:06 2018 +0200
+
+    tile-paper: use new iterator api
+
+ operations/common-gpl3+/tile-paper.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+commit 03005d3e13c03ed414b6b9a46197a8f4558f53c3
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 16:49:06 2018 +0200
+
+    softglow: use new iterator api
+
+ operations/common-gpl3+/softglow.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
+
+commit 5f19191c55bf5cd2ef146f51e1784e2eb1cbcf2e
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 16:49:05 2018 +0200
+
+    ripple: use new iterator api
+
+ operations/common-gpl3+/ripple.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+commit ff1ddcbeef76e607b9ef4709120dcb140c2f64b3
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 16:49:05 2018 +0200
+
+    photocopy: use new iterator api
+
+ operations/common-gpl3+/photocopy.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
+
+commit 2b92ff7fec6f3f5b68ce02becb1819639db5a4d4
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 16:49:05 2018 +0200
+
+    noise-solid: use new iterator api
+
+ operations/common-gpl3+/noise-solid.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit ecca28cfcffcc415acf3b5a33f01433cd76af380
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 16:49:05 2018 +0200
+
+    noise-slur: use new iterator api
+
+ operations/common-gpl3+/noise-slur.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+commit e99ca7c5abb5ac5a3394f15df4d66520e8425b9e
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 16:49:05 2018 +0200
+
+    illusion: use new iterator api
+
+ operations/common-gpl3+/illusion.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+commit feefefcb67364fbe8863425bbdb419432479a163
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 16:49:05 2018 +0200
+
+    displace: use new iterator api
+
+ operations/common-gpl3+/displace.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
+
+commit 61ec1adf10ce94353b3c89cc1535343e750ed794
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 16:49:05 2018 +0200
+
+    diffraction-patterns: use new iterator api
+
+ operations/common-gpl3+/diffraction-patterns.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit b7a557d2e01b4b1580655fd136fdd2c19e045c04
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 16:49:05 2018 +0200
+
+    cartoon: use new iterator api
+
+ operations/common-gpl3+/cartoon.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
+
+commit 5a6cbb987cd74ad2544df6a85a6c0509a572170a
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 16:49:05 2018 +0200
+
+    apply-lens: use new iterator api
+
+ operations/common-gpl3+/apply-lens.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+commit b41748b517a26deae60cffd2835b06933460e7fc
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 16:27:21 2018 +0200
+
+    buffer: remove references to cl headers in Makefile.am
+
+ gegl/buffer/Makefile.am | 2 --
+ 1 file changed, 2 deletions(-)
+
+commit 0c678671e509ec39ecc01059332476a134622a6e
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 16:24:35 2018 +0200
+
+    tests: port test suite to new iterator api
+
+ tests/buffer/buffer-test.c                  |  6 ++++--
+ tests/buffer/tests/buffer_linear_iter.c     |  8 +++++---
+ tests/buffer/tests/buffer_linear_iter2.c    |  8 +++++---
+ tests/buffer/tests/buffer_multcopy.c        |  9 ++++++---
+ tests/buffer/tests/linear_shift.c           | 20 ++++++++++++--------
+ tests/buffer/tests/mipmap_iterator.c        |  4 ++--
+ tests/buffer/tests/mipmap_iterator2.c       |  4 ++--
+ tests/buffer/tests/mipmap_sampler.c         |  8 ++++----
+ tests/simple/test-buffer-changes.c          |  4 ++--
+ tests/simple/test-buffer-unaligned-access.c |  7 ++++---
+ 10 files changed, 46 insertions(+), 32 deletions(-)
+
+commit b849ee4bad0999057275584fe549d1c33bc2d810
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 16:08:49 2018 +0200
+
+    gegl: use new iterator API in point op base classes
+
+ gegl/operation/gegl-operation-point-composer.c  | 19 +++++++++++--------
+ gegl/operation/gegl-operation-point-composer3.c | 21
+ +++++++++++----------
+ gegl/operation/gegl-operation-point-filter.c    | 13 +++++++------
+ gegl/operation/gegl-operation-point-render.c    |  5 +++--
+ 4 files changed, 32 insertions(+), 26 deletions(-)
+
+commit 72d32620f615bc0a10718672f1ea99d3ad042d03
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 16:08:21 2018 +0200
+
+    buffer: use new iterator api internally
+
+ gegl/buffer/gegl-buffer-access.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
+
+commit a84f1a58e52e41a72cb5f8112f550632bc1ed5cf
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Jul 23 18:18:29 2018 +0200
+
+    buffer: add new iterator api that can take more buffers
+
+    if GEGL_ITERATOR2_API is defined before inclusion of the GEGL
+    headers a new iterator API with restructured public struct that
+    permits using more buffers is used, all code should be migrated
+    over to the new API, before the meaning of the old symbols also
+    change to the new state in a couple of releases - and the symbols
+    should be adopted again.
+
+ gegl/buffer/Makefile.am             |   2 +
+ gegl/buffer/gegl-buffer-iterator.h  |  18 +-
+ gegl/buffer/gegl-buffer-iterator2.c | 743
+ ++++++++++++++++++++++++++++++++++++
+ gegl/buffer/gegl-buffer-iterator2.h | 137 +++++++
+ 4 files changed, 898 insertions(+), 2 deletions(-)
+
+commit 66dd86d9c60e579539f984a96a12943cbaae0207
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 15:20:51 2018 +0200
+
+    buffer: move non-sampler scaling algorithms into buffer
+
+    They are only used here, thus bundling them with buffer makes sense
+    for later
+    using external GeglBuffer.
+
+ gegl/Makefile.am                                    | 5 +----
+ gegl/buffer/Makefile.am                             | 3 +++
+ gegl/{ => buffer}/gegl-algorithms-2x2-downscale.inc | 0
+ gegl/{ => buffer}/gegl-algorithms-bilinear.inc      | 0
+ gegl/{ => buffer}/gegl-algorithms-boxfilter.inc     | 0
+ gegl/{ => buffer}/gegl-algorithms.c                 | 0
+ gegl/{ => buffer}/gegl-algorithms.h                 | 0
+ 7 files changed, 4 insertions(+), 4 deletions(-)
+
+commit e3b29ef5fa3d38a9f04747434ea077ee8719ee1b
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 15:12:44 2018 +0200
+
+    buffer: add gegl_buffer_flush_ext
+
+    This is the call to be used externally where the explicit opencl cache
+    flushing was used before. In code that uses opencl existing checks for
+    opencl can be used around it - but do not have to, since it is a no-op
+    with no flush_ext vfuncs set, like it is with no opencl in operation.
+
+ gegl/buffer/gegl-buffer-access.c                |  9 +++++++++
+ gegl/buffer/gegl-buffer.h                       | 14 ++++++++++++++
+ gegl/operation/gegl-operation-point-composer.c  |  4 ++--
+ gegl/operation/gegl-operation-point-composer3.c |  6 +++---
+ gegl/operation/gegl-operation-point-filter.c    |  2 +-
+ operations/transform/transform-core.c           |  3 +--
+ 6 files changed, 30 insertions(+), 8 deletions(-)
+
+commit 6f5df0c023055922e62241b344cd88121132dabb
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 14:33:46 2018 +0200
+
+    transform: fix build with moved internal headers
+
+ operations/transform/transform-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 6638803d37159f1f4b67f7ab542bfff58841594d
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 14:24:23 2018 +0200
+
+    build: patch up breakage introduced in prior commit
+
+    Ooops, the header files for buffer are installed from the parent dir.
+
+ gegl/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit c3c9b63f5fcca2b023d64177d959079215e889b8
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Sep 10 14:05:50 2018 +0200
+
+    buffer,opencl: split opencl code from GeglBuffer
+
+    The integration between the opencl buffer cache and GeglBuffer
+    consists of
+    two (three) function calls that are conditionally done for updates are
+    correctly propagated between opencl / cpu.
+
+    This commit in work towards making GeglBuffer possible to reuse as
+    a separate
+    libraryt without needing to link and load opencl replaces these
+    conditionals
+    with a check whether a function pointer is set, and if it is set it
+    uses it.
+    The opencl code sets/unsets the function pointers depending on
+    whether it is
+    active.
+
+ gegl/buffer/Makefile.am                           |  2 --
+ gegl/buffer/gegl-buffer-access.c                  | 16 +++++++++-------
+ gegl/buffer/gegl-buffer-iterator.c                |  9 ++++-----
+ gegl/buffer/gegl-buffer-private.h                 |  6 ++++++
+ gegl/buffer/gegl-buffer.c                         | 17 +++++++++++++----
+ gegl/buffer/gegl-sampler.c                        | 14 +++++++-------
+ gegl/buffer/gegl-tile-handler-cache.c             | 15 +++++++--------
+ gegl/opencl/Makefile.am                           |  6 +++++-
+ gegl/{buffer => opencl}/gegl-buffer-cl-cache.c    |  0
+ gegl/{buffer => opencl}/gegl-buffer-cl-cache.h    |  0
+ gegl/{buffer => opencl}/gegl-buffer-cl-iterator.c |  0
+ gegl/{buffer => opencl}/gegl-buffer-cl-iterator.h |  0
+ gegl/opencl/gegl-cl-init.c                        | 17 +++++++++++++++++
+ 13 files changed, 68 insertions(+), 34 deletions(-)
+
+commit bbbf18ece3f53f3e423c529a086753f216604792
+Author: Rodrigo Lledó <rodhos92@gmail.com>
+Date:   Mon Sep 10 08:29:02 2018 +0000
+
+    Update Spanish translation
+
+ po/es.po | 37 ++++++++++++++++++++++++-------------
+ 1 file changed, 24 insertions(+), 13 deletions(-)
+
+commit d77fd17e0afde1df2f35979929b7d8d5e29ad022
+Author: Debarshi Ray <debarshir@gnome.org>
+Date:   Thu Sep 6 09:06:42 2018 +0200
+
+    Fix the type casts for babl_space_from_icc
+
+    For reference, here's the signature of babl_space_from_icc:
+    const Babl *babl_space_from_icc (const char       *icc_data,
+                                     int               icc_length,
+                                     BablIccIntent     intent,
+                                     const char      **error);
+
+    ... and JOCTET can be defined as either a signed or unsigned char:
+    #ifdef HAVE_UNSIGNED_CHAR
+    typedef unsigned char JOCTET;
+    #define GETJOCTET(value)  (value)
+    #else /* not HAVE_UNSIGNED_CHAR */
+    typedef char JOCTET;
+    #ifdef __CHAR_UNSIGNED__
+    #define GETJOCTET(value)  (value)
+    #else
+    #define GETJOCTET(value)  ((value) & 0xFF)
+    #endif /* __CHAR_UNSIGNED__ */
+    #endif /* HAVE_UNSIGNED_CHAR */
+
+ bin/mrg-gegl.c                  | 2 +-
+ operations/core/cast-space.c    | 2 +-
+ operations/core/convert-space.c | 2 +-
+ operations/external/jpg-load.c  | 6 +++---
+ operations/external/png-load.c  | 2 +-
+ operations/external/tiff-load.c | 2 +-
+ 6 files changed, 8 insertions(+), 8 deletions(-)
+
+commit 722f8d2224eae1ace76b4f68fb7412e35f4c35a9
+Author: Marco Ciampa <ciampix@posteo.net>
+Date:   Wed Sep 5 17:10:54 2018 +0200
+
+    Updated Italian translation
+
+ po/it.po | 210
+ +++++++++++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 137 insertions(+), 73 deletions(-)
+
+commit cdbdd9426a5ce2ab7e79dd9fefafcbe33339f295
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Sep 4 20:56:04 2018 +0200
+
+    invert-gamma: update reference hash
+
+ operations/common/invert-gamma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 69ced71fa0f2ba01c5718cf47c9774734ee4912d
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Sep 4 19:50:26 2018 +0200
+
+    tests: bail out of simple svg test earlier
+
+ tests/simple/test-svg-abyss.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 42b6d1371796c2606507cfbfef08af126b9fcc67
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Sep 4 19:25:53 2018 +0200
+
+    alien-map: update reference hash
+
+ operations/common/alien-map.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 4386984020bcb4bc606991f72a65660c2cc9364a
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Sat Sep 1 20:00:29 2018 +0200
+
+    Update Polish translation
+
+ po/pl.po | 28 ++++++++++++++++++----------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
+
+commit b0f1fb52229b1ee1345ad65c3d6e65b7b02f81ca
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Aug 31 15:10:30 2018 +0200
+
+    snn-mean: update reference hash
+
+ operations/common/snn-mean.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 1b68392c7064b8b2794f264e3f4770ce1ae56bd6
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Aug 31 14:52:33 2018 +0200
+
+    reference hash updates
+
+ operations/common-gpl3+/emboss.c               | 2 +-
+ operations/common-gpl3+/motion-blur-circular.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit e7389bdc02278151b5be538e623242f0eef6bd29
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Aug 31 13:35:16 2018 +0200
+
+    reference hash updates
+
+ bin/ui.c                                       |    8 +-
+ docs/operations.html                           | 2652
+ ------------------------
+ operations/common-gpl3+/antialias.c            |    2 +-
+ operations/common-gpl3+/cartoon.c              |    2 +-
+ operations/common-gpl3+/channel-mixer.c        |    1 +
+ operations/common-gpl3+/color-exchange.c       |    1 +
+ operations/common-gpl3+/cubism.c               |    2 +-
+ operations/common-gpl3+/deinterlace.c          |    2 +-
+ operations/common-gpl3+/edge-laplace.c         |    2 +-
+ operations/common-gpl3+/edge.c                 |    2 +-
+ operations/common-gpl3+/emboss.c               |    2 +-
+ operations/common-gpl3+/fractal-trace.c        |    2 +-
+ operations/common-gpl3+/illusion.c             |    2 +-
+ operations/common-gpl3+/lens-flare.c           |    2 +-
+ operations/common-gpl3+/mosaic.c               |    2 +-
+ operations/common-gpl3+/motion-blur-circular.c |    2 +-
+ operations/common-gpl3+/motion-blur-zoom.c     |    2 +-
+ operations/common-gpl3+/oilify.c               |    2 +-
+ operations/common-gpl3+/photocopy.c            |    2 +-
+ operations/common-gpl3+/red-eye-removal.c      |    2 +-
+ operations/common-gpl3+/ripple.c               |    2 +-
+ operations/common-gpl3+/shift.c                |    2 +-
+ operations/common-gpl3+/softglow.c             |    2 +-
+ operations/common-gpl3+/tile-glass.c           |    2 +-
+ operations/common-gpl3+/value-propagate.c      |    2 +-
+ operations/common-gpl3+/waves.c                |    2 +-
+ operations/common/alien-map.c                  |    2 +-
+ operations/common/bilateral-filter.c           |    2 +-
+ operations/common/contrast-curve.c             |    2 +-
+ operations/common/convolution-matrix.c         |    2 +-
+ operations/common/edge-sobel.c                 |    2 +-
+ operations/common/image-gradient.c             |    2 +-
+ operations/common/invert-gamma.c               |    2 +-
+ operations/common/mean-curvature-blur.c        |    2 +-
+ operations/common/mono-mixer.c                 |    2 +-
+ operations/common/noise-cie-lch.c              |    2 +-
+ operations/common/noise-hsv.c                  |    2 +-
+ operations/common/noise-pick.c                 |    2 +-
+ operations/common/noise-reduction.c            |    2 +-
+ operations/common/noise-rgb.c                  |    2 +-
+ operations/common/noise-spread.c               |    2 +-
+ operations/common/posterize.c                  |    2 +-
+ operations/common/rgb-clip.c                   |    2 +-
+ operations/common/saturation.c                 |    2 +-
+ operations/common/sepia.c                      |    2 +-
+ operations/common/snn-mean.c                   |    2 +-
+ operations/common/value-invert.c               |    2 +-
+ operations/common/vignette.c                   |    2 +-
+ operations/common/wavelet-blur-1d.c            |    2 +-
+ 49 files changed, 53 insertions(+), 2699 deletions(-)
+
+commit 2f245174eee1634a4f9dc106a3911ad718beb21d
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Aug 31 13:03:56 2018 +0200
+
+    mosaic: fix typo in output pad
+
+ operations/common-gpl3+/mosaic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 0c6eb26f85aa418e5fd042669b8fa6cbb5f41ee3
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Fri Aug 31 11:57:28 2018 +0200
+
+    tests: do not let test-svg-abyss failing break build
+
+ tests/simple/test-svg-abyss.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+commit 7db46716cce53bea1d3188c996e76fe3b0ad2ce9
+Author: Rodrigo Lledó <rodhos92@gmail.com>
+Date:   Fri Aug 31 08:11:27 2018 +0000
+
+    Update Spanish translation
+
+ po/es.po | 198
+ +++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 97 insertions(+), 101 deletions(-)
+
+commit 828597e33b178017d3187f58917075c55bd537b3
+Author: Ell <ell_se@yahoo.com>
+Date:   Thu Aug 30 04:16:44 2018 -0400
+
+    long-shadow: fix accelerating fading-fixed-length shadow value
+    calculation
+
+    In shadow_[collation_]value(), don't scale the current shadow value
+    by the fade-curve LUT when the value is 0, and just return 0
+    directly.  When the value is 0, the shadow is "inactive" and its
+    y-coordinate is meaningless, which can result in an out-of-bounds
+    access to the LUT.
+
+ operations/common/long-shadow.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+commit 74a673cf6031ae57baa5acc65b8e7c4472c0e492
+Author: Ell <ell_se@yahoo.com>
+Date:   Wed Aug 29 12:51:21 2018 -0400
+
+    long-shadow: add midpoint parameter to finite fading styles
+
+    Add a "midpoint-rel" property, which acts as the fade midpoint
+    parameter, instead of the "midpoint" property, for the fadinig-
+    fixed-length and fading-fixed-rate styles.  Unlike the latter,
+    "midpoint-rel" is specified as a factor of the shadow length,
+    instead of as an absolute distance.  When using GUM, as GIMP does,
+    the label of both properties is "midpoint", so they appear to be a
+    single property.
+
+    The midpoint value determines the gamma curve to use as the drop-
+    off function of the shadow.  When it is 0.5, the drop-off is
+    linear, as before; when it is < 0.5, the drop-off decelerates; and,
+    when it is > 0.5, the drop-off accelerates.
+
+    Note that in the fixed-rate style, higher midpoint values result in
+    darker but *shorter* shadows, and a 1.0 midpoint results in no
+    shadow at all.
+
+ operations/common/long-shadow.c | 576
+ +++++++++++++++++++++++++++++++---------
+ 1 file changed, 449 insertions(+), 127 deletions(-)
+
+commit 52dfeb54f5acaeee1df09931498411815180ca92
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Sun Aug 26 18:19:27 2018 +0200
+
+    Update Polish translation
+
+ po/pl.po | 187
+ +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 97 insertions(+), 90 deletions(-)
+
+commit dc32b3525530944ab5e47cc45f5be3c81623ed58
+Author: Ell <ell_se@yahoo.com>
+Date:   Wed Aug 22 14:03:48 2018 -0400
+
+    color-overlay: fix output for semi-transparent color parameters
+
+    Premultiply the color-parameter components by the alpha before
+    processing.  Got lost during space invasion.
+
+ operations/common/color-overlay.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+commit c1c3541caab485384087bbbcf1c83ef2d5bd4d43
+Author: Hussam Al-Tayeb <me@hussam.eu.org>
+Date:   Wed Aug 22 14:55:31 2018 +0200
+
+    exr-save: avoid hard-coding Imath_2_2 name space
+
+ operations/external/exr-save.cc | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+commit 7febad8a98cb4e779977bcce84e656a351457284
+Author: Ell <ell_se@yahoo.com>
+Date:   Wed Aug 22 04:37:39 2018 -0400
+
+    long-shadow: add "fading-fixed-length" and "fading-fixed-rate" styles
+
+    Add two finite fading shadow styles: "fading-fixed-length", and
+    "fading-fixed-rate".  Both styles produce the same result for
+    fully-opaque input pixels, but diverge for partially-transparent
+    pixels.  "fading-fixed-length" produces a shadow of the same length
+    regardless of the input pixel's alpha value, such that the shadow
+    fading rate of pixels with lower alpha values is lower, while
+    "fading-fixed-rate" produces a shadow with a fixed fade rate,
+    regardless of the input pixel's alpha value, such that the shadow
+    of pixels with lower alpha values is shorter.
+
+    Currently, finite fading shadows don't support user-defined
+    midpoint values, and their drop-off curve is always linear (as if
+    the midpoint were 0.5, in relative terms).  Nonlinear fixed-length
+    fading shadows break some of the algorithm's invariants, and
+    addressing that would increase the computational complexity.
+
+ operations/common/long-shadow.c | 313
+ +++++++++++++++++++++++++++++++---------
+ 1 file changed, 243 insertions(+), 70 deletions(-)
+
+commit 525f9ef02d9d93e156a76a291e98bb57ac1acc6d
+Author: Ell <ell_se@yahoo.com>
+Date:   Wed Aug 22 03:57:53 2018 -0400
+
+    text: fix bounding box when wrap-height is specified
+
+    Take the "vertical-wrap" and "vertical-alignment" properties into
+    account when deciding if the bounding box needs to be recalculated.
+
+ operations/external/text.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+commit 627d9bc85edc2a8153580ddac04da917b484af7e
+Author: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>
+Date:   Tue Aug 21 03:22:01 2018 +0300
+
+    Update Russian translation
+
+ po/ru.po | 267
+ +++++++++++++++++++++++++++++----------------------------------
+ 1 file changed, 122 insertions(+), 145 deletions(-)
+
+commit 35806a4e9d1bd430a06e803d9ddee10464e52994
+Author: Ell <ell_se@yahoo.com>
+Date:   Sun Aug 19 19:38:12 2018 -0400
+
+    buffer: use gegl_tile_backend_command() in tile backends
+
+    In all tile-backend command handlers, forward unhandled commands to
+    gegl_tile_backend_command(), instead of asserting that the command
+    is within range.  See the previous commit for a rationale.
+
+ gegl/buffer/gegl-tile-backend-buffer.c     | 6 ++----
+ gegl/buffer/gegl-tile-backend-file-async.c | 7 ++++---
+ gegl/buffer/gegl-tile-backend-ram.c        | 7 ++++---
+ gegl/buffer/gegl-tile-backend-swap.c       | 7 +++----
+ 4 files changed, 13 insertions(+), 14 deletions(-)
+
+commit 30047e65723ebb44fcde9c6b5f60ceecb43b0895
+Author: Ell <ell_se@yahoo.com>
+Date:   Sun Aug 19 19:19:37 2018 -0400
+
+    buffer: add gegl_tile_backend_command(); pre-0.4.10 compatibility
+
+    Tile backends currently assert in their command handlers that the
+    input command is between 0 and GEGL_TILE_LAST_COMMAND (this is true
+    for the built-in backends, but we can assume it's also true for
+    custom backends.)  This prevents us from adding new tile commands
+    without breaking the ABI.
+
+    Instead, add a new gegl_tile_backend_command() function, which acts
+    as a default command handler for tile backends, and to which their
+    handlers should forward unhandled commands (this function currently
+    simply performs the range check for the command -- however, against
+    the GEGL_TILE_LAST_COMMAND value of the runtime GEGL -- and returns
+    NULL; we can add differet default behaviors for different commands
+    as necessary.)
+
+    In order to remain backward compatible with tile backends compiled
+    against older versions of GEGL, which still contain the above
+    assertion, we replace the subclass's command handler with a thunk
+    upon construction, which tests whether the original handler
+    forwards unhandled commands to gegl_tile_backend_command(), and re-
+    replaces the handler with either the original handler if it does,
+    or a compatibility shim, which only forwards pre-0.4.10 commands to
+    the original handler, if it doesn't.
+
+ gegl/buffer/gegl-buffer-backend.h |   6 ++-
+ gegl/buffer/gegl-buffer-types.h   |  20 +++----
+ gegl/buffer/gegl-tile-backend.c   | 108
+ ++++++++++++++++++++++++++++++++++++++
+ gegl/buffer/gegl-tile-backend.h   |  21 ++++++++
+ 4 files changed, 145 insertions(+), 10 deletions(-)
+
+commit 64021786ee067cf66c038622719acc590e6341db
+Author: Ell <ell_se@yahoo.com>
+Date:   Fri Aug 17 20:49:25 2018 -0400
+
+    buffer, stats: limit maximal pending data size in the swap backend
+    queue
+
+    In GeglTileBackendSwap, limit the maximal data size allowed to be
+    pending in the queue at any given time.  The limit is currently set
+    to 10% of the cache size.  If data is attempted to be written to
+    the swap while the queue is full, the operation blocks until the
+    queued data size drops below the limit.
+
+    Add new "swap-queue-total", "swap-queue-full", and "swap-queue-
+    stalls" properties to GeglStats, reporting the total queued data
+    size, whether or not the queue is full, and the number of times a
+    write operation has been blocked due to a full queue, respectively.
+
+ gegl/buffer/gegl-tile-backend-swap.c | 244
+ ++++++++++++++++++++++++-----------
+ gegl/buffer/gegl-tile-backend-swap.h |   3 +
+ gegl/gegl-stats.c                    |  39 ++++++
+ 3 files changed, 212 insertions(+), 74 deletions(-)
+
+commit 04011ae6d09f3ee194334da0e70ae65bb0e403b4
+Author: Ell <ell_se@yahoo.com>
+Date:   Tue Aug 14 13:06:10 2018 -0400
+
+    buffer: implement TILE_COPY in the buffer backend
+
+    In GeglTileBackendBuffer, implement the TILE_COPY command, by
+    simply forwarding it to the underlying buffer (unless the
+    underlying buffer has user-provided tile handlers, in which case we
+    can't use TILE_COPY for the same reason as in gegl_buffer_copy()).
+
+ gegl/buffer/gegl-tile-backend-buffer.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+commit 185f4450f2a51690b39112973c61f894c1ec3e41
+Author: Ell <ell_se@yahoo.com>
+Date:   Tue Aug 14 12:55:02 2018 -0400
+
+    buffer, stats: implement TILE_COPY in the swap backend; cleanup;
+    new stat
+
+    In GeglTileBackendSwap, implement the TILE_COPY command between a
+    pair of swap backends, but decoupling swap data blocks,
+    representing an allocated block in the common swap file, from swap
+    entries, representing stored tiles in an individual swap backend.
+    Have data blocks be ref-counted, such that each swap entry
+    corresponds to a single data block, but each data block may be
+    shared among multiple entries.  When copying a tile, we simply
+    assign the data block of the source entry to the destination entry,
+    and increment its reference count.  When modifying a tile, upon a
+    TILE_SET command, if the corresponding data block isn't uniquely
+    owned by the entry (i.e., if its ref-count is greater than 1), we
+    allocate a new data block for the tile.
+
+    Some all-around cleanup in gegl-tile-backend-swap.c.
+
+    In GeglStats, add a "swap-total-uncloned" stat, analogous to
+    "cache-total-uncloned", reporting the total size of the data that
+    would have been stored in the swap, if each tile occupied a unique
+    data block.
+
+ gegl/buffer/gegl-tile-backend-swap.c | 523
+ +++++++++++++++++++++++------------
+ gegl/buffer/gegl-tile-backend-swap.h |  19 +-
+ gegl/gegl-stats.c                    |  12 +
+ 3 files changed, 368 insertions(+), 186 deletions(-)
+
+commit e9dce12c96d8c1d0dc72067f94044ae87ed5c7e5
+Author: Ell <ell_se@yahoo.com>
+Date:   Tue Aug 14 11:32:41 2018 -0400
+
+    buffer: implement TILE_COPY in the cache handler
+
+    If the tile exists in the cache, we start by copying it directly to
+    the destination.  Then, if the tile doesn't exist in the cache, or
+    if it's already stored -- i.e., if it might exist in the backend in
+    an up-to-date state -- we try letting the backend copy the tile as
+    well, and, if this succeeds, we either mark the tile copied from
+    the cache as stored, or void any existing tile in the destination
+    cache.  The copy is considered successful if either the cache or
+    the backend copied the tile.
+
+ gegl/buffer/gegl-tile-handler-cache.c | 181
+ +++++++++++++++++++++++++++-------
+ 1 file changed, 148 insertions(+), 33 deletions(-)
+
+commit 44c258bf8797464151d80fec8235fd149e3f7ac6
+Author: Ell <ell_se@yahoo.com>
+Date:   Tue Aug 14 10:41:09 2018 -0400
+
+    buffer: use TILE_COPY in gegl_buffer_copy()
+
+    In gegl_buffer_copy(), use the TILE_COPY command, added in the
+    previous commit, when copying tiles directly between the buffers,
+    and fall back to a simple TILE_GET + cache_insert() if the
+    TILE_COPY command fails.  See the previous commit for a rationale.
+
+    We currently avoid this optimization for source buffers that have
+    user-provided tile handlers, since they might interfere with the
+    TILE_COPY mechanism.  See the comment in the code for more
+    details.
+
+    Additionally, lock/unlock the source buffer's tile-storage mutex
+    before/after copying the entire set of tiles, and use an unlocked
+    gegl_tile_source_get_tile() call to fetch the tiles, instead of
+    locking the mutex once per tile.  In addition to being more
+    efficient, this allows us to properly order the source/destination
+    buffer locks, to avoid a potential deadlock when copying between
+    two swapped pairs of buffers concurrently.
+
+ gegl/buffer/gegl-buffer-access.c | 62
+ +++++++++++++++++++++++++++++++---------
+ gegl/buffer/gegl-tile-storage.c  |  4 +++
+ gegl/buffer/gegl-tile-storage.h  |  3 ++
+ 3 files changed, 55 insertions(+), 14 deletions(-)
+
+commit c5045711164ee44b0ce9e585e98266a3e6cbb9da
+Author: Ell <ell_se@yahoo.com>
+Date:   Tue Aug 14 10:00:31 2018 -0400
+
+    buffer: add GEGL_TILE_COPY tile-source command
+
+    GEGL_TILE_COPY requests a tile source to copy a tile to a given
+    destination buffer (or to the same buffer to which the tile source
+    belongs), at given destination tile coordinates.  The tile source
+    and the destination buffer are assumed to be tile-compatible (i.e.,
+    having the same tile dimensions and format).  The tile source
+    should return a boolean value, indicating whether the tile has been
+    copied.
+
+    This is mostly meant to be implemented by the cache handler, and by
+    tile backends (the swap backend, in particular).  It allows
+    backends to implement a cheap copy operation, avoiding the need to
+    actually fetch the tile.  For example, at the moment, copying a
+    swapped-out tile between two buffers, both of which are using the
+    swap backend, requires reading the tile from disk into memory
+    first, only to COW the result.  This might not be an issue if the
+    same tile is known to be accessed shortly after, but when doing a
+    tentative copy, usually of an entire buffer (as is done in GIMP in
+    several cases), this incurs a very noticeable overhead.
+
+ gegl/buffer/gegl-buffer-backend.h | 10 ++++++++++
+ gegl/buffer/gegl-tile-source.h    | 40
+ +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 50 insertions(+)
+
+commit 5488b282927b7abbaf6f357099def2121638ec48
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Sat Aug 18 12:40:22 2018 +0200
+
+    post release version bump
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 commit 4d634fe907eb7973c732b34b0d5641943f93e086
 Author: Øyvind Kolås <pippin@gimp.org>
 Date:   Sat Aug 18 12:11:56 2018 +0200

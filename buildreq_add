@@ -6,3 +6,4 @@ libwebp-dev
 libjpeg-turbo-dev
 graphviz
 gobject-introspection-dev
+openexr-dev
