@@ -1,3 +1,93 @@
+commit 0e3dc92b07430b0626443524ca88f34f64ae1778
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Oct 23 14:10:27 2018 +0200
+
+    NEWS: update
+
+ docs/NEWS.txt | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+commit 222068b408660013fb89eda366f249eefb028e46
+Author: Ell <ell_se@yahoo.com>
+Date:   Mon Oct 22 11:39:52 2018 -0400
+
+    Partially revert "buffer: fix source rect passed to
+    gegl_resample_{linear,boxfilter}()"
+
+    Commit a7c730cf6e841a46d3b4546b86a234ae59206e9c trimmed the sample-
+    buffer padding from the source-rect passed to the resampling
+    functions.  This isn't strictly necessary, and has the negative
+    effect of preventing the same padding from being present in the
+    converted sample-buffer when using any of the _generic() resampling
+    functions, causing artifacts.
+
+    Revert the trimming of the resampling source-rect, though keep
+    avoiding reading padding-region data from the source buffer, which
+    should still be unnecessary.
+
+ gegl/buffer/gegl-buffer-access.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+commit ed3cc6124cb7832eecaf4e3ff22d158fddf75e19
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Mon Oct 22 17:18:48 2018 +0200
+
+    jp2-load: remove unnedd cast in g_clear_pointer
+
+ operations/external/jp2-load.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit a1804b75fdad12b729055a45a5e0f0b76c9dbda3
+Author: Rodrigo Lledó <rodhos92@gmail.com>
+Date:   Mon Oct 22 09:22:36 2018 +0000
+
+    Update Spanish translation
+
+ po/es.po | 189
+ +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 98 insertions(+), 91 deletions(-)
+
+commit 8c6ab9b0fd59e62c2563f32b969595df6700d589
+Author: Ell <ell_se@yahoo.com>
+Date:   Thu Oct 18 01:51:59 2018 -0400
+
+    tests: update mipmap reference images after last commit
+
+ tests/mipmap/invert-crop-reference.png  | Bin 13038 -> 13016 bytes
+ tests/mipmap/invert-reference.png       | Bin 62604 -> 62491 bytes
+ tests/mipmap/rotate-crop-reference.png  | Bin 16182 -> 16115 bytes
+ tests/mipmap/rotate-reference.png       | Bin 84631 -> 84718 bytes
+ tests/mipmap/unsharp-crop-reference.png | Bin 14698 -> 14777 bytes
+ tests/mipmap/unsharp-reference.png      | Bin 92440 -> 92449 bytes
+ 6 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 950dc34789c05f5c4da31b6988f19983ecbfca08
+Author: Ell <ell_se@yahoo.com>
+Date:   Wed Oct 17 10:29:20 2018 -0400
+
+    buffer: apply gamma curve to alpha component during filtering
+
+    Disable the _alpha() variant of
+    gegl_{boxfilter,bilinear,downscale_2x2}_u8_nl(), and use the non-
+    alpha one instead, applying the same gamma curve to the alpha
+    components as we do for the color components.  This is a temporary
+    hack, meant to avoid producing over-saturated pixels when using
+    these functions with premultiplied-alpha formats (in particular,
+    cairo-ARGB32), which can lead, most notably, to visual artifacts in
+    cairo during compositing (see issue #104).
+
+ gegl/buffer/gegl-algorithms.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+commit ab4b599e62f3035b85b4c5c82b80f465948a0fe7
+Author: Øyvind Kolås <pippin@gimp.org>
+Date:   Tue Oct 16 18:37:15 2018 +0200
+
+    post-release version bump
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 commit bb37399a9fd7fa375336b5754bdcd03e1a9b4243
 Author: Øyvind Kolås <pippin@gimp.org>
 Date:   Tue Oct 16 18:36:24 2018 +0200
