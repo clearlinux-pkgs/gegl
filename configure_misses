@@ -9,7 +9,6 @@ Configure miss: enscript
 Configure miss: asciidoc
 Configure miss: MRG
 Configure miss: sdl-config
-Configure miss: AVFORMAT
 Configure miss: run_spiro in -lspiro
 Configure miss: umfpack_dl_solve in -lumfpack
 Configure miss: P2TC

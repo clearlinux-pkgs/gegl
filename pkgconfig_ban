@@ -5,7 +5,6 @@ jasper
 libavcodec
 libavformat
 libopenraw-1.0
-libswscale
 mrg
 poly2tri-c
 vapigen

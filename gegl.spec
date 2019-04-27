@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.4.14
-Release  : 45
+Release  : 46
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.14.tar.bz2
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.14.tar.bz2
 Summary  : Graph based image processing framework
@@ -38,6 +38,7 @@ BuildRequires : pkgconfig(lensfun)
 BuildRequires : pkgconfig(libpng)
 BuildRequires : pkgconfig(libraw)
 BuildRequires : pkgconfig(librsvg-2.0)
+BuildRequires : pkgconfig(libswscale)
 BuildRequires : pkgconfig(libv4l2)
 BuildRequires : pkgconfig(luajit)
 BuildRequires : pkgconfig(pango)
@@ -123,14 +124,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1551537598
+export SOURCE_DATE_EPOCH=1556387152
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
+export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
+export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
 %configure --disable-static --without-jasper --without-tiff --disable-docs PYTHON=/usr/bin/python3 --without-vala
 make  %{?_smp_mflags}
 
@@ -142,7 +143,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1551537598
+export SOURCE_DATE_EPOCH=1556387152
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gegl
 cp COPYING %{buildroot}/usr/share/package-licenses/gegl/COPYING
@@ -255,6 +256,8 @@ cp libs/poly2tri-c/COPYING %{buildroot}/usr/share/package-licenses/gegl/libs_pol
 %defattr(-,root,root,-)
 /usr/lib64/gegl-0.4/exr-load.so
 /usr/lib64/gegl-0.4/exr-save.so
+/usr/lib64/gegl-0.4/ff-load.so
+/usr/lib64/gegl-0.4/ff-save.so
 /usr/lib64/gegl-0.4/gegl-common-cxx.so
 /usr/lib64/gegl-0.4/gegl-common-gpl3.so
 /usr/lib64/gegl-0.4/gegl-common.so
