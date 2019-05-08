@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.4.16
-Release  : 47
+Release  : 48
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.16.tar.bz2
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.16.tar.bz2
 Summary  : Graph based image processing framework
@@ -17,6 +17,7 @@ Requires: gegl-license = %{version}-%{release}
 Requires: gegl-locales = %{version}-%{release}
 BuildRequires : docbook-xml
 BuildRequires : gettext
+BuildRequires : glibc-bin
 BuildRequires : gobject-introspection-dev
 BuildRequires : graphviz
 BuildRequires : lcms2-dev
@@ -124,7 +125,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1557327869
+export SOURCE_DATE_EPOCH=1557329305
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -143,7 +144,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1557327869
+export SOURCE_DATE_EPOCH=1557329305
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gegl
 cp COPYING %{buildroot}/usr/share/package-licenses/gegl/COPYING
