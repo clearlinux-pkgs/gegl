@@ -1,4 +1,81 @@
-GEGL-0.4.14 2019-03-xx
+GEGL-0.4.15
+
+Build
+
+Added gitlab continuous integration.
+
+Core
+
+Platform specific build fixes for both win32 and OSX.
+
+Avoid in-place processing for cached nodes.
+
+Indentation consitency improvements.
+
+Permit more detailed specifying/overriding of OpenCL device through the
+GEGL_USE_OPENCL environment variable.
+
+New call gegl_update_anim_time for applying the animation curves of
+properties.
+
+Buffer
+
+Swapped behavior of cubic interpolation from cubic to mithcell
+coefficients, leading to crisper results in all uses of the cubic
+sampler.
+
+Permit tiles to be unreffed after GEGL shut-down without crash, which
+is likely when using bindings to dynamic languages.
+
+Use malloc_trim when compiled with glibc to possibly decrease the
+resident size of progress when buffers are destroyed.
+
+Improved deadlock prevention in gegl_buffer_copy() when using copy on
+write.
+
+Operations
+
+Use indirect buffer inputs on main thread during multi-processed
+processing for point-filters/composers and tranform base classes.
+
+Smaller required/invalided ROI for map-absolute/relative when using
+nearest neighbor.
+
+tiff-save and jpg-save fixed dimensions when buffer saved has non-zero
+origin
+
+Added missing descriptions of properties for cubism, mosaic,
+tile-paper, color, mantiuk06 and vignette operations.
+
+ff-load fix some of the deprecation warnings.
+
+ff-save avoid crashing if audio or video codec fails to initialize.
+
+cache, parent class changed - it is no longer a point operations, also
+speed up processing and permit copy on write handling of tiles.
+
+opacity and invert - crash for 8bpc buffers, reimplemented logic for
+(non-)associated alpha OpenCL kernel selection.
+
+Tools
+
+Drop direct dependency on exiv2 - we now only transiently depend on it
+through the gexiv2 abstraction.
+
+commandline tool/gui
+
+Store per image editing chains in .gegl folder instead of sidecars.
+
+Set window title, permit interaction with opened .lui documents, fixed
+playback of audio for opened videos - it now works; if the video is
+decoding, scaling and display is fast enough to leave spare cycles.
+
+Support for nearest neighbor scaling of imagry; aiding video playback
+without dropping audio frames.
+
+Support for custom collection order and per-file key-value metadata.
+
+GEGL-0.4.14 2019-03-01
 
 Core
 
@@ -73,9 +150,9 @@ revisted, a graph/property editor has been added, and migration/
 extension to lua has begun for parts of the code.
 
         many parts of the UI is of exploratory proof of concept/alpha
-Warning quality but released since it is part of the GEGL repository
-        and useful development tools both for creating and testing new
-        GEGL operations as well as GEGL itself.
+Warning quality but are released since the code is part of the GEGL
+        repository and important development tools both for creating
+        and testing new GEGL operations as well as GEGL itself.
 
 Some screenshots showing some the process towards the state and
 capabilties of the UI in this release can be seen at https://
@@ -1608,4 +1685,4 @@ Calvin Williamson, Caroline Dahloff Daniel Rogers, Garry R. Osgood, Jay
 Cox and Sven Neumann
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Last updated 2019-02-27 22:53:16 CET
+Last updated 2019-05-07 22:32:27 CEST

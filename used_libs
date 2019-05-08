@@ -6,6 +6,7 @@ libIlmThread-2_3.so.24
 libImath-2_3.so.24
 libavcodec.so.58
 libavformat.so.58
+libavutil.so.56
 libbabl-0.1.so.0
 libc.so.6
 libcairo.so.2
