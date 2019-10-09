@@ -4,10 +4,10 @@
 #
 Name     : gegl
 Version  : 0.4.16
-Release  : 48
+Release  : 49
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.16.tar.bz2
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.16.tar.bz2
-Summary  : Graph based image processing framework
+Summary  : Generic Graphics Library
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-3.0 LGPL-3.0
 Requires: gegl-bin = %{version}-%{release}
@@ -46,7 +46,7 @@ BuildRequires : pkgconfig(pangocairo)
 BuildRequires : pkgconfig(poppler-glib)
 BuildRequires : pkgconfig(pygobject-3.0)
 BuildRequires : pkgconfig(zlib)
-BuildRequires : python
+BuildRequires : python3
 BuildRequires : ruby-dev
 BuildRequires : tiff-dev
 
@@ -57,7 +57,7 @@ GEGL
 GEGL (Generic Graphics Library) is a data flow based image processing
 framework, providing floating point processing and non-destructive
 image processing capabilities to GNU Image Manipulation Program and
-other projects (imgflo, GNOME Photos, gcut, iconographer, â¦)
+other projects (imgflo, GNOME Photos, gcut, iconographer, …)
 
 %package bin
 Summary: bin components for the gegl package.
@@ -84,7 +84,6 @@ Requires: gegl-lib = %{version}-%{release}
 Requires: gegl-bin = %{version}-%{release}
 Requires: gegl-data = %{version}-%{release}
 Provides: gegl-devel = %{version}-%{release}
-Requires: gegl = %{version}-%{release}
 Requires: gegl = %{version}-%{release}
 
 %description dev
@@ -124,27 +123,28 @@ locales components for the gegl package.
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1557329305
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1570647913
+export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 %configure --disable-static --without-jasper --without-tiff --disable-docs PYTHON=/usr/bin/python3 --without-vala
 make  %{?_smp_mflags}
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1557329305
+export SOURCE_DATE_EPOCH=1570647913
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gegl
 cp COPYING %{buildroot}/usr/share/package-licenses/gegl/COPYING
