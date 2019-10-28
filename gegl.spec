@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.4.18
-Release  : 50
+Release  : 51
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.18.tar.xz
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.18.tar.xz
 Summary  : Graph based image processing framework
@@ -19,6 +19,7 @@ BuildRequires : SDL2-dev
 BuildRequires : buildreq-meson
 BuildRequires : cairo-dev
 BuildRequires : exiv2-dev
+BuildRequires : gexiv2-dev
 BuildRequires : glibc-bin
 BuildRequires : gobject-introspection-dev
 BuildRequires : graphviz
@@ -47,6 +48,7 @@ BuildRequires : pkgconfig(libv4l2)
 BuildRequires : pkgconfig(luajit)
 BuildRequires : pkgconfig(pango)
 BuildRequires : pkgconfig(pangocairo)
+BuildRequires : pkgconfig(poppler-glib)
 BuildRequires : pkgconfig(pygobject-3.0)
 BuildRequires : python3
 BuildRequires : ruby-dev
@@ -130,7 +132,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1572274133
+export SOURCE_DATE_EPOCH=1572275519
 # -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
