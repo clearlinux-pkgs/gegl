@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.4.22
-Release  : 55
+Release  : 56
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.22.tar.xz
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.22.tar.xz
 Summary  : Graph based image processing framework
@@ -46,6 +46,7 @@ BuildRequires : pkgconfig(pygobject-3.0)
 BuildRequires : python3
 BuildRequires : ruby-dev
 BuildRequires : vala
+BuildRequires : vala-dev
 
 %description
 libnsgif - Decoding GIF files
@@ -124,7 +125,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1582066961
+export SOURCE_DATE_EPOCH=1582069645
 # -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
@@ -192,6 +193,8 @@ DESTDIR=%{buildroot} ninja -C builddir install
 /usr/share/gegl-0.4/lua/preferences.lua
 /usr/share/gegl-0.4/lua/viewer.lua
 /usr/share/gir-1.0/*.gir
+/usr/share/vala/vapi/gegl-0.4.deps
+/usr/share/vala/vapi/gegl-0.4.vapi
 
 %files dev
 %defattr(-,root,root,-)

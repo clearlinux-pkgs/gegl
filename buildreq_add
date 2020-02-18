@@ -8,3 +8,5 @@ graphviz
 gobject-introspection-dev
 openexr-dev
 gexiv2-dev
+vala
+vala-dev
