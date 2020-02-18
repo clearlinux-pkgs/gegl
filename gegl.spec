@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.4.22
-Release  : 56
+Release  : 57
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.22.tar.xz
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.22.tar.xz
 Summary  : Graph based image processing framework
@@ -125,7 +125,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1582069645
+export SOURCE_DATE_EPOCH=1582069995
+unset LD_AS_NEEDED
 # -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
