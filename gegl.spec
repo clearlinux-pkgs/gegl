@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.4.22
-Release  : 57
+Release  : 59
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.22.tar.xz
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.22.tar.xz
 Summary  : Graph based image processing framework
@@ -119,13 +119,19 @@ locales components for the gegl package.
 %prep
 %setup -q -n gegl-0.4.22
 cd %{_builddir}/gegl-0.4.22
+pushd ..
+cp -a gegl-0.4.22 buildavx2
+popd
+pushd ..
+cp -a gegl-0.4.22 buildavx512
+popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1582069995
+export SOURCE_DATE_EPOCH=1582671528
 unset LD_AS_NEEDED
 # -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
@@ -138,6 +144,8 @@ export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-o
 export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain   builddir
 ninja -v -C builddir
+CFLAGS="$CFLAGS -m64 -march=haswell" CXXFLAGS="$CXXFLAGS -m64 -march=haswell " LDFLAGS="$LDFLAGS -m64 -march=haswell" meson --libdir=lib64/haswell --prefix=/usr --buildtype=plain   builddiravx2
+ninja -v -C builddiravx2
 
 %check
 export LANG=C.UTF-8
@@ -154,12 +162,22 @@ cp %{_builddir}/gegl-0.4.22/subprojects/libnsgif/COPYING %{buildroot}/usr/share/
 cp %{_builddir}/gegl-0.4.22/subprojects/poly2tri-c/COPYING %{buildroot}/usr/share/package-licenses/gegl/7cd64aeec55f96676d9e34b6b1677ec470e45fcf
 cp %{_builddir}/gegl-0.4.22/subprojects/poly2tri-c/LICENSE-Poly2Tri-C.txt %{buildroot}/usr/share/package-licenses/gegl/855d3492027e24b96cc759b7fa729176cb1bdca7
 cp %{_builddir}/gegl-0.4.22/subprojects/poly2tri-c/LICENSE-Poly2Tri.txt %{buildroot}/usr/share/package-licenses/gegl/178f030d76bde249653291b58a7e8066755051be
+DESTDIR=%{buildroot} ninja -C builddiravx2 install
 DESTDIR=%{buildroot} ninja -C builddir install
 %find_lang gegl-0.4
+## install_append content
+pushd %{buildroot}/usr/lib64/haswell/gegl-0.4/
+for i in *.so ; do mv $i ../../gegl-0.4/$i.so.avx2 ; done
+popd
+## install_append end
 
 %files
 %defattr(-,root,root,-)
 /usr/lib64/gegl-0.4/grey2.json
+/usr/lib64/haswell/gegl-0.4/grey2.json
+/usr/lib64/haswell/girepository-1.0/Gegl-0.4.typelib
+/usr/lib64/haswell/pkgconfig/gegl-0.4.pc
+/usr/lib64/haswell/pkgconfig/gegl-sc-0.4.pc
 
 %files bin
 %defattr(-,root,root,-)
@@ -284,42 +302,63 @@ DESTDIR=%{buildroot} ninja -C builddir install
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/gegl-0.4/exr-load.so
+/usr/lib64/gegl-0.4/exr-load.so.so.avx2
 /usr/lib64/gegl-0.4/exr-save.so
 /usr/lib64/gegl-0.4/ff-load.so
 /usr/lib64/gegl-0.4/ff-save.so
 /usr/lib64/gegl-0.4/gegl-common-cxx.so
+/usr/lib64/gegl-0.4/gegl-common-cxx.so.so.avx2
 /usr/lib64/gegl-0.4/gegl-common-gpl3.so
+/usr/lib64/gegl-0.4/gegl-common-gpl3.so.so.avx2
 /usr/lib64/gegl-0.4/gegl-common.so
+/usr/lib64/gegl-0.4/gegl-common.so.so.avx2
 /usr/lib64/gegl-0.4/gegl-core.so
+/usr/lib64/gegl-0.4/gegl-core.so.so.avx2
 /usr/lib64/gegl-0.4/gegl-generated.so
+/usr/lib64/gegl-0.4/gegl-generated.so.so.avx2
 /usr/lib64/gegl-0.4/gif-load.so
+/usr/lib64/gegl-0.4/gif-load.so.so.avx2
 /usr/lib64/gegl-0.4/jpg-load.so
+/usr/lib64/gegl-0.4/jpg-load.so.so.avx2
 /usr/lib64/gegl-0.4/jpg-save.so
 /usr/lib64/gegl-0.4/lcms-from-profile.so
 /usr/lib64/gegl-0.4/npd.so
+/usr/lib64/gegl-0.4/npd.so.so.avx2
 /usr/lib64/gegl-0.4/npy-save.so
 /usr/lib64/gegl-0.4/path.so
+/usr/lib64/gegl-0.4/path.so.so.avx2
 /usr/lib64/gegl-0.4/pdf-load.so
 /usr/lib64/gegl-0.4/pixbuf-load.so
 /usr/lib64/gegl-0.4/pixbuf-save.so
 /usr/lib64/gegl-0.4/png-load.so
 /usr/lib64/gegl-0.4/png-save.so
 /usr/lib64/gegl-0.4/ppm-load.so
+/usr/lib64/gegl-0.4/ppm-load.so.so.avx2
 /usr/lib64/gegl-0.4/ppm-save.so
+/usr/lib64/gegl-0.4/ppm-save.so.so.avx2
 /usr/lib64/gegl-0.4/raw-load.so
 /usr/lib64/gegl-0.4/rgbe-load.so
+/usr/lib64/gegl-0.4/rgbe-load.so.so.avx2
 /usr/lib64/gegl-0.4/rgbe-save.so
+/usr/lib64/gegl-0.4/rgbe-save.so.so.avx2
 /usr/lib64/gegl-0.4/sdl2-display.so
 /usr/lib64/gegl-0.4/seamless-clone-compose.so
 /usr/lib64/gegl-0.4/seamless-clone.so
 /usr/lib64/gegl-0.4/svg-load.so
 /usr/lib64/gegl-0.4/text.so
 /usr/lib64/gegl-0.4/transformops.so
+/usr/lib64/gegl-0.4/transformops.so.so.avx2
 /usr/lib64/gegl-0.4/v4l.so
 /usr/lib64/gegl-0.4/vector-fill.so
 /usr/lib64/gegl-0.4/vector-stroke.so
+/usr/lib64/gegl-0.4/vector-stroke.so.so.avx2
 /usr/lib64/gegl-0.4/webp-load.so
 /usr/lib64/gegl-0.4/webp-save.so
+/usr/lib64/haswell/libgegl-0.4.so
+/usr/lib64/haswell/libgegl-0.4.so.0
+/usr/lib64/haswell/libgegl-0.4.so.0.421.1
+/usr/lib64/haswell/libgegl-npd-0.4.so
+/usr/lib64/haswell/libgegl-sc-0.4.so
 /usr/lib64/libgegl-0.4.so
 /usr/lib64/libgegl-0.4.so.0
 /usr/lib64/libgegl-0.4.so.0.421.1
