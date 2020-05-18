@@ -4,10 +4,10 @@
 #
 Name     : gegl
 Version  : 0.4.22
-Release  : 59
+Release  : 60
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.22.tar.xz
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.22.tar.xz
-Summary  : Graph based image processing framework
+Summary  : Provides gif loading and conversion
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-3.0 LGPL-3.0 MIT
 Requires: gegl-bin = %{version}-%{release}
@@ -49,14 +49,10 @@ BuildRequires : vala
 BuildRequires : vala-dev
 
 %description
-libnsgif - Decoding GIF files
-=============================
-The functions provided by this library allow for efficient progressive
-GIF decoding. Whilst the initialisation does not ensure that there is
-sufficient image data to complete the entire frame, it does ensure
-that the information provided is valid. Any subsequent attempts to
-decode an initialised GIF are guaranteed to succeed, and any bytes of
-the image not present are assumed to be totally transparent.
+========================================================================
+====  Poly2Tri-C: A library for generating, refining and rendering  ====
+====        2-Dimensional Constrained Delaunay Triangulations       ====
+========================================================================
 
 %package bin
 Summary: bin components for the gegl package.
@@ -83,7 +79,6 @@ Requires: gegl-lib = %{version}-%{release}
 Requires: gegl-bin = %{version}-%{release}
 Requires: gegl-data = %{version}-%{release}
 Provides: gegl-devel = %{version}-%{release}
-Requires: gegl = %{version}-%{release}
 Requires: gegl = %{version}-%{release}
 
 %description dev
@@ -131,17 +126,16 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1582671528
+export SOURCE_DATE_EPOCH=1589816115
 unset LD_AS_NEEDED
-# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain   builddir
 ninja -v -C builddir
 CFLAGS="$CFLAGS -m64 -march=haswell" CXXFLAGS="$CXXFLAGS -m64 -march=haswell " LDFLAGS="$LDFLAGS -m64 -march=haswell" meson --libdir=lib64/haswell --prefix=/usr --buildtype=plain   builddiravx2
@@ -350,6 +344,7 @@ popd
 /usr/lib64/gegl-0.4/transformops.so.so.avx2
 /usr/lib64/gegl-0.4/v4l.so
 /usr/lib64/gegl-0.4/vector-fill.so
+/usr/lib64/gegl-0.4/vector-fill.so.so.avx2
 /usr/lib64/gegl-0.4/vector-stroke.so
 /usr/lib64/gegl-0.4/vector-stroke.so.so.avx2
 /usr/lib64/gegl-0.4/webp-load.so
