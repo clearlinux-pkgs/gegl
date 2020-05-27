@@ -1,3 +1,0 @@
-pushd %{buildroot}/usr/lib64/haswell/gegl-0.4/
-for i in *.so ; do mv $i ../../gegl-0.4/$i.so.avx2 ; done
-popd

@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.4.22
-Release  : 60
+Release  : 61
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.22.tar.xz
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.22.tar.xz
 Summary  : Provides gif loading and conversion
@@ -126,7 +126,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1589816115
+export SOURCE_DATE_EPOCH=1590583305
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
@@ -159,11 +159,6 @@ cp %{_builddir}/gegl-0.4.22/subprojects/poly2tri-c/LICENSE-Poly2Tri.txt %{buildr
 DESTDIR=%{buildroot} ninja -C builddiravx2 install
 DESTDIR=%{buildroot} ninja -C builddir install
 %find_lang gegl-0.4
-## install_append content
-pushd %{buildroot}/usr/lib64/haswell/gegl-0.4/
-for i in *.so ; do mv $i ../../gegl-0.4/$i.so.avx2 ; done
-popd
-## install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -296,59 +291,59 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/gegl-0.4/exr-load.so
-/usr/lib64/gegl-0.4/exr-load.so.so.avx2
 /usr/lib64/gegl-0.4/exr-save.so
 /usr/lib64/gegl-0.4/ff-load.so
 /usr/lib64/gegl-0.4/ff-save.so
 /usr/lib64/gegl-0.4/gegl-common-cxx.so
-/usr/lib64/gegl-0.4/gegl-common-cxx.so.so.avx2
 /usr/lib64/gegl-0.4/gegl-common-gpl3.so
-/usr/lib64/gegl-0.4/gegl-common-gpl3.so.so.avx2
 /usr/lib64/gegl-0.4/gegl-common.so
-/usr/lib64/gegl-0.4/gegl-common.so.so.avx2
 /usr/lib64/gegl-0.4/gegl-core.so
-/usr/lib64/gegl-0.4/gegl-core.so.so.avx2
 /usr/lib64/gegl-0.4/gegl-generated.so
-/usr/lib64/gegl-0.4/gegl-generated.so.so.avx2
 /usr/lib64/gegl-0.4/gif-load.so
-/usr/lib64/gegl-0.4/gif-load.so.so.avx2
 /usr/lib64/gegl-0.4/jpg-load.so
-/usr/lib64/gegl-0.4/jpg-load.so.so.avx2
 /usr/lib64/gegl-0.4/jpg-save.so
 /usr/lib64/gegl-0.4/lcms-from-profile.so
 /usr/lib64/gegl-0.4/npd.so
-/usr/lib64/gegl-0.4/npd.so.so.avx2
 /usr/lib64/gegl-0.4/npy-save.so
 /usr/lib64/gegl-0.4/path.so
-/usr/lib64/gegl-0.4/path.so.so.avx2
 /usr/lib64/gegl-0.4/pdf-load.so
 /usr/lib64/gegl-0.4/pixbuf-load.so
 /usr/lib64/gegl-0.4/pixbuf-save.so
 /usr/lib64/gegl-0.4/png-load.so
 /usr/lib64/gegl-0.4/png-save.so
 /usr/lib64/gegl-0.4/ppm-load.so
-/usr/lib64/gegl-0.4/ppm-load.so.so.avx2
 /usr/lib64/gegl-0.4/ppm-save.so
-/usr/lib64/gegl-0.4/ppm-save.so.so.avx2
 /usr/lib64/gegl-0.4/raw-load.so
 /usr/lib64/gegl-0.4/rgbe-load.so
-/usr/lib64/gegl-0.4/rgbe-load.so.so.avx2
 /usr/lib64/gegl-0.4/rgbe-save.so
-/usr/lib64/gegl-0.4/rgbe-save.so.so.avx2
 /usr/lib64/gegl-0.4/sdl2-display.so
 /usr/lib64/gegl-0.4/seamless-clone-compose.so
 /usr/lib64/gegl-0.4/seamless-clone.so
 /usr/lib64/gegl-0.4/svg-load.so
 /usr/lib64/gegl-0.4/text.so
 /usr/lib64/gegl-0.4/transformops.so
-/usr/lib64/gegl-0.4/transformops.so.so.avx2
 /usr/lib64/gegl-0.4/v4l.so
 /usr/lib64/gegl-0.4/vector-fill.so
-/usr/lib64/gegl-0.4/vector-fill.so.so.avx2
 /usr/lib64/gegl-0.4/vector-stroke.so
-/usr/lib64/gegl-0.4/vector-stroke.so.so.avx2
 /usr/lib64/gegl-0.4/webp-load.so
 /usr/lib64/gegl-0.4/webp-save.so
+/usr/lib64/haswell/gegl-0.4/exr-load.so
+/usr/lib64/haswell/gegl-0.4/gegl-common-cxx.so
+/usr/lib64/haswell/gegl-0.4/gegl-common-gpl3.so
+/usr/lib64/haswell/gegl-0.4/gegl-common.so
+/usr/lib64/haswell/gegl-0.4/gegl-core.so
+/usr/lib64/haswell/gegl-0.4/gegl-generated.so
+/usr/lib64/haswell/gegl-0.4/gif-load.so
+/usr/lib64/haswell/gegl-0.4/jpg-load.so
+/usr/lib64/haswell/gegl-0.4/npd.so
+/usr/lib64/haswell/gegl-0.4/path.so
+/usr/lib64/haswell/gegl-0.4/ppm-load.so
+/usr/lib64/haswell/gegl-0.4/ppm-save.so
+/usr/lib64/haswell/gegl-0.4/rgbe-load.so
+/usr/lib64/haswell/gegl-0.4/rgbe-save.so
+/usr/lib64/haswell/gegl-0.4/transformops.so
+/usr/lib64/haswell/gegl-0.4/vector-fill.so
+/usr/lib64/haswell/gegl-0.4/vector-stroke.so
 /usr/lib64/haswell/libgegl-0.4.so
 /usr/lib64/haswell/libgegl-0.4.so.0
 /usr/lib64/haswell/libgegl-0.4.so.0.421.1
