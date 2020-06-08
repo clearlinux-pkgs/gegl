@@ -1,4 +1,4 @@
-0.4.22
+0.4.24
 SDL2-dev
 librsvg
 librsvg-dev
@@ -17,4 +17,3 @@ pkgconfig(luajit)
 pkgconfig(pango)
 pkgconfig(pangocairo)
 pkgconfig(pygobject-3.0)
-vala
