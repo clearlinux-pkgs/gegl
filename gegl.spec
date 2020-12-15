@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.4.26
-Release  : 72
+Release  : 73
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.26.tar.xz
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.26.tar.xz
 Summary  : Provides gif loading and conversion
