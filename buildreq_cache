@@ -1,4 +1,4 @@
-0.4.26
+0.4.28
 SDL2-dev
 librsvg
 librsvg-dev
@@ -13,6 +13,7 @@ pkgconfig(libswscale)
 pkgconfig(libv4l1)
 pkgconfig(libv4l2)
 pkgconfig(luajit)
+pkgconfig(maxflow)
 pkgconfig(pango)
 pkgconfig(pangocairo)
 pkgconfig(pygobject-3.0)
