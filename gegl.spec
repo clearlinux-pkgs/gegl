@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.4.30
-Release  : 76
+Release  : 77
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.30.tar.xz
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.30.tar.xz
 Summary  : Provides gif loading and conversion
@@ -46,6 +46,7 @@ BuildRequires : python3
 BuildRequires : ruby-dev
 BuildRequires : vala
 BuildRequires : vala-dev
+Patch1: 0001-Fix-build-with-OpenEXR-3.patch
 
 %description
 ========================================================================
@@ -113,6 +114,7 @@ locales components for the gegl package.
 %prep
 %setup -q -n gegl-0.4.30
 cd %{_builddir}/gegl-0.4.30
+%patch1 -p1
 pushd ..
 cp -a gegl-0.4.30 buildavx2
 popd
@@ -125,7 +127,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1617218156
+export SOURCE_DATE_EPOCH=1622743878
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
@@ -139,6 +141,8 @@ CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --
 ninja -v -C builddir
 CFLAGS="$CFLAGS -m64 -march=haswell" CXXFLAGS="$CXXFLAGS -m64 -march=haswell " LDFLAGS="$LDFLAGS -m64 -march=haswell" meson --libdir=lib64/haswell --prefix=/usr --buildtype=plain   builddiravx2
 ninja -v -C builddiravx2
+CFLAGS="$CFLAGS -m64 -march=skylake-avx512" CXXFLAGS="$CXXFLAGS -m64 -march=skylake-avx512 " LDFLAGS="$LDFLAGS -m64 -march=skylake-avx512" meson --libdir=lib64/haswell/avx512_1 --prefix=/usr --buildtype=plain   builddiravx512
+ninja -v -C builddiravx512
 
 %check
 export LANG=C.UTF-8
@@ -155,6 +159,7 @@ cp %{_builddir}/gegl-0.4.30/subprojects/libnsgif/COPYING %{buildroot}/usr/share/
 cp %{_builddir}/gegl-0.4.30/subprojects/poly2tri-c/COPYING %{buildroot}/usr/share/package-licenses/gegl/7cd64aeec55f96676d9e34b6b1677ec470e45fcf
 cp %{_builddir}/gegl-0.4.30/subprojects/poly2tri-c/LICENSE-Poly2Tri-C.txt %{buildroot}/usr/share/package-licenses/gegl/855d3492027e24b96cc759b7fa729176cb1bdca7
 cp %{_builddir}/gegl-0.4.30/subprojects/poly2tri-c/LICENSE-Poly2Tri.txt %{buildroot}/usr/share/package-licenses/gegl/178f030d76bde249653291b58a7e8066755051be
+DESTDIR=%{buildroot} ninja -C builddiravx512 install
 DESTDIR=%{buildroot} ninja -C builddiravx2 install
 DESTDIR=%{buildroot} ninja -C builddir install
 %find_lang gegl-0.4
