@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.4.30
-Release  : 77
+Release  : 78
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.30.tar.xz
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.30.tar.xz
 Summary  : Provides gif loading and conversion
@@ -127,7 +127,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1622743878
+export SOURCE_DATE_EPOCH=1622744457
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
@@ -169,15 +169,22 @@ for i in *so ; do
 mv $i ../../gegl-0.4/$i.avx2
 done
 popd
+pushd %{buildroot}/usr/lib64/haswell/avx512_1/gegl-0.4/
+for i in *so ; do
+mv $i ../../../gegl-0.4/$i.avx512
+done
+popd
 rm -rf %{buildroot}/usr/lib64/haswell
-mkdir -p %{buildroot}/usr/lib64/haswell
+mkdir -p %{buildroot}/usr/lib64/haswell/avx512_1
 ln -s ../gegl-0.4 %{buildroot}/usr/lib64/haswell/
+ln -s ../../gegl-0.4 %{buildroot}/usr/lib64/haswell/avx512_1/
 ## install_append end
 
 %files
 %defattr(-,root,root,-)
 /usr/lib64/gegl-0.4/dropshadow2.json
 /usr/lib64/gegl-0.4/grey2.json
+/usr/lib64/haswell/avx512_1/gegl-0.4
 /usr/lib64/haswell/gegl-0.4
 
 %files bin
@@ -310,19 +317,25 @@ ln -s ../gegl-0.4 %{buildroot}/usr/lib64/haswell/
 /usr/lib64/gegl-0.4/exr-load.so.avx2
 /usr/lib64/gegl-0.4/exr-save.so
 /usr/lib64/gegl-0.4/ff-load.so
+/usr/lib64/gegl-0.4/ff-load.so.avx512
 /usr/lib64/gegl-0.4/ff-save.so
 /usr/lib64/gegl-0.4/gegl-common-cxx.so
 /usr/lib64/gegl-0.4/gegl-common-cxx.so.avx2
+/usr/lib64/gegl-0.4/gegl-common-cxx.so.avx512
 /usr/lib64/gegl-0.4/gegl-common-gpl3.so
 /usr/lib64/gegl-0.4/gegl-common-gpl3.so.avx2
+/usr/lib64/gegl-0.4/gegl-common-gpl3.so.avx512
 /usr/lib64/gegl-0.4/gegl-common.so
 /usr/lib64/gegl-0.4/gegl-common.so.avx2
+/usr/lib64/gegl-0.4/gegl-common.so.avx512
 /usr/lib64/gegl-0.4/gegl-core.so
 /usr/lib64/gegl-0.4/gegl-core.so.avx2
 /usr/lib64/gegl-0.4/gegl-generated.so
 /usr/lib64/gegl-0.4/gegl-generated.so.avx2
+/usr/lib64/gegl-0.4/gegl-generated.so.avx512
 /usr/lib64/gegl-0.4/gif-load.so
 /usr/lib64/gegl-0.4/gif-load.so.avx2
+/usr/lib64/gegl-0.4/gif-load.so.avx512
 /usr/lib64/gegl-0.4/jpg-load.so
 /usr/lib64/gegl-0.4/jpg-load.so.avx2
 /usr/lib64/gegl-0.4/jpg-save.so
@@ -344,8 +357,10 @@ ln -s ../gegl-0.4 %{buildroot}/usr/lib64/haswell/
 /usr/lib64/gegl-0.4/raw-load.so
 /usr/lib64/gegl-0.4/rgbe-load.so
 /usr/lib64/gegl-0.4/rgbe-load.so.avx2
+/usr/lib64/gegl-0.4/rgbe-load.so.avx512
 /usr/lib64/gegl-0.4/rgbe-save.so
 /usr/lib64/gegl-0.4/rgbe-save.so.avx2
+/usr/lib64/gegl-0.4/rgbe-save.so.avx512
 /usr/lib64/gegl-0.4/sdl2-display.so
 /usr/lib64/gegl-0.4/seamless-clone-compose.so
 /usr/lib64/gegl-0.4/seamless-clone.so
@@ -353,6 +368,7 @@ ln -s ../gegl-0.4 %{buildroot}/usr/lib64/haswell/
 /usr/lib64/gegl-0.4/text.so
 /usr/lib64/gegl-0.4/transformops.so
 /usr/lib64/gegl-0.4/transformops.so.avx2
+/usr/lib64/gegl-0.4/transformops.so.avx512
 /usr/lib64/gegl-0.4/v4l.so
 /usr/lib64/gegl-0.4/vector-fill.so
 /usr/lib64/gegl-0.4/vector-fill.so.avx2
