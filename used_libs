@@ -1,4 +1,4 @@
-libOpenEXR-3_0.so.28
+libOpenEXR-3_0.so.29
 libSDL2-2.0.so.0
 libavcodec.so.58
 libavformat.so.58
@@ -16,6 +16,7 @@ libjpeg.so.62
 libjson-glib-1.0.so.0
 liblcms2.so.2
 libm.so.6
+libmvec.so.1
 libpango-1.0.so.0
 libpangocairo-1.0.so.0
 libpng16.so.16

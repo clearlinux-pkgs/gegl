@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.4.30
-Release  : 80
+Release  : 81
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.30.tar.xz
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.30.tar.xz
 Summary  : Provides gif loading and conversion
@@ -127,16 +127,16 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1622744457
+export SOURCE_DATE_EPOCH=1626715908
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -fzero-call-used-regs=used "
-export FCFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -fzero-call-used-regs=used "
-export FFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -fzero-call-used-regs=used "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -fzero-call-used-regs=used "
+export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=4 -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mprefer-vector-width=256 "
+export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=4 -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mprefer-vector-width=256 "
+export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=4 -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mprefer-vector-width=256 "
+export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=4 -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mprefer-vector-width=256 "
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain   builddir
 ninja -v -C builddir
 CFLAGS="$CFLAGS -m64 -march=haswell" CXXFLAGS="$CXXFLAGS -m64 -march=haswell " LDFLAGS="$LDFLAGS -m64 -march=haswell" meson --libdir=lib64/haswell --prefix=/usr --buildtype=plain   builddiravx2
@@ -317,8 +317,10 @@ ln -s ../../gegl-0.4 %{buildroot}/usr/lib64/haswell/avx512_1/
 /usr/lib64/gegl-0.4/exr-load.so.avx2
 /usr/lib64/gegl-0.4/exr-save.so
 /usr/lib64/gegl-0.4/ff-load.so
+/usr/lib64/gegl-0.4/ff-load.so.avx2
 /usr/lib64/gegl-0.4/ff-load.so.avx512
 /usr/lib64/gegl-0.4/ff-save.so
+/usr/lib64/gegl-0.4/ff-save.so.avx2
 /usr/lib64/gegl-0.4/gegl-common-cxx.so
 /usr/lib64/gegl-0.4/gegl-common-cxx.so.avx2
 /usr/lib64/gegl-0.4/gegl-common-cxx.so.avx512
