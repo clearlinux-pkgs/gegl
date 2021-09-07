@@ -2,15 +2,15 @@
 # but are undesirable. One entry per line, no whitespace.
 OpenEXR
 jasper
+lcms2
 libavcodec
 libavformat
+libnsgif
 libopenraw-1.0
+libtiff-4
+libwebp
+maxflow
 mrg
 poly2tri-c
-vapigen
-libwebp
-libtiff-4
-lcms2
 pygobject-2.0
-libnsgif
-maxflow
+vapigen

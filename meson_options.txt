@@ -1,8 +1,14 @@
 # Optional features
 option('docs',
+  type: 'combo',
+  choices: ['auto', 'true', 'false'],
+  value: 'auto',
+  description: 'build documentation'
+)
+option('gtk-doc',
   type: 'boolean',
   value: 'false',
-  description: 'build documentation'
+  description: 'build gtk-doc reference',
 )
 option('workshop',
   type: 'boolean',
@@ -25,6 +31,12 @@ option('parallel-tests',
   type: 'boolean',
   value: 'true',
   description: 'run tests in parallel or sequentially'
+)
+
+option('operation-test',
+  type: 'boolean',
+  value: 'false',
+  description: 'include gegl-tester in test suite'
 )
 
 # optional dependencies

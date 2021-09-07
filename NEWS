@@ -1,8 +1,345 @@
-GEGL-0.4.15
+GEGL-0.4.32 2021-09-05
+
+Docs/testing:
+
+Fixes and improvements to the test system ands it integration for
+comparing/keeping track of hashes of operation output by John Marshall
+including and overhaul of reference compositions and hashes, improving
+development as well as documentation.
+
+json: fixing of leaks and dead code removal.
+
+Operations:
+
+distance-transform: openexr: fix build with newer OpenEXR 3
+negative-darkroom: contrast boost and illuminant adjustment parameter,
+reworked emulsion dye model, UI improvements, more black and white
+paper presets. fill-path: 32bit float RGB and CMYK color processing,
+using ctx as renderer.
+
+GEGL-0.4.30 2021-03-27
+
+Build:
+
+libjpeg and libpng are now required.
+
+Reduce babl requirement to 0.1.78, it is highly recommended to build
+with a newer babl though despite it being what wants to increase the
+meson version requirement. Improved gir build options, fixes for cross
+compilation.
+
+Large improvements of integration of tests with meson. XML tests are
+now outputting in TAP format. As well as many related cleanups of tests
+that have been in a state of slight bitrot since the migration to
+meson.
+
+Upload meson logs as artifcats, use release and debugoptimized build
+types.
+
+Pin glibc package in arch CI build to a version before it hard depends
+on linux 4.4.
+
+New Operations:
+
+negative-darkroom: This operation is for artists who use hybrid workflow
+ technique of analog photography. After scanning a developed negative, this
+ operation is used to invert the scan to create a positive image by simulating
+ the light behaviour of darkroom enlarger and common photographic papers.
+
+Operations:
+
+jpg-load,png-load,tiff-load: show ICC relatd problems as warnings.
+rgbe-load : fix handling of exponent=0 in RLE encoded files.
+color-reduction : Added blue-noise modes, the patents are expired for some
+years already, also added fix to levels parameters; enabling bi-level.
+fattal02 : ensure gaussian pyramid has at least one level.
+
+paint-select (in workshop): multi-level banded graphcut, sub-region rather
+  than full buffer rcomputations and other improvements.
+
+Contributors to this release:
+
+dimspingos, Jan Vesely, John Marshall, JonnyRobbie, Jordi Mas, Милош
+Поповић, Olivier Tilloy, Øyvind Kolås, Philipp Kiemle, Piotr Drąg,
+Sabri Ünal, scootergrisen, Thomas Manni, Yuri Chornoivan.
+
+GEGL-0.4.28 2020-12-20
+
+Core:
+
+Infrastructure to opt out of listing ops with unmet runtime
+dependencies.
+
+Build:
+
+Set vapi metadata better under meson. Make graphviz' dot library is a
+run-time not build time dependency.
+
+Operations:
+
+gegl:convert-space and gegl:cast-space operations fixed, and added to
+build. icc:load new operation that treats .icc files as images,
+permitting loading a space into the graph from file.
+
+Workshop:
+
+New operation paint-select for an foreground select tool in
+development.
+
+Contributors to this release:
+
+Asier Sarasua Garmendia, Christian Kirbach, Corentin Noël, Cristian
+Secară, Dimitris Spingos (Δημήτρης Σπίγγος), Jehan, Jordi Mas, Milo
+Ivir, Niels De Graef, Øyvind Kolås, Piotr Drąg, Rico Tzschichholz,
+Sabri Ünal, Stephan Woidowski, Thomas Manni, Yacine Bouklif and Yuri
+Chornoivan.
+
+GEGL-0.4.26 2020-08-02
+
+Core:
+
+Allow unsetting of property keys on paramspecs.
+
+Operations:
+
+perlin-noise: use a local random generator, avoiding resetting the
+global one. transform: decrease epsilon for affine-detection, and round
+some affine matrices to be exact.
+
+Contributors to this release:
+
+Alan Mortensen, Jan Vesely, Øyvind Kolås, Jordi Mas, Michael Natterer,
+Asier Sarasua Garmendia, Ell, Tim Sabsh and Tatsuki Makino.
+
+GEGL-0.4.24 2020-06-07
+
+Build:
+
+CI creation and caching of container images for build. Force support
+for 64bit file offsets on win32, re-enabling >2GB tile swap, fallout
+from migration to meson. Operations in workshop are now built as a
+bundle.
+
+Core:
+
+cppcheck liniting fixes. Report pixel-formats as part of graphviz
+debug. New meta-data API, that permit handling non-exif metadata in
+different file loaders and savers in a generic manner. Use
+g_ascii_strtod to avoid being tripped up by , expected through locale.
+
+Buffer:
+
+Fixed integer overflow in u32 bilinear blit scaler.
+
+Changed cubic interpolation to be a bit softer, reducing induced moire
+seen in issue #167. Speeded up cubic sampler with custom inlinable
+fabsf.
+
+Gracefully fail when running out of swap space. issue #229 Avoid
+possible deadlock in file monitoring, working around upstream issue.
+Reduced contention on tile allocation. Allow creating buffers with
+uninitialized data, and tracking of empty tiles in tile backends. Sleep
+on tile lock contention, reducing contention when hyperthreading.
+Cppcheck liniting fixes.
+
+Operations:
+
+Meta-operations now have an additional vfunc, update(), which gets
+invoked on property changes, all meta ops have been refactored to use
+the new cleaner API. gegl_operation_meta_watch_node(s) were already
+effectively nops, they are marked as deprecated and left as stubs for
+thid party ops still calling them.
+
+We now provide our own inlined versions of some basic single precision
+floats ops, this enables inlining of performance critical code also
+with lower optimization levels.
+
+crop: with no parameters set, infer rectangle to crop from graph.
+
+crop: cropping rectangle can be implied from graph. hue-chroma: avoid
+modifying hue/chroma of neutrals dropshadow: added option for shadow
+growing median-blur: accept negative radius values rgb-clip: add
+parameters for specifying clipping ranges vignette: new shapes,
+horizontal and vertical. imgcmp: make max-diff property conform to
+gobject standard. save-pixbuf: use a GObject for consumer read instead
+of pointer property. gegl-graph: add a gegl-chain tutorial as default
+script.
+
+New Ops:
+
+border-align: place a buffer within the borders of another one. pack:
+joins two buffers into one, with optional gap. bloom: adds a glow
+around highlights. piecewise-blend: uses a grayscale map as index into
+array of buffers used as LUT. variable-blur: uses piecewise-blend
+piecewise-blend and gaussian blur to approximate blurs with per-pixel
+blur radius. focus-blur: a vignetting blur, using variable-blur.
+reset-origin: moves upper left of extent to 0,0 band-tune: parametric
+band equalizer for tuning frequency bands of image.
+
+Contributors to this release
+
+Alexandre Prokoudine, Andre Klapper, Asier Sarasua Garmendia, Brian
+Stafford, Daniel Mustieles, Debarshi Ray, Dimitris Spingos (Δημήτρης
+Σπίγγος), Ell, Elle Stone, Jan Vesely, Jehan, Jordi Mas, lillolollo,
+Marco Ciampa, Michael Schumacher, Nathan Follens, Niels De Graef,
+Øyvind Kolås, Piotr Drąg, Rodrigo Lledó, Senya, Simon McVittie, suzu
+urek, woob, Yuri Chornoivan,
+
+GEGL-0.4.22 2020-02-18
 
 Build
 
-Added gitlab continuous integration.
+Updates to python gobject introspection tests, and made them able to
+look up babl typelib. Build pdf:load again; missing since meson
+migration. Fix OpenCL include file generation to work in non-utf8
+locales.
+
+Operations
+
+matting-{global,levin}: fix crash when bounding boxes of input and aux
+differ.
+
+Contributors to this release
+
+Anders Jonsson, band-a-prend, Ell, Félix Piédallu and Øyvind Kolås.
+
+GEGL-0.4.20 2020-01-17
+
+Build
+
+Improvements and refinements of meson builds and CI. Fixing major
+issues for OSX and win32.
+
+Buffer
+
+Pass O_BINARY where relevant on windows, fixing crashes occuring when
+swap is used. Avoid 32bit overflows in computations for gegl_buffer_set
+and gegl_buffer_get.
+
+Core
+
+Avoid running more thread jobs than there are pixels to process. Faster
+teardown of buffer caches when bounding box shrinks. only do in-place
+processing if ROI fits in input abyss.
+
+Operations
+
+Improved edge handling for gegl:distance-transform gegl:crop removed
+workaround for incorrect in-place handling.
+
+Contributors to this release
+
+Alan Mortensen, Alex Samorukov, Christoph Reiter, Dimitris Spingos,
+Ell, Jan Vesely, Jordi Mas, Julien Hardelin, Koop Mast, Marco Ciampa,
+Michael Schumacher, Øyvind Kolås and woob.
+
+GEGL-0.4.18 2019-10-27
+
+Build
+
+Drop autotools, GEGL is now using meson, most things are working again
+now - documentation/website build is a work in progress, many issues
+have been fixed, more a sure to surface with this first meson only
+release following the babl one.
+
+Core
+
+Support ui labels and descriptions for aux pads of ops. Guard against
+uint32_t overflows in memory computations, improved memory usage stat
+on FreeBSD. Added support for hygon dhyana architecture. Added
+gegl_try_malloc and use it to allocate storage for tiles. gegl-stats
+gained active- and assigned-threads members.
+
+Buffer
+
+New API for aligning to regular tile grid, gegl_rectangle_align
+[_to_buffer] added gegl_rectangle_xor gegl_buffer_create_sub_bufer now
+always returns a new object. Improved tile compression, more accurate
+accounting and avoidiance when it is determinetal. gegl_buffer_save :
+store BablSpace take into consideration concurrent use of different
+tile sizes in gegl_tile_alloc Fast path for gegl_buffer_copy is
+entirely in abyss. Improved api misuse handling in gegl_buffer_set|get
+Improved consistency of results when doing COW of abyss. Improved
+Gobject Intospection annotations. Use a binary tree for tile swap,
+improving tile removal speed. Avoid gegl_buffer_set avoid set_pixel
+fast path if level>0
+
+Operations
+
+Dynamic computation of per-operation thread cost, making GEGL fully use
+available cores on more operations.
+
+new operations: bayer-matrix, linear-sinusoid, color-assimilation-grid,
+normal-map. new operations in workshop: boxblur, alpha-inpaint
+
+pass-through for infinite planes for: apply-lens, polar-coordinates,
+whirl-pinch, convolution-matrix, maze, cartoon, waterpixels, tile,
+distance-transform, spherize, tile-paper, dither, mantiuk06,
+reinhard05, fattal02, fractal-trace, motion-blur-zoom,
+motion-blur-circular, wind, little-planet, mirrors, cubism and
+long-shdow. improved property ranges/meta-data or copyright for:
+motion-blur-zoom, edge-neon, cartoon, photocopy, softglow, oilify,
+bump-map, remap,
+
+convolution: fix source-buffer offsets of filtered-out components,
+avoiding excessive shifting. jpg-save: force grayscale if incoming
+buffer is grayscale sdl-display: port to SDL2 gamma: handle negative
+input values apply-lens; enable auto threading matting-global: disable
+auto threading, allocate less temporay memory. maze: reimplemented
+without recursion newsprint: added black pullout and per colorant
+pattern and period parameters, enable threading. saturation: add a
+colormodel property which permits operating in RGB instead of CIE Lab,
+enabling hue preserving saturation changes. exr-load/exr-save: only use
+associated alpha with EXR files ff-load: fix audio track decoding for
+pure audio files c2g: fixed initialization data race and out of bounds
+array access when threaded. color-enhance: fixed a buffer leak
+perlin-noise: fix initialization race domain-transform: faster nop for
+edge-preservation=1.0, support BablSpace oilify: support specifying
+mask-radius with aux buffer linear-gradient, readial-gradient: use
+colors in correct order. pixelize: avoid potential glitches
+weighted-blend: harmonize opencl implementation with C edge-neon:
+performane improvements
+
+GEGL UI
+
+gcut video editor ui has been removed, all its functionality is latent
+in the new media browser/manipulator/viewer UI.
+
+Permit start/end times for playlist items, enabling use of folder as
+EDL. Add ability loop currently shown media element. Nearest neighbor
+decoding; for realtime playback of HD video content. Frame-cache for
+rendered video frames (with associated PCM data) Drag and drop from
+file-managers to collection view.
+
+Contributors to this release:
+
+Abderrahim Kitouni, Alexandre Prokoudine, Asier Sarasua Garmendia,
+Bruce Cowan, Debarshi Ray, Dimitris Spingos, Ell, fanjinke, Félix
+Piédallu, Jan Vesely, Jordi Mas, Marco Ciampa, Martin Srebotnjak,
+Michael Natterer, Michael Schumacher, Niels De Graef, Øyvind Kolås,
+Pawan Chitrakar, Piotr Drąg, Rodrigo Lledó, Sabri Ünal, Schwan Carl,
+Shlomi Fish, Stefan Brüns, Thomas Manni and Ting-Wei Lan.
+
+GEGL-0.4.16 2019-05-07
+
+Buffer
+
+Swapped behavior of cubic interpolation from cubic to mithcell
+coefficients, leading to crisper results in all uses of the cubic
+sampler.
+
+Use a custom allocator for tile data which aligns data and groups
+allocations in blocks - improving performance on windows by keeping
+more slack allocation memory in-process. On linux the opposite was
+needed and is achieved by using the GNU extension malloc_trim which
+permits forcing invokation of the glibc malloc/free allocators garbage
+collection function.
+
+Permit tiles to be unreffed after GEGL shut-down without crash, which
+is likely when using bindings to dynamic languages.
+
+Improved deadlock prevention in gegl_buffer_copy() when using copy on
+write.
 
 Core
 
@@ -18,20 +355,9 @@ GEGL_USE_OPENCL environment variable.
 New call gegl_update_anim_time for applying the animation curves of
 properties.
 
-Buffer
+Build
 
-Swapped behavior of cubic interpolation from cubic to mithcell
-coefficients, leading to crisper results in all uses of the cubic
-sampler.
-
-Permit tiles to be unreffed after GEGL shut-down without crash, which
-is likely when using bindings to dynamic languages.
-
-Use malloc_trim when compiled with glibc to possibly decrease the
-resident size of progress when buffers are destroyed.
-
-Improved deadlock prevention in gegl_buffer_copy() when using copy on
-write.
+Added gitlab continuous integration.
 
 Operations
 
@@ -73,7 +399,14 @@ decoding, scaling and display is fast enough to leave spare cycles.
 Support for nearest neighbor scaling of imagry; aiding video playback
 without dropping audio frames.
 
-Support for custom collection order and per-file key-value metadata.
+Custom collection order and per-file key-value metadata.
+
+Contributors to this release:
+
+Alex Samorukov, Brian Stafford, Carles Ferrando Garcia, Dimitris
+Spingos, Edward E, Ell, Jan Vesely, Jehan, Jordi Mas, lumingzh, Marco
+Ciampa, Martin Srebotnjak, Massimo Valentini, Nuno Ferreira, Øyvind
+Kolås, Piotr Drąg, sabri ünal and Sveinn í Felli.
 
 GEGL-0.4.14 2019-03-01
 
@@ -1685,4 +2018,4 @@ Calvin Williamson, Caroline Dahloff Daniel Rogers, Garry R. Osgood, Jay
 Cox and Sven Neumann
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Last updated 2019-05-07 22:32:27 CEST
+Last updated 2021-09-05 19:03:39 CEST

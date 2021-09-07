@@ -1,6 +1,5 @@
-0.4.30
+0.4.32
 SDL2-dev
-librsvg
 librsvg-dev
 pkgconfig(babl)
 pkgconfig(gdk-pixbuf-2.0)
