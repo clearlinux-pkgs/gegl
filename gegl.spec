@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.4.32
-Release  : 83
+Release  : 85
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.32.tar.xz
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.32.tar.xz
 Summary  : Provides gif loading and conversion
@@ -12,6 +12,7 @@ Group    : Development/Tools
 License  : BSD-3-Clause GPL-3.0 LGPL-3.0 MIT
 Requires: gegl-bin = %{version}-%{release}
 Requires: gegl-data = %{version}-%{release}
+Requires: gegl-filemap = %{version}-%{release}
 Requires: gegl-lib = %{version}-%{release}
 Requires: gegl-license = %{version}-%{release}
 Requires: gegl-locales = %{version}-%{release}
@@ -60,6 +61,7 @@ Summary: bin components for the gegl package.
 Group: Binaries
 Requires: gegl-data = %{version}-%{release}
 Requires: gegl-license = %{version}-%{release}
+Requires: gegl-filemap = %{version}-%{release}
 
 %description bin
 bin components for the gegl package.
@@ -86,11 +88,20 @@ Requires: gegl = %{version}-%{release}
 dev components for the gegl package.
 
 
+%package filemap
+Summary: filemap components for the gegl package.
+Group: Default
+
+%description filemap
+filemap components for the gegl package.
+
+
 %package lib
 Summary: lib components for the gegl package.
 Group: Libraries
 Requires: gegl-data = %{version}-%{release}
 Requires: gegl-license = %{version}-%{release}
+Requires: gegl-filemap = %{version}-%{release}
 
 %description lib
 lib components for the gegl package.
@@ -127,21 +138,21 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1631030216
+export SOURCE_DATE_EPOCH=1634059279
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mprefer-vector-width=256 "
-export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mprefer-vector-width=256 "
-export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mprefer-vector-width=256 "
-export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mprefer-vector-width=256 "
+export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mno-vzeroupper -mprefer-vector-width=256 "
+export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mno-vzeroupper -mprefer-vector-width=256 "
+export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mno-vzeroupper -mprefer-vector-width=256 "
+export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mno-vzeroupper -mprefer-vector-width=256 "
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain   builddir
 ninja -v -C builddir
-CFLAGS="$CFLAGS -m64 -march=haswell" CXXFLAGS="$CXXFLAGS -m64 -march=haswell " LDFLAGS="$LDFLAGS -m64 -march=haswell" meson --libdir=lib64/haswell --prefix=/usr --buildtype=plain   builddiravx2
+CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -O3" CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 " LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3" meson --libdir=lib64 --prefix=/usr --buildtype=plain   builddiravx2
 ninja -v -C builddiravx2
-CFLAGS="$CFLAGS -m64 -march=skylake-avx512" CXXFLAGS="$CXXFLAGS -m64 -march=skylake-avx512 " LDFLAGS="$LDFLAGS -m64 -march=skylake-avx512" meson --libdir=lib64/haswell/avx512_1 --prefix=/usr --buildtype=plain   builddiravx512
+CFLAGS="$CFLAGS -m64 -march=x86-64-v4 -O3" CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v4 " LDFLAGS="$LDFLAGS -m64 -march=x86-64-v4" meson --libdir=lib64 --prefix=/usr --buildtype=plain   builddiravx512
 ninja -v -C builddiravx512
 
 %check
@@ -149,7 +160,7 @@ export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-meson test -C builddir || :
+meson test -C builddir --print-errorlogs || :
 
 %install
 mkdir -p %{buildroot}/usr/share/package-licenses/gegl
@@ -159,38 +170,23 @@ cp %{_builddir}/gegl-0.4.32/subprojects/libnsgif/COPYING %{buildroot}/usr/share/
 cp %{_builddir}/gegl-0.4.32/subprojects/poly2tri-c/COPYING %{buildroot}/usr/share/package-licenses/gegl/7cd64aeec55f96676d9e34b6b1677ec470e45fcf
 cp %{_builddir}/gegl-0.4.32/subprojects/poly2tri-c/LICENSE-Poly2Tri-C.txt %{buildroot}/usr/share/package-licenses/gegl/855d3492027e24b96cc759b7fa729176cb1bdca7
 cp %{_builddir}/gegl-0.4.32/subprojects/poly2tri-c/LICENSE-Poly2Tri.txt %{buildroot}/usr/share/package-licenses/gegl/178f030d76bde249653291b58a7e8066755051be
-DESTDIR=%{buildroot} ninja -C builddiravx512 install
-DESTDIR=%{buildroot} ninja -C builddiravx2 install
+DESTDIR=%{buildroot}-v3 ninja -C builddiravx2 install
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
+DESTDIR=%{buildroot}-v4 ninja -C builddiravx512 install
+/usr/bin/elf-move.py avx512 %{buildroot}-v4 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 DESTDIR=%{buildroot} ninja -C builddir install
 %find_lang gegl-0.4
-## install_append content
-pushd %{buildroot}/usr/lib64/haswell/gegl-0.4/
-for i in *so ; do
-mv $i ../../gegl-0.4/$i.avx2
-done
-popd
-pushd %{buildroot}/usr/lib64/haswell/avx512_1/gegl-0.4/
-for i in *so ; do
-mv $i ../../../gegl-0.4/$i.avx512
-done
-popd
-rm -rf %{buildroot}/usr/lib64/haswell
-mkdir -p %{buildroot}/usr/lib64/haswell/avx512_1
-ln -s ../gegl-0.4 %{buildroot}/usr/lib64/haswell/
-ln -s ../../gegl-0.4 %{buildroot}/usr/lib64/haswell/avx512_1/
-## install_append end
 
 %files
 %defattr(-,root,root,-)
 /usr/lib64/gegl-0.4/dropshadow2.json
 /usr/lib64/gegl-0.4/grey2.json
-/usr/lib64/haswell/avx512_1/gegl-0.4
-/usr/lib64/haswell/gegl-0.4
 
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/gegl
 /usr/bin/gegl-imgcmp
+/usr/share/clear/optimized-elf/bin*
 
 %files data
 %defattr(-,root,root,-)
@@ -312,69 +308,46 @@ ln -s ../../gegl-0.4 %{buildroot}/usr/lib64/haswell/avx512_1/
 /usr/lib64/pkgconfig/gegl-0.4.pc
 /usr/lib64/pkgconfig/gegl-sc-0.4.pc
 
+%files filemap
+%defattr(-,root,root,-)
+/usr/share/clear/filemap/filemap-gegl
+
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/gegl-0.4/exr-load.so
-/usr/lib64/gegl-0.4/exr-load.so.avx2
 /usr/lib64/gegl-0.4/exr-save.so
 /usr/lib64/gegl-0.4/ff-load.so
-/usr/lib64/gegl-0.4/ff-load.so.avx2
-/usr/lib64/gegl-0.4/ff-load.so.avx512
 /usr/lib64/gegl-0.4/ff-save.so
-/usr/lib64/gegl-0.4/ff-save.so.avx2
 /usr/lib64/gegl-0.4/gegl-common-cxx.so
-/usr/lib64/gegl-0.4/gegl-common-cxx.so.avx2
-/usr/lib64/gegl-0.4/gegl-common-cxx.so.avx512
 /usr/lib64/gegl-0.4/gegl-common-gpl3.so
-/usr/lib64/gegl-0.4/gegl-common-gpl3.so.avx2
-/usr/lib64/gegl-0.4/gegl-common-gpl3.so.avx512
 /usr/lib64/gegl-0.4/gegl-common.so
-/usr/lib64/gegl-0.4/gegl-common.so.avx2
-/usr/lib64/gegl-0.4/gegl-common.so.avx512
 /usr/lib64/gegl-0.4/gegl-core.so
-/usr/lib64/gegl-0.4/gegl-core.so.avx2
 /usr/lib64/gegl-0.4/gegl-generated.so
-/usr/lib64/gegl-0.4/gegl-generated.so.avx2
-/usr/lib64/gegl-0.4/gegl-generated.so.avx512
 /usr/lib64/gegl-0.4/gif-load.so
-/usr/lib64/gegl-0.4/gif-load.so.avx2
-/usr/lib64/gegl-0.4/gif-load.so.avx512
 /usr/lib64/gegl-0.4/jpg-load.so
-/usr/lib64/gegl-0.4/jpg-load.so.avx2
 /usr/lib64/gegl-0.4/jpg-save.so
 /usr/lib64/gegl-0.4/lcms-from-profile.so
 /usr/lib64/gegl-0.4/npd.so
-/usr/lib64/gegl-0.4/npd.so.avx2
 /usr/lib64/gegl-0.4/npy-save.so
 /usr/lib64/gegl-0.4/path.so
-/usr/lib64/gegl-0.4/path.so.avx2
 /usr/lib64/gegl-0.4/pdf-load.so
 /usr/lib64/gegl-0.4/pixbuf-load.so
 /usr/lib64/gegl-0.4/pixbuf-save.so
 /usr/lib64/gegl-0.4/png-load.so
 /usr/lib64/gegl-0.4/png-save.so
 /usr/lib64/gegl-0.4/ppm-load.so
-/usr/lib64/gegl-0.4/ppm-load.so.avx2
 /usr/lib64/gegl-0.4/ppm-save.so
-/usr/lib64/gegl-0.4/ppm-save.so.avx2
 /usr/lib64/gegl-0.4/raw-load.so
 /usr/lib64/gegl-0.4/rgbe-load.so
-/usr/lib64/gegl-0.4/rgbe-load.so.avx2
-/usr/lib64/gegl-0.4/rgbe-load.so.avx512
 /usr/lib64/gegl-0.4/rgbe-save.so
-/usr/lib64/gegl-0.4/rgbe-save.so.avx2
-/usr/lib64/gegl-0.4/rgbe-save.so.avx512
 /usr/lib64/gegl-0.4/sdl2-display.so
 /usr/lib64/gegl-0.4/seamless-clone-compose.so
 /usr/lib64/gegl-0.4/seamless-clone.so
 /usr/lib64/gegl-0.4/svg-load.so
 /usr/lib64/gegl-0.4/text.so
 /usr/lib64/gegl-0.4/transformops.so
-/usr/lib64/gegl-0.4/transformops.so.avx2
-/usr/lib64/gegl-0.4/transformops.so.avx512
 /usr/lib64/gegl-0.4/v4l.so
 /usr/lib64/gegl-0.4/vector-stroke.so
-/usr/lib64/gegl-0.4/vector-stroke.so.avx2
 /usr/lib64/gegl-0.4/webp-load.so
 /usr/lib64/gegl-0.4/webp-save.so
 /usr/lib64/libgegl-0.4.so
@@ -382,6 +355,7 @@ ln -s ../../gegl-0.4 %{buildroot}/usr/lib64/haswell/avx512_1/
 /usr/lib64/libgegl-0.4.so.0.431.1
 /usr/lib64/libgegl-npd-0.4.so
 /usr/lib64/libgegl-sc-0.4.so
+/usr/share/clear/optimized-elf/lib*
 
 %files license
 %defattr(0644,root,root,0755)
