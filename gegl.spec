@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.4.36
-Release  : 91
+Release  : 92
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.36.tar.xz
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.36.tar.xz
 Summary  : Provides gif loading and conversion
@@ -138,16 +138,16 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1645556078
+export SOURCE_DATE_EPOCH=1656030247
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mno-vzeroupper -mprefer-vector-width=256 "
-export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mno-vzeroupper -mprefer-vector-width=256 "
-export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mno-vzeroupper -mprefer-vector-width=256 "
-export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mno-vzeroupper -mprefer-vector-width=256 "
+export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mprefer-vector-width=256 "
+export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mprefer-vector-width=256 "
+export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mprefer-vector-width=256 "
+export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mprefer-vector-width=256 "
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain   builddir
 ninja -v -C builddir
 CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 -O3" CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 " LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3" meson --libdir=lib64 --prefix=/usr --buildtype=plain   builddiravx2
@@ -174,8 +174,8 @@ DESTDIR=%{buildroot}-v3 ninja -C builddiravx2 install
 DESTDIR=%{buildroot}-v4 ninja -C builddiravx512 install
 DESTDIR=%{buildroot} ninja -C builddir install
 %find_lang gegl-0.4
-/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
-/usr/bin/elf-move.py avx512 %{buildroot}-v4 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
+/usr/bin/elf-move.py avx512 %{buildroot}-v4 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
@@ -359,12 +359,113 @@ DESTDIR=%{buildroot} ninja -C builddir install
 /usr/lib64/gegl-0.4/vector-stroke.so
 /usr/lib64/gegl-0.4/webp-load.so
 /usr/lib64/gegl-0.4/webp-save.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/exr-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/exr-save.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/ff-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/ff-save.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/gegl-common-cxx-x86_64-v2.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/gegl-common-cxx-x86_64-v3.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/gegl-common-cxx.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/gegl-common-gpl3-x86_64-v2.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/gegl-common-gpl3-x86_64-v3.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/gegl-common-gpl3.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/gegl-common-x86_64-v2.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/gegl-common-x86_64-v3.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/gegl-common.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/gegl-core.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/gegl-generated-x86_64-v2.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/gegl-generated-x86_64-v3.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/gegl-generated.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/gegl-transformops-x86_64-v2.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/gegl-transformops-x86_64-v3.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/gif-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/jpg-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/jpg-save.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/lcms-from-profile.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/libgegl-0.4.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/libgegl-0.4.so.0
+/usr/lib64/glibc-hwcaps/x86-64-v3/libgegl-0.4.so.0.435.1
+/usr/lib64/glibc-hwcaps/x86-64-v3/libgegl-npd-0.4.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/libgegl-sc-0.4.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/npd.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/npy-save.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/path.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/pdf-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/pixbuf-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/pixbuf-save.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/png-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/png-save.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/ppm-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/ppm-save.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/raw-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/rgbe-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/rgbe-save.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/sdl2-display.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/seamless-clone-compose.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/seamless-clone.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/svg-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/text.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/transformops.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/v4l.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/vector-stroke.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/webp-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/webp-save.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/exr-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/exr-save.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/ff-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/ff-save.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/gegl-common-cxx-x86_64-v2.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/gegl-common-cxx-x86_64-v3.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/gegl-common-cxx.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/gegl-common-gpl3-x86_64-v2.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/gegl-common-gpl3-x86_64-v3.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/gegl-common-gpl3.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/gegl-common-x86_64-v2.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/gegl-common-x86_64-v3.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/gegl-common.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/gegl-core.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/gegl-generated-x86_64-v2.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/gegl-generated-x86_64-v3.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/gegl-generated.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/gegl-transformops-x86_64-v2.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/gegl-transformops-x86_64-v3.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/gif-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/jpg-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/jpg-save.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/lcms-from-profile.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/libgegl-0.4.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/libgegl-0.4.so.0
+/usr/lib64/glibc-hwcaps/x86-64-v4/libgegl-0.4.so.0.435.1
+/usr/lib64/glibc-hwcaps/x86-64-v4/libgegl-npd-0.4.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/libgegl-sc-0.4.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/npd.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/npy-save.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/path.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/pdf-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/pixbuf-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/pixbuf-save.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/png-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/png-save.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/ppm-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/ppm-save.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/raw-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/rgbe-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/rgbe-save.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/sdl2-display.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/seamless-clone-compose.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/seamless-clone.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/svg-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/text.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/transformops.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/v4l.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/vector-stroke.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/webp-load.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/webp-save.so
 /usr/lib64/libgegl-0.4.so
 /usr/lib64/libgegl-0.4.so.0
 /usr/lib64/libgegl-0.4.so.0.435.1
 /usr/lib64/libgegl-npd-0.4.so
 /usr/lib64/libgegl-sc-0.4.so
-/usr/share/clear/optimized-elf/lib*
 
 %files license
 %defattr(0644,root,root,0755)
