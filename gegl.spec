@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.4.36
-Release  : 93
+Release  : 94
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.36.tar.xz
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.36.tar.xz
 Summary  : Provides gif loading and conversion
@@ -374,6 +374,7 @@ DESTDIR=%{buildroot} ninja -C builddir install
 /usr/lib64/libgegl-0.4.so.0.435.1
 /usr/lib64/libgegl-npd-0.4.so
 /usr/lib64/libgegl-sc-0.4.so
+/usr/share/clear/optimized-elf/other*
 
 %files license
 %defattr(0644,root,root,0755)
