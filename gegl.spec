@@ -4,12 +4,12 @@
 #
 Name     : gegl
 Version  : 0.4.38
-Release  : 99
+Release  : 100
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.38.tar.xz
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.38.tar.xz
 Summary  : Seamless Cloning Library Based on GEGL
 Group    : Development/Tools
-License  : BSD-3-Clause GPL-3.0 LGPL-3.0
+License  : BSD-3-Clause GPL-3.0 LGPL-3.0 MIT
 Requires: gegl-bin = %{version}-%{release}
 Requires: gegl-data = %{version}-%{release}
 Requires: gegl-filemap = %{version}-%{release}
@@ -138,16 +138,16 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1657813353
+export SOURCE_DATE_EPOCH=1667423360
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mprefer-vector-width=256 "
-export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mprefer-vector-width=256 "
-export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mprefer-vector-width=256 "
-export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mprefer-vector-width=256 "
+export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used "
+export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used "
+export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used "
+export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used "
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain   builddir
 ninja -v -C builddir
 CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 -O3" CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 " LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3" meson --libdir=lib64 --prefix=/usr --buildtype=plain   builddiravx2
@@ -164,11 +164,12 @@ meson test -C builddir --print-errorlogs || :
 
 %install
 mkdir -p %{buildroot}/usr/share/package-licenses/gegl
-cp %{_builddir}/gegl-0.4.38/COPYING %{buildroot}/usr/share/package-licenses/gegl/7181028b2cb15912d89c76ca33b720a3bfb537cc
-cp %{_builddir}/gegl-0.4.38/COPYING.LESSER %{buildroot}/usr/share/package-licenses/gegl/e7d563f52bf5295e6dba1d67ac23e9f6a160fab9
-cp %{_builddir}/gegl-0.4.38/subprojects/poly2tri-c/COPYING %{buildroot}/usr/share/package-licenses/gegl/7cd64aeec55f96676d9e34b6b1677ec470e45fcf
-cp %{_builddir}/gegl-0.4.38/subprojects/poly2tri-c/LICENSE-Poly2Tri-C.txt %{buildroot}/usr/share/package-licenses/gegl/855d3492027e24b96cc759b7fa729176cb1bdca7
-cp %{_builddir}/gegl-0.4.38/subprojects/poly2tri-c/LICENSE-Poly2Tri.txt %{buildroot}/usr/share/package-licenses/gegl/178f030d76bde249653291b58a7e8066755051be
+cp %{_builddir}/gegl-%{version}/COPYING %{buildroot}/usr/share/package-licenses/gegl/7181028b2cb15912d89c76ca33b720a3bfb537cc || :
+cp %{_builddir}/gegl-%{version}/COPYING.LESSER %{buildroot}/usr/share/package-licenses/gegl/e7d563f52bf5295e6dba1d67ac23e9f6a160fab9 || :
+cp %{_builddir}/gegl-%{version}/subprojects/libnsgif/COPYING %{buildroot}/usr/share/package-licenses/gegl/8ea017a0e28cfc72918082e8def8cf617d78cfac || :
+cp %{_builddir}/gegl-%{version}/subprojects/poly2tri-c/COPYING %{buildroot}/usr/share/package-licenses/gegl/7cd64aeec55f96676d9e34b6b1677ec470e45fcf || :
+cp %{_builddir}/gegl-%{version}/subprojects/poly2tri-c/LICENSE-Poly2Tri-C.txt %{buildroot}/usr/share/package-licenses/gegl/855d3492027e24b96cc759b7fa729176cb1bdca7 || :
+cp %{_builddir}/gegl-%{version}/subprojects/poly2tri-c/LICENSE-Poly2Tri.txt %{buildroot}/usr/share/package-licenses/gegl/178f030d76bde249653291b58a7e8066755051be || :
 DESTDIR=%{buildroot}-v3 ninja -C builddiravx2 install
 DESTDIR=%{buildroot}-v4 ninja -C builddiravx512 install
 DESTDIR=%{buildroot} ninja -C builddir install
@@ -381,6 +382,7 @@ DESTDIR=%{buildroot} ninja -C builddir install
 /usr/share/package-licenses/gegl/7181028b2cb15912d89c76ca33b720a3bfb537cc
 /usr/share/package-licenses/gegl/7cd64aeec55f96676d9e34b6b1677ec470e45fcf
 /usr/share/package-licenses/gegl/855d3492027e24b96cc759b7fa729176cb1bdca7
+/usr/share/package-licenses/gegl/8ea017a0e28cfc72918082e8def8cf617d78cfac
 /usr/share/package-licenses/gegl/e7d563f52bf5295e6dba1d67ac23e9f6a160fab9
 
 %files locales -f gegl-0.4.lang
