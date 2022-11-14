@@ -1,3 +1,23 @@
+GEGL-0.4.40 2022-11-13
+
+Operations:
+
+  • newsprint: do not drop alpha channel in RGB modes.
+
+Core
+
+  • fixes for legacy build, still supporting building latest GEGL for
+    stable GIMP with old babl (not recommended if distros can have
+    recent enough meson.).
+
+  • avoiding possible multi thread race in babl garbage collection
+
+Contributors to this release
+
+Asier Sarasua Garmendia, Enrico Nicoletto, Fran Dieguez, Jehan, Jordi
+Mas, Luming Zh, Marco Ciampa, Matheus Barbosa, nikita, Øyvind Kolås,
+Sabri Ünal and Sam James.
+
 GEGL-0.4.38 2022-07-13
 
 Operations:
@@ -2120,4 +2140,4 @@ Calvin Williamson, Caroline Dahloff Daniel Rogers, Garry R. Osgood, Jay
 Cox and Sven Neumann
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Last updated 2022-07-13 22:13:17 CEST
+Last updated 2022-11-13 15:56:37 CET

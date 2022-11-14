@@ -1,7 +1,8 @@
-0.4.38
+0.4.40
 SDL2-dev
 librsvg-dev
 pkgconfig(babl)
+pkgconfig(babl-0.1)
 pkgconfig(gdk-pixbuf-2.0)
 pkgconfig(lensfun)
 pkgconfig(libavutil)
