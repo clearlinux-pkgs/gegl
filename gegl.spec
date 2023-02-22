@@ -4,7 +4,7 @@
 #
 Name     : gegl
 Version  : 0.4.42
-Release  : 111
+Release  : 112
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.42.tar.xz
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.42.tar.xz
 Summary  : Seamless Cloning Library Based on GEGL
@@ -26,7 +26,7 @@ BuildRequires : libjpeg-turbo-dev
 BuildRequires : librsvg-dev
 BuildRequires : libwebp-dev
 BuildRequires : openexr-dev
-BuildRequires : pkgconfig(babl)
+BuildRequires : pkgconfig(babl-0.1)
 BuildRequires : pkgconfig(gdk-pixbuf-2.0)
 BuildRequires : pkgconfig(json-glib-1.0)
 BuildRequires : pkgconfig(lensfun)
@@ -44,6 +44,7 @@ BuildRequires : pkgconfig(poppler-glib)
 BuildRequires : pkgconfig(pygobject-3.0)
 BuildRequires : python3
 BuildRequires : ruby-dev
+BuildRequires : source-highlight-dev
 BuildRequires : vala
 BuildRequires : vala-dev
 # Suppress stripping binaries
@@ -141,7 +142,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1676998592
+export SOURCE_DATE_EPOCH=1677025465
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
