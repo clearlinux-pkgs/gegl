@@ -5,7 +5,7 @@
 #
 Name     : gegl
 Version  : 0.4.44
-Release  : 113
+Release  : 114
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.44.tar.xz
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.44.tar.xz
 Summary  : Seamless Cloning Library Based on GEGL
@@ -13,7 +13,6 @@ Group    : Development/Tools
 License  : BSD-3-Clause GPL-3.0 LGPL-3.0 MIT
 Requires: gegl-bin = %{version}-%{release}
 Requires: gegl-data = %{version}-%{release}
-Requires: gegl-filemap = %{version}-%{release}
 Requires: gegl-lib = %{version}-%{release}
 Requires: gegl-license = %{version}-%{release}
 Requires: gegl-locales = %{version}-%{release}
@@ -66,7 +65,6 @@ Summary: bin components for the gegl package.
 Group: Binaries
 Requires: gegl-data = %{version}-%{release}
 Requires: gegl-license = %{version}-%{release}
-Requires: gegl-filemap = %{version}-%{release}
 
 %description bin
 bin components for the gegl package.
@@ -93,20 +91,11 @@ Requires: gegl = %{version}-%{release}
 dev components for the gegl package.
 
 
-%package filemap
-Summary: filemap components for the gegl package.
-Group: Default
-
-%description filemap
-filemap components for the gegl package.
-
-
 %package lib
 Summary: lib components for the gegl package.
 Group: Libraries
 Requires: gegl-data = %{version}-%{release}
 Requires: gegl-license = %{version}-%{release}
-Requires: gegl-filemap = %{version}-%{release}
 
 %description lib
 lib components for the gegl package.
@@ -143,16 +132,16 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1679930093
+export SOURCE_DATE_EPOCH=1683125133
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz "
-export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz "
-export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz "
-export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz "
+export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain   builddir
 ninja -v -C builddir
 CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 -O3" CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 " LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3" meson --libdir=lib64 --prefix=/usr --buildtype=plain   builddiravx2
@@ -189,9 +178,12 @@ DESTDIR=%{buildroot} ninja -C builddir install
 
 %files bin
 %defattr(-,root,root,-)
+/V3/usr/bin/gegl
+/V3/usr/bin/gegl-imgcmp
+/V4/usr/bin/gegl
+/V4/usr/bin/gegl-imgcmp
 /usr/bin/gegl
 /usr/bin/gegl-imgcmp
-/usr/share/clear/optimized-elf/bin*
 
 %files data
 %defattr(-,root,root,-)
@@ -312,12 +304,110 @@ DESTDIR=%{buildroot} ninja -C builddir install
 /usr/lib64/pkgconfig/gegl-0.4.pc
 /usr/lib64/pkgconfig/gegl-sc-0.4.pc
 
-%files filemap
-%defattr(-,root,root,-)
-/usr/share/clear/filemap/filemap-gegl
-
 %files lib
 %defattr(-,root,root,-)
+/V3/usr/lib64/gegl-0.4/exr-load.so
+/V3/usr/lib64/gegl-0.4/exr-save.so
+/V3/usr/lib64/gegl-0.4/ff-load.so
+/V3/usr/lib64/gegl-0.4/ff-save.so
+/V3/usr/lib64/gegl-0.4/gegl-common-cxx-x86_64-v2.so
+/V3/usr/lib64/gegl-0.4/gegl-common-cxx-x86_64-v3.so
+/V3/usr/lib64/gegl-0.4/gegl-common-cxx.so
+/V3/usr/lib64/gegl-0.4/gegl-common-gpl3-x86_64-v2.so
+/V3/usr/lib64/gegl-0.4/gegl-common-gpl3-x86_64-v3.so
+/V3/usr/lib64/gegl-0.4/gegl-common-gpl3.so
+/V3/usr/lib64/gegl-0.4/gegl-common-x86_64-v2.so
+/V3/usr/lib64/gegl-0.4/gegl-common-x86_64-v3.so
+/V3/usr/lib64/gegl-0.4/gegl-common.so
+/V3/usr/lib64/gegl-0.4/gegl-core.so
+/V3/usr/lib64/gegl-0.4/gegl-generated-x86_64-v2.so
+/V3/usr/lib64/gegl-0.4/gegl-generated-x86_64-v3.so
+/V3/usr/lib64/gegl-0.4/gegl-generated.so
+/V3/usr/lib64/gegl-0.4/gegl-transformops-x86_64-v2.so
+/V3/usr/lib64/gegl-0.4/gegl-transformops-x86_64-v3.so
+/V3/usr/lib64/gegl-0.4/gif-load.so
+/V3/usr/lib64/gegl-0.4/jpg-load.so
+/V3/usr/lib64/gegl-0.4/jpg-save.so
+/V3/usr/lib64/gegl-0.4/lcms-from-profile.so
+/V3/usr/lib64/gegl-0.4/npd.so
+/V3/usr/lib64/gegl-0.4/npy-save.so
+/V3/usr/lib64/gegl-0.4/path.so
+/V3/usr/lib64/gegl-0.4/pdf-load.so
+/V3/usr/lib64/gegl-0.4/pixbuf-load.so
+/V3/usr/lib64/gegl-0.4/pixbuf-save.so
+/V3/usr/lib64/gegl-0.4/png-load.so
+/V3/usr/lib64/gegl-0.4/png-save.so
+/V3/usr/lib64/gegl-0.4/ppm-load.so
+/V3/usr/lib64/gegl-0.4/ppm-save.so
+/V3/usr/lib64/gegl-0.4/raw-load.so
+/V3/usr/lib64/gegl-0.4/rgbe-load.so
+/V3/usr/lib64/gegl-0.4/rgbe-save.so
+/V3/usr/lib64/gegl-0.4/sdl2-display.so
+/V3/usr/lib64/gegl-0.4/seamless-clone-compose.so
+/V3/usr/lib64/gegl-0.4/seamless-clone.so
+/V3/usr/lib64/gegl-0.4/svg-load.so
+/V3/usr/lib64/gegl-0.4/text.so
+/V3/usr/lib64/gegl-0.4/transformops.so
+/V3/usr/lib64/gegl-0.4/v4l.so
+/V3/usr/lib64/gegl-0.4/vector-stroke.so
+/V3/usr/lib64/gegl-0.4/webp-load.so
+/V3/usr/lib64/gegl-0.4/webp-save.so
+/V3/usr/lib64/libgegl-0.4.so
+/V3/usr/lib64/libgegl-0.4.so.0
+/V3/usr/lib64/libgegl-0.4.so.0.443.1
+/V3/usr/lib64/libgegl-npd-0.4.so
+/V3/usr/lib64/libgegl-sc-0.4.so
+/V4/usr/lib64/gegl-0.4/exr-load.so
+/V4/usr/lib64/gegl-0.4/exr-save.so
+/V4/usr/lib64/gegl-0.4/ff-load.so
+/V4/usr/lib64/gegl-0.4/ff-save.so
+/V4/usr/lib64/gegl-0.4/gegl-common-cxx-x86_64-v2.so
+/V4/usr/lib64/gegl-0.4/gegl-common-cxx-x86_64-v3.so
+/V4/usr/lib64/gegl-0.4/gegl-common-cxx.so
+/V4/usr/lib64/gegl-0.4/gegl-common-gpl3-x86_64-v2.so
+/V4/usr/lib64/gegl-0.4/gegl-common-gpl3-x86_64-v3.so
+/V4/usr/lib64/gegl-0.4/gegl-common-gpl3.so
+/V4/usr/lib64/gegl-0.4/gegl-common-x86_64-v2.so
+/V4/usr/lib64/gegl-0.4/gegl-common-x86_64-v3.so
+/V4/usr/lib64/gegl-0.4/gegl-common.so
+/V4/usr/lib64/gegl-0.4/gegl-core.so
+/V4/usr/lib64/gegl-0.4/gegl-generated-x86_64-v2.so
+/V4/usr/lib64/gegl-0.4/gegl-generated-x86_64-v3.so
+/V4/usr/lib64/gegl-0.4/gegl-generated.so
+/V4/usr/lib64/gegl-0.4/gegl-transformops-x86_64-v2.so
+/V4/usr/lib64/gegl-0.4/gegl-transformops-x86_64-v3.so
+/V4/usr/lib64/gegl-0.4/gif-load.so
+/V4/usr/lib64/gegl-0.4/jpg-load.so
+/V4/usr/lib64/gegl-0.4/jpg-save.so
+/V4/usr/lib64/gegl-0.4/lcms-from-profile.so
+/V4/usr/lib64/gegl-0.4/npd.so
+/V4/usr/lib64/gegl-0.4/npy-save.so
+/V4/usr/lib64/gegl-0.4/path.so
+/V4/usr/lib64/gegl-0.4/pdf-load.so
+/V4/usr/lib64/gegl-0.4/pixbuf-load.so
+/V4/usr/lib64/gegl-0.4/pixbuf-save.so
+/V4/usr/lib64/gegl-0.4/png-load.so
+/V4/usr/lib64/gegl-0.4/png-save.so
+/V4/usr/lib64/gegl-0.4/ppm-load.so
+/V4/usr/lib64/gegl-0.4/ppm-save.so
+/V4/usr/lib64/gegl-0.4/raw-load.so
+/V4/usr/lib64/gegl-0.4/rgbe-load.so
+/V4/usr/lib64/gegl-0.4/rgbe-save.so
+/V4/usr/lib64/gegl-0.4/sdl2-display.so
+/V4/usr/lib64/gegl-0.4/seamless-clone-compose.so
+/V4/usr/lib64/gegl-0.4/seamless-clone.so
+/V4/usr/lib64/gegl-0.4/svg-load.so
+/V4/usr/lib64/gegl-0.4/text.so
+/V4/usr/lib64/gegl-0.4/transformops.so
+/V4/usr/lib64/gegl-0.4/v4l.so
+/V4/usr/lib64/gegl-0.4/vector-stroke.so
+/V4/usr/lib64/gegl-0.4/webp-load.so
+/V4/usr/lib64/gegl-0.4/webp-save.so
+/V4/usr/lib64/libgegl-0.4.so
+/V4/usr/lib64/libgegl-0.4.so.0
+/V4/usr/lib64/libgegl-0.4.so.0.443.1
+/V4/usr/lib64/libgegl-npd-0.4.so
+/V4/usr/lib64/libgegl-sc-0.4.so
 /usr/lib64/gegl-0.4/exr-load.so
 /usr/lib64/gegl-0.4/exr-save.so
 /usr/lib64/gegl-0.4/ff-load.so
@@ -364,22 +454,11 @@ DESTDIR=%{buildroot} ninja -C builddir install
 /usr/lib64/gegl-0.4/vector-stroke.so
 /usr/lib64/gegl-0.4/webp-load.so
 /usr/lib64/gegl-0.4/webp-save.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/libgegl-0.4.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/libgegl-0.4.so.0
-/usr/lib64/glibc-hwcaps/x86-64-v3/libgegl-0.4.so.0.443.1
-/usr/lib64/glibc-hwcaps/x86-64-v3/libgegl-npd-0.4.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/libgegl-sc-0.4.so
-/usr/lib64/glibc-hwcaps/x86-64-v4/libgegl-0.4.so
-/usr/lib64/glibc-hwcaps/x86-64-v4/libgegl-0.4.so.0
-/usr/lib64/glibc-hwcaps/x86-64-v4/libgegl-0.4.so.0.443.1
-/usr/lib64/glibc-hwcaps/x86-64-v4/libgegl-npd-0.4.so
-/usr/lib64/glibc-hwcaps/x86-64-v4/libgegl-sc-0.4.so
 /usr/lib64/libgegl-0.4.so
 /usr/lib64/libgegl-0.4.so.0
 /usr/lib64/libgegl-0.4.so.0.443.1
 /usr/lib64/libgegl-npd-0.4.so
 /usr/lib64/libgegl-sc-0.4.so
-/usr/share/clear/optimized-elf/other*
 
 %files license
 %defattr(0644,root,root,0755)
