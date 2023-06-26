@@ -1,8 +1,50 @@
-GEGL-0.4.44 2023-03-25
+GEGL-0.4.46 2023-06-1x
 
-This release fixes a crashing bug what is umasked by GLib 2.75.3 and
-newer. Never-allocated data were being passed to g_slice_free, in
-GeglBuffer’s handling of copy-on-write tiles.
+Core:
+
+New simpler API for connecting pads, gegl_node_connect which can be
+used instead of either gegl_node_connect_from or gegl_node_connect_to
+by autosensing the neccesary direction of the connection.
+
+Operations:
+
+Clean up various bits of ill or undefiend code based on stricter
+compiler warnings.
+
+Use gegl_node_connect in all ops.
+
+ff-load,ff-save: clean up of deprecated API - hope fully covering more
+ffmpeg versions.
+
+New operation: adaptive-threshold, this is equivalent to doing an
+unsharp mask with a large radius, followed by scaling the image up
+applying threshold and scaling down by the inverse. The scalings are
+only done if antialias is higher than 1. To speed up processing the
+first thing done in the graph is conversion to grayscale.
+
+Updated vendored libraries
+
+ctx and libnsgif have been updated from upstream.
+
+Build:
+
+  • Depend on meson 0.55.0
+
+  • various cleanups including re-enabling of deprecation warnings.
+
+  • make ctx be an internal library.
+
+Contributors to this release
+
+Alexandre Prokoudine, Asier Sarasua Garmendia, Ekaterine Papava, Marco
+Ciampa, Martin, Øyvind Kolås, Piotr Drąg, Rodrigo Lledó, Sabri Ünal,
+Yuri Chornoivan
+
+GEGL-0.4.44 2023-03-26
+
+GeglBuffer:
+
+Fixed a invalid free that gets umasked by GLib 2.75.3 and newer.
 
 ctx:
 
@@ -196,23 +238,29 @@ types.
 Pin glibc package in arch CI build to a version before it hard depends
 on linux 4.4.
 
-New Operations:
+negative-darkroom
 
-negative-darkroom: This operation is for artists who use hybrid workflow
- technique of analog photography. After scanning a developed negative, this
- operation is used to invert the scan to create a positive image by simulating
- the light behaviour of darkroom enlarger and common photographic papers.
+New operation for artists who use hybrid workflow technique of analog
+photography. After scanning a developed negative, this operation is
+used to invert the scan to create a positive image by simulating the
+light behaviour of darkroom enlarger and common photographic papers.
 
-Operations:
+Operations
 
-jpg-load,png-load,tiff-load: show ICC relatd problems as warnings.
-rgbe-load : fix handling of exponent=0 in RLE encoded files.
-color-reduction : Added blue-noise modes, the patents are expired for some
-years already, also added fix to levels parameters; enabling bi-level.
-fattal02 : ensure gaussian pyramid has at least one level.
+  • jpg-load,png-load,tiff-load: show ICC relatd problems as warnings.
 
-paint-select (in workshop): multi-level banded graphcut, sub-region rather
-  than full buffer rcomputations and other improvements.
+  • rgbe-load : fix handling of exponent=0 in RLE encoded files.
+
+  • color-reduction : Added blue-noise modes, the patents are expired
+    for some
+
+  • years already, also added fix to levels parameters; enabling
+    bi-level.
+
+  • fattal02 : ensure gaussian pyramid has at least one level.
+
+  • paint-select (in workshop): multi-level banded graphcut, sub-region
+    rather than full buffer rcomputations and other improvements.
 
 Contributors to this release:
 
@@ -1123,11 +1171,13 @@ gegL_buffer_copy. Better clone accounting in tile cache.
 
 Operations
 
-exp-combine: code cleanup/simplification
-libraw: make bounding box handling consistent with rest of code.
-transform ops: re-enabled multi-threading, reduced some format
-               conversions and added wiggle-room in required/invalidated
-               calculations.
+  • exp-combine: code cleanup/simplification
+
+  • libraw: make bounding box handling consistent with rest of code.
+
+  • transform ops: re-enabled multi-threading, reduced some format
+    conversions and added wiggle-room in required/invalidated
+    calculations.
 
 GEGL-0.3.24 2017-11-24
 
@@ -2175,4 +2225,4 @@ Calvin Williamson, Caroline Dahloff Daniel Rogers, Garry R. Osgood, Jay
 Cox and Sven Neumann
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Last updated 2023-03-25 16:20:51 CET
+Last updated 2023-06-13 16:26:06 CEST

@@ -4,10 +4,10 @@
 # Using build pattern: meson
 #
 Name     : gegl
-Version  : 0.4.44
-Release  : 119
-URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.44.tar.xz
-Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.44.tar.xz
+Version  : 0.4.46
+Release  : 120
+URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.46.tar.xz
+Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.46.tar.xz
 Summary  : Seamless Cloning Library Based on GEGL
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-3.0 LGPL-3.0 MIT
@@ -118,13 +118,13 @@ locales components for the gegl package.
 
 
 %prep
-%setup -q -n gegl-0.4.44
-cd %{_builddir}/gegl-0.4.44
+%setup -q -n gegl-0.4.46
+cd %{_builddir}/gegl-0.4.46
 pushd ..
-cp -a gegl-0.4.44 buildavx2
+cp -a gegl-0.4.46 buildavx2
 popd
 pushd ..
-cp -a gegl-0.4.44 buildavx512
+cp -a gegl-0.4.46 buildavx512
 popd
 
 %build
@@ -132,7 +132,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1687206310
+export SOURCE_DATE_EPOCH=1687795334
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
@@ -349,10 +349,11 @@ DESTDIR=%{buildroot} ninja -C builddir install
 /V3/usr/lib64/gegl-0.4/text.so
 /V3/usr/lib64/gegl-0.4/transformops.so
 /V3/usr/lib64/gegl-0.4/v4l.so
+/V3/usr/lib64/gegl-0.4/vector-fill.so
 /V3/usr/lib64/gegl-0.4/vector-stroke.so
 /V3/usr/lib64/gegl-0.4/webp-load.so
 /V3/usr/lib64/gegl-0.4/webp-save.so
-/V3/usr/lib64/libgegl-0.4.so.0.443.1
+/V3/usr/lib64/libgegl-0.4.so.0.445.1
 /V3/usr/lib64/libgegl-npd-0.4.so
 /V3/usr/lib64/libgegl-sc-0.4.so
 /V4/usr/lib64/gegl-0.4/exr-load.so
@@ -398,10 +399,11 @@ DESTDIR=%{buildroot} ninja -C builddir install
 /V4/usr/lib64/gegl-0.4/text.so
 /V4/usr/lib64/gegl-0.4/transformops.so
 /V4/usr/lib64/gegl-0.4/v4l.so
+/V4/usr/lib64/gegl-0.4/vector-fill.so
 /V4/usr/lib64/gegl-0.4/vector-stroke.so
 /V4/usr/lib64/gegl-0.4/webp-load.so
 /V4/usr/lib64/gegl-0.4/webp-save.so
-/V4/usr/lib64/libgegl-0.4.so.0.443.1
+/V4/usr/lib64/libgegl-0.4.so.0.445.1
 /V4/usr/lib64/libgegl-npd-0.4.so
 /V4/usr/lib64/libgegl-sc-0.4.so
 /usr/lib64/gegl-0.4/exr-load.so
@@ -447,12 +449,13 @@ DESTDIR=%{buildroot} ninja -C builddir install
 /usr/lib64/gegl-0.4/text.so
 /usr/lib64/gegl-0.4/transformops.so
 /usr/lib64/gegl-0.4/v4l.so
+/usr/lib64/gegl-0.4/vector-fill.so
 /usr/lib64/gegl-0.4/vector-stroke.so
 /usr/lib64/gegl-0.4/webp-load.so
 /usr/lib64/gegl-0.4/webp-save.so
 /usr/lib64/libgegl-0.4.so
 /usr/lib64/libgegl-0.4.so.0
-/usr/lib64/libgegl-0.4.so.0.443.1
+/usr/lib64/libgegl-0.4.so.0.445.1
 /usr/lib64/libgegl-npd-0.4.so
 /usr/lib64/libgegl-sc-0.4.so
 
