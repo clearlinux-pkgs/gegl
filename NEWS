@@ -1,4 +1,78 @@
-GEGL=0.4.48 2024-02-11
+GEGL-0.4.50 2024-11-03
+
+Core:
+
+Better Gobject Introspection annotation coverage.
+
+Improved error handling for gegl chain processing.
+
+Added accessors for pad meta-data, to be able to show names and
+descriptions in UIs.
+
+GeglColor: more lax parameters for g_arapm_values_cmp
+
+Ops:
+
+API: GEGL_OP_NAME needs to be uniqe .c filenames no longer needs to be.
+First registered op with a given name now takes precedence over later.
+
+  * exr-save: store 16bpc files as half, fixing gimp#10778
+
+  * ff-load, ff-save: fix build with FFmpeg 7
+
+  * dither: do processing in linear when all levels==2
+
+  * OpenCL: upgrade from 1.1 to 3.0, disable opencl caching system -
+    not crashing is more important than caching. And fixes to the
+    opencl operation of the following ops:
+
+  * alien-map
+
+  * color-to-alpha
+
+  * edge-sobel
+
+  * hue-chroma
+
+  * noise-reduction
+
+  * oilify
+
+  * snn-mean
+
+New Ops:
+
+styles: a UI for achieving many visual effects for use on text and
+similar alpha defined shapes. bevel: simulate light and shadow on an
+alpha defined shape. inner-glow: an inner shadow glow effect
+
+New Ops in workshop:
+
+ctx-script: an experimental op for rendering ctx protocol this might be
+a future basis for ctx-based vector layers.
+
+Build:
+
+Various meson cleanups. Generate .pdb (CodeView) debug symbols for
+Windows Reproducible build fixed by getting rid of runtime values in
+.gir files.
+
+Updated vendored libraries
+
+ctx has been updated from upstream, perhaps most significantly the
+protocol/drawing API has been fuzzed with afl+
+
+Contributors to this release, including translators:
+
+Alan Mortensen, Alexandre Prokoudine, Alx Sa, Anders Jonsson, Andi
+Chandler, Andre Klapper, ArtSin, Asier Sarasua Garmendia, Bruce Cowan,
+Bruno, Bruno Lopes, Daniel ?erb?nescu, Ekaterine Papava, Jacob Boerema,
+Jehan, Joe Locash, Jordi Mas, Kolbj?rn Stuest?l, Lukas Oberhuber,
+Luming Zh, Marco Ciampa, Martin, Morgane Glidic, Niels De Graef,
+Rodrigo Lled?, Sabri ?nal, Sam Lester, Tim Sabsch, Varun Samaga B L,
+Yuri Chornoivan, dimspingos, lillolollo, psykose, ?yvind Kol?s.
+
+GEGL-0.4.48 2024-02-11
 
 Core:
 
@@ -15,21 +89,21 @@ ctx has been updated from upstream.
 
 Operations:
 
-  • dropshadow: Fix shrinking with negative-grow radius.
+  * dropshadow: Fix shrinking with negative-grow radius.
 
-  • mantiuk: opt out of OpenMP when building with clang.
+  * mantiuk: opt out of OpenMP when building with clang.
 
-  • voroni: fix crash.
+  * voroni: fix crash.
 
-  • shuffle-search: in progress (in workshop, not built by default)
+  * shuffle-search: in progress (in workshop, not built by default)
     brute-force dither optimizer.
 
 Contributors to this release
 
 Alan Mortensen, Anders Jonsson, Andre Klapper, Andre Klapper, Asier
 Sarasua Garmendia, dimspingos, Ekaterine Papava, Jacob Boerema, Jan
-Tojnar, Jehan, Jordi Mas, Luming Zh, Marco Ciampa, Martin, Øyvind
-Kolås, Piotr Drąg, Rodrigo Lledó, Sabri Ünal, Víttor Paulo Vieira da
+Tojnar, Jehan, Jordi Mas, Luming Zh, Marco Ciampa, Martin, ?yvind
+Kol?s, Piotr Dr?g, Rodrigo Lled?, Sabri ?nal, V?ttor Paulo Vieira da
 Costa, woob and Yuri Chornoivan,
 
 GEGL-0.4.46 2023-06-26
@@ -46,18 +120,18 @@ GIMP has now started looking at the "gimp:menu-path" key among the GEGL
 operation class key/value pairs, and putting operations in the
 corresponding menu.
 
-  • local-threshold: new operation that does neighborhood aware and
+  * local-threshold: new operation that does neighborhood aware and
     optionally antialiased thresholding of an image. The operation is
     equivalent to doing an unsharp mask with a large radius, followed
     by scaling the image up applying threshold and scaling down by the
     inverse of the scale up factor.
 
-  • chamfer: new operation in workshop that useis distance-transform
-    and emboss or LinuxBeaver’s research into modeling different bevels
+  * chamfer: new operation in workshop that useis distance-transform
+    and emboss or LinuxBeaver's research into modeling different bevels
     with combinations of blurs.
 
-  • ff-load,ff-save: clean up of deprecated API, builds with ffmpeg-6.0
-    but ff-save hasn’t been made to work with this release of ffmpeg
+  * ff-load,ff-save: clean up of deprecated API, builds with ffmpeg-6.0
+    but ff-save hasn't been made to work with this release of ffmpeg
     yet.
 
 Updated vendored libraries
@@ -66,17 +140,17 @@ ctx and libnsgif have been updated from upstream.
 
 Build:
 
-  • Depend on meson 0.55.0
+  * Depend on meson 0.55.0
 
-  • various cleanups including re-enabling of deprecation warnings.
+  * various cleanups including re-enabling of deprecation warnings.
 
-  • make ctx be an internal library.
+  * make ctx be an internal library.
 
 Contributors to this release
 
 Alexandre Prokoudine, Asier Sarasua Garmendia, Ekaterine Papava,
-LinuxBeaver, Marco Ciampa, Martin, Øyvind Kolås, Piotr Drąg, Rodrigo
-Lledó, Sabri Ünal, Yuri Chornoivan.
+LinuxBeaver, Marco Ciampa, Martin, ?yvind Kol?s, Piotr Dr?g, Rodrigo
+Lled?, Sabri ?nal, Yuri Chornoivan.
 
 GEGL-0.4.44 2023-03-26
 
@@ -90,72 +164,72 @@ Updated vendored library from upstream.
 
 Contributors to this release:
 
-Øyvind Kolås, Tim Sabsch, dimspingos and Jan Tojnar.
+?yvind Kol?s, Tim Sabsch, dimspingos and Jan Tojnar.
 
 GEGL-0.4.42 2023-02-20
 
 Operations:
 
-  • raw-load: add conditional support for 0.21.0 API
+  * raw-load: add conditional support for 0.21.0 API
 
-  • rgb-clib: improved ui-ranges
+  * rgb-clib: improved ui-ranges
 
-  • perlin, mosiac, c2g, long-shadow: small cleanups
+  * perlin, mosiac, c2g, long-shadow: small cleanups
 
-  • gif-load: update vendored dependency, including code updates.
+  * gif-load: update vendored dependency, including code updates.
 
 Build:
 
-  • keeping up with babl
+  * keeping up with babl
 
 Contributors to this release:
 
-Alan Mortensen, Chris Mayo, Jehan, Jordi Mas, Michael Drakei, Øyvind
-Kolås and Sabri Ünal
+Alan Mortensen, Chris Mayo, Jehan, Jordi Mas, Michael Drakei, ?yvind
+Kol?s and Sabri ?nal
 
 GEGL-0.4.40 2022-11-13
 
 Operations:
 
-  • newsprint: do not drop alpha channel in RGB modes.
+  * newsprint: do not drop alpha channel in RGB modes.
 
 Core
 
-  • fixes for legacy build, still supporting building latest GEGL for
+  * fixes for legacy build, still supporting building latest GEGL for
     stable GIMP with old babl (not recommended if distros can have
     recent enough meson.).
 
-  • avoiding possible multi thread race in babl garbage collection
+  * avoiding possible multi thread race in babl garbage collection
 
 Contributors to this release
 
 Asier Sarasua Garmendia, Enrico Nicoletto, Fran Dieguez, Jehan, Jordi
-Mas, Luming Zh, Marco Ciampa, Matheus Barbosa, nikita, Øyvind Kolås,
-Sabri Ünal and Sam James.
+Mas, Luming Zh, Marco Ciampa, Matheus Barbosa, nikita, ?yvind Kol?s,
+Sabri ?nal and Sam James.
 
 GEGL-0.4.38 2022-07-13
 
 Operations:
 
-  • denoise-dct: a NEW denoising operation which decomposes the input
+  * denoise-dct: a NEW denoising operation which decomposes the input
     buffer to sliding overlapping patches, calculates the DCT denoising
     in each patch, and then aggregates the denoised patches to the
     output buffer averaging the overlapped pixels.
 
-  • ff-load and ff-save: big cleanup API cleanup, now ffmpeg-5.0
+  * ff-load and ff-save: big cleanup API cleanup, now ffmpeg-5.0
     compatible
 
-  • gif-load: updated to latest upstream libnsgif version
+  * gif-load: updated to latest upstream libnsgif version
 
-  • slic: progress reporting and improved parameter handling.
+  * slic: progress reporting and improved parameter handling.
 
-  • vector-fill: updated to latest upstream ctx version
+  * vector-fill: updated to latest upstream ctx version
 
-  • oilify: clamp inputs to avoid nan in output
+  * oilify: clamp inputs to avoid nan in output
 
-  • gegl:load fix possible double free
+  * gegl:load fix possible double free
 
-  • rgbe-write: plug leaks in error paths
+  * rgbe-write: plug leaks in error paths
 
 Core:
 
@@ -174,8 +248,8 @@ Contributors to this release:
 
 Alan Mortensen, Anders Jonsson, Axel Viala, Behnam Momeni, darnuria,
 dimspingos, Felix Schwarz, Hugo Carvalho, Jehan, Jordi Mas, Luming Zh,
-Marcia van den Hout, Marco Ciampa, Martin, Michael Drake, Øyvind Kolås,
-Piotr Drąg, Rodrigo Lledó, Sabri Ünal, Thomas Manni, Tim Sabsch, Xavier
+Marcia van den Hout, Marco Ciampa, Martin, Michael Drake, ?yvind Kol?s,
+Piotr Dr?g, Rodrigo Lled?, Sabri ?nal, Thomas Manni, Tim Sabsch, Xavier
 Claessens, Yuri Chornoivan and Zurab Kargareteli.
 
 GEGL-0.4.36 2022-02-21
@@ -191,7 +265,7 @@ The npd operation fixed with multiple threads.
 
 Contributors to this release
 
-Alan Mortensen, Anders Jonsson, Caleb Xu, Jehan, Øyvind Kolås and
+Alan Mortensen, Anders Jonsson, Caleb Xu, Jehan, ?yvind Kol?s and
 zamfofex.
 
 GEGL-0.4.34 2021-12-19
@@ -216,7 +290,7 @@ Contributors to this release:
 
 Anders Jonsson, Asier Sarasua Garmendia, Boyuan Yang, dimspingos, Gavin
 Cui, Hugo Carvalho, Jehan Jordi Mas, krzygorz, Lukas Oberhuber, Marco
-Ciampa, Matej Urbančič, Øyvind Kolås, Rodrigo Lledó, Rūdolfs Mazurs and
+Ciampa, Matej Urban?i?, ?yvind Kol?s, Rodrigo Lled?, R?dolfs Mazurs and
 Simon McVittie.
 
 GEGL-0.4.32 2021-09-05
@@ -230,15 +304,15 @@ development as well as documentation.
 
 Operations:
 
-  • distance-transform:
+  * distance-transform:
 
-  • openexr: fix build with newer OpenEXR 3
+  * openexr: fix build with newer OpenEXR 3
 
-  • negative-darkroom: contrast boost and illuminant adjustment
+  * negative-darkroom: contrast boost and illuminant adjustment
     parameter, reworked emulsion dye model, UI improvements, more black
     and white paper presets.
 
-  • fill-path: 32bit float RGB and CMYK color processing, using ctx as
+  * fill-path: 32bit float RGB and CMYK color processing, using ctx as
     renderer.
 
 Core:
@@ -250,8 +324,8 @@ Contributors to this release:
 
 Alexandre Prokoudine, Anders Jonsson, Andrzej Hunt, Antonio Rojas,
 Asier Sarasua Garmendia, Boyuan Yang, Daniel Mustieles, dimspingos,
-John Marshall, JonnyRobbie, Jordi Mas, Marco Ciampa, Matej Urbančič,
-Øyvind Kolås, Piotr Drąg, Richard Kreckel, Rodrigo Lledó, woob and Yuri
+John Marshall, JonnyRobbie, Jordi Mas, Marco Ciampa, Matej Urban?i?,
+?yvind Kol?s, Piotr Dr?g, Richard Kreckel, Rodrigo Lled?, woob and Yuri
 Chornoivan,
 
 GEGL-0.4.30 2021-03-27
@@ -285,26 +359,26 @@ light behaviour of darkroom enlarger and common photographic papers.
 
 Operations
 
-  • jpg-load,png-load,tiff-load: show ICC relatd problems as warnings.
+  * jpg-load,png-load,tiff-load: show ICC relatd problems as warnings.
 
-  • rgbe-load : fix handling of exponent=0 in RLE encoded files.
+  * rgbe-load : fix handling of exponent=0 in RLE encoded files.
 
-  • color-reduction : Added blue-noise modes, the patents are expired
+  * color-reduction : Added blue-noise modes, the patents are expired
     for some
 
-  • years already, also added fix to levels parameters; enabling
+  * years already, also added fix to levels parameters; enabling
     bi-level.
 
-  • fattal02 : ensure gaussian pyramid has at least one level.
+  * fattal02 : ensure gaussian pyramid has at least one level.
 
-  • paint-select (in workshop): multi-level banded graphcut, sub-region
+  * paint-select (in workshop): multi-level banded graphcut, sub-region
     rather than full buffer rcomputations and other improvements.
 
 Contributors to this release:
 
-dimspingos, Jan Vesely, John Marshall, JonnyRobbie, Jordi Mas, Милош
-Поповић, Olivier Tilloy, Øyvind Kolås, Philipp Kiemle, Piotr Drąg,
-Sabri Ünal, scootergrisen, Thomas Manni, Yuri Chornoivan.
+dimspingos, Jan Vesely, John Marshall, JonnyRobbie, Jordi Mas, ?????
+???????, Olivier Tilloy, ?yvind Kol?s, Philipp Kiemle, Piotr Dr?g,
+Sabri ?nal, scootergrisen, Thomas Manni, Yuri Chornoivan.
 
 GEGL-0.4.28 2020-12-20
 
@@ -331,10 +405,10 @@ development.
 
 Contributors to this release:
 
-Asier Sarasua Garmendia, Christian Kirbach, Corentin Noël, Cristian
-Secară, Dimitris Spingos (Δημήτρης Σπίγγος), Jehan, Jordi Mas, Milo
-Ivir, Niels De Graef, Øyvind Kolås, Piotr Drąg, Rico Tzschichholz,
-Sabri Ünal, Stephan Woidowski, Thomas Manni, Yacine Bouklif and Yuri
+Asier Sarasua Garmendia, Christian Kirbach, Corentin No?l, Cristian
+Secar?, Dimitris Spingos (???????? ???????), Jehan, Jordi Mas, Milo
+Ivir, Niels De Graef, ?yvind Kol?s, Piotr Dr?g, Rico Tzschichholz,
+Sabri ?nal, Stephan Woidowski, Thomas Manni, Yacine Bouklif and Yuri
 Chornoivan.
 
 GEGL-0.4.26 2020-08-02
@@ -351,7 +425,7 @@ some affine matrices to be exact.
 
 Contributors to this release:
 
-Alan Mortensen, Jan Vesely, Øyvind Kolås, Jordi Mas, Michael Natterer,
+Alan Mortensen, Jan Vesely, ?yvind Kol?s, Jordi Mas, Michael Natterer,
 Asier Sarasua Garmendia, Ell, Tim Sabsh and Tatsuki Makino.
 
 GEGL-0.4.24 2020-06-07
@@ -422,10 +496,10 @@ band equalizer for tuning frequency bands of image.
 Contributors to this release
 
 Alexandre Prokoudine, Andre Klapper, Asier Sarasua Garmendia, Brian
-Stafford, Daniel Mustieles, Debarshi Ray, Dimitris Spingos (Δημήτρης
-Σπίγγος), Ell, Elle Stone, Jan Vesely, Jehan, Jordi Mas, lillolollo,
+Stafford, Daniel Mustieles, Debarshi Ray, Dimitris Spingos (????????
+???????), Ell, Elle Stone, Jan Vesely, Jehan, Jordi Mas, lillolollo,
 Marco Ciampa, Michael Schumacher, Nathan Follens, Niels De Graef,
-Øyvind Kolås, Piotr Drąg, Rodrigo Lledó, Senya, Simon McVittie, suzu
+?yvind Kol?s, Piotr Dr?g, Rodrigo Lled?, Senya, Simon McVittie, suzu
 urek, woob, Yuri Chornoivan,
 
 GEGL-0.4.22 2020-02-18
@@ -444,7 +518,7 @@ differ.
 
 Contributors to this release
 
-Anders Jonsson, band-a-prend, Ell, Félix Piédallu and Øyvind Kolås.
+Anders Jonsson, band-a-prend, Ell, F?lix Pi?dallu and ?yvind Kol?s.
 
 GEGL-0.4.20 2020-01-17
 
@@ -474,7 +548,7 @@ Contributors to this release
 
 Alan Mortensen, Alex Samorukov, Christoph Reiter, Dimitris Spingos,
 Ell, Jan Vesely, Jordi Mas, Julien Hardelin, Koop Mast, Marco Ciampa,
-Michael Schumacher, Øyvind Kolås and woob.
+Michael Schumacher, ?yvind Kol?s and woob.
 
 GEGL-0.4.18 2019-10-27
 
@@ -557,11 +631,11 @@ file-managers to collection view.
 Contributors to this release:
 
 Abderrahim Kitouni, Alexandre Prokoudine, Asier Sarasua Garmendia,
-Bruce Cowan, Debarshi Ray, Dimitris Spingos, Ell, fanjinke, Félix
-Piédallu, Jan Vesely, Jordi Mas, Marco Ciampa, Martin Srebotnjak,
-Michael Natterer, Michael Schumacher, Niels De Graef, Øyvind Kolås,
-Pawan Chitrakar, Piotr Drąg, Rodrigo Lledó, Sabri Ünal, Schwan Carl,
-Shlomi Fish, Stefan Brüns, Thomas Manni and Ting-Wei Lan.
+Bruce Cowan, Debarshi Ray, Dimitris Spingos, Ell, fanjinke, F?lix
+Pi?dallu, Jan Vesely, Jordi Mas, Marco Ciampa, Martin Srebotnjak,
+Michael Natterer, Michael Schumacher, Niels De Graef, ?yvind Kol?s,
+Pawan Chitrakar, Piotr Dr?g, Rodrigo Lled?, Sabri ?nal, Schwan Carl,
+Shlomi Fish, Stefan Br?ns, Thomas Manni and Ting-Wei Lan.
 
 GEGL-0.4.16 2019-05-07
 
@@ -648,8 +722,8 @@ Contributors to this release:
 
 Alex Samorukov, Brian Stafford, Carles Ferrando Garcia, Dimitris
 Spingos, Edward E, Ell, Jan Vesely, Jehan, Jordi Mas, lumingzh, Marco
-Ciampa, Martin Srebotnjak, Massimo Valentini, Nuno Ferreira, Øyvind
-Kolås, Piotr Drąg, sabri ünal and Sveinn í Felli.
+Ciampa, Martin Srebotnjak, Massimo Valentini, Nuno Ferreira, ?yvind
+Kol?s, Piotr Dr?g, sabri ?nal and Sveinn ? Felli.
 
 GEGL-0.4.14 2019-03-01
 
@@ -755,8 +829,8 @@ UI
 Contributors to this release:
 
 Alan Mortensen, Alexandre Prokoudine, Anders Jonsson, Andre Klapper,
-Debarshi Ray, elad, Ell, Jehan, Marco Ciampa, Michael Natterer, Øyvind
-Kolås, Piotr Drąg, Richard B. Kreckel, Rodrigo Lledó, sabri ünal,
+Debarshi Ray, elad, Ell, Jehan, Marco Ciampa, Michael Natterer, ?yvind
+Kol?s, Piotr Dr?g, Richard B. Kreckel, Rodrigo Lled?, sabri ?nal,
 thetoastcaper, Thomas Manni and woob.
 
 This release depends on the new features of babl-0.1.62 which has the
@@ -777,7 +851,7 @@ scaling artifacts for all formats that are non-8bit.
 
 Contributions to this relase
 
-Ell, Øyvind Kolås and Rodrigo Lledó
+Ell, ?yvind Kol?s and Rodrigo Lled?
 
 GEGL-0.4.10 2018-10-16
 
@@ -821,8 +895,8 @@ Updated all operations to use new iterator API
 Contributors to this release
 
 Alexandre Prokoudine, Anders Jonsson, Debarshi Ray, Ell, Hussam
-Al-Tayeb, Marco Ciampa, Massimo Valentini, Øyvind Kolås, Piotr Drąg,
-Rodrigo Lledó and Tim Sabsch.
+Al-Tayeb, Marco Ciampa, Massimo Valentini, ?yvind Kol?s, Piotr Dr?g,
+Rodrigo Lled? and Tim Sabsch.
 
 GEGL-0.4.8 2018-08-17
 
@@ -841,8 +915,8 @@ little-planet        - adapt reference composition
 Contributors to this release
 
 Alexandre Prokoudine, Anders Jonsson, Daniel Mustieles, Ell, Marco
-Ciampa, Martin Srebotnjak, Matej Urbančič, Øyvind Kolås, Piotr Drąg,
-and Rodrigo Lledó
+Ciampa, Martin Srebotnjak, Matej Urban?i?, ?yvind Kol?s, Piotr Dr?g,
+and Rodrigo Lled?
 
 GEGL-0.4.6 2018-07-23
 
@@ -853,7 +927,7 @@ set of RGB primaries. babl formats, represented by a pointer and a
 corresponding encoding/format string have been used to specify the
 specific encoding of pixel values. The encoding including component
 order, data type and TRC encoding. Where "RGBA float" means 32bit float
-data and "R’G'B' u8" the ' indicates non-linear, and thus this is sRGB.
+data and "R'G'B' u8" the ' indicates non-linear, and thus this is sRGB.
 "RaGaBaA half" gives premultiplied linear half data. Other encodings
 and conversions are also provided through these formats including "CIE
 Lab float" and "HSV float".
@@ -862,7 +936,7 @@ As a color management workflow for scene-referred imaging the above
 could be sufficient, but GIMP needs data in the 0.0-1.0 range for some
 display referred blending modes to work properly. As a consequence of
 this recognized short-coming GIMP has been passing the pixels of for
-instance ProPhoto "R’G'B’A float" off as "R’G'B’A float" and linear
+instance ProPhoto "R'G'B'A float" off as "R'G'B'A float" and linear
 ProPhoto "RGBA float" as "RGBA float" this works for single operations,
 but falls apart when the colors are converted to CIE Lab. This is the
 good enough state where the other benefits of having a stable release
@@ -936,8 +1010,8 @@ acrs-rrt: ACES RRT based HDR to SDR proof/preview point-filter tonemapping op.
 Contributors to this release:
 
 Alan Mortensen, Daniel Korostil, Daniel Mustieles, Ell, Francisco
-Mariano-Neto, Marco Ciampa, Matej Urbančič, Michael Natterer, Michael
-Schumacher, Øyvind Kolås, Piotr Drąg, Rodrigo and Snehalata B Shirude.
+Mariano-Neto, Marco Ciampa, Matej Urban?i?, Michael Natterer, Michael
+Schumacher, ?yvind Kol?s, Piotr Dr?g, Rodrigo and Snehalata B Shirude.
 
 GEGL-0.4.4 2018-07-04
 
@@ -967,9 +1041,9 @@ selective-hue-saturation.
 Contributors
 
 Alan Mortensen, Alexandre Prokoudine, Daniel Korostil, Debarshi Ray,
-Dimitris Spingos (Δημήτρης Σπίγγος), Ell, Marco Ciampa, Michael
-Schumacher, Miroslav Talasek, orbea, Øyvind Kolås, Øyvind "pippin"
-Kolås, Piotr Drąg, Rūdolfs Mazurs, and Tobias.
+Dimitris Spingos (???????? ???????), Ell, Marco Ciampa, Michael
+Schumacher, Miroslav Talasek, orbea, ?yvind Kol?s, ?yvind "pippin"
+Kol?s, Piotr Dr?g, R?dolfs Mazurs, and Tobias.
 
 GEGL-0.4.2 2018-05-15
 
@@ -1006,8 +1080,8 @@ base-classes.
 Contributors
 
 code improvements and translations from: Daniel Korostil, Debarshi Ray,
-Dimitris Spingos (Δημήτρης Σπίγγος), Ell, Franz Brausse, Jehan, Jordi
-Mas, Marco Ciampa, Øyvind Kolås, and Sebastian Pipping.
+Dimitris Spingos (???????? ???????), Ell, Franz Brausse, Jehan, Jordi
+Mas, Marco Ciampa, ?yvind Kol?s, and Sebastian Pipping.
 
 GEGL-0.4.0 2018-04-26
 
@@ -1020,7 +1094,7 @@ though master will track the 0.4.x series.
 Core
 
 Change GeglParamSpecSeed from int to uint to match the value range of
-GeglRandom’s seed.
+GeglRandom's seed.
 
 Operations
 
@@ -1028,8 +1102,8 @@ ripple fixed remaining issues needed to remove legacy GIMP plug-in in
 GIMP. spherize, requrise transform and color-overlay moved out of
 workshop. ppm-load ported to GIO.
 
-Contributors to this release: Ell, Piotr Drąg, Anders Mortensen, Anders
-Jonsson, Marco Ciampa, Daniel Korostil, Øyvind Kolås, Jon Nordby and
+Contributors to this release: Ell, Piotr Dr?g, Anders Mortensen, Anders
+Jonsson, Marco Ciampa, Daniel Korostil, ?yvind Kol?s, Jon Nordby and
 Simon Budig.
 
 GEGL-0.3.32 2018-04-16
@@ -1037,13 +1111,13 @@ GEGL-0.3.32 2018-04-16
 Core
 
 Change GeglParamSpecSeed from int to uint to match the value range of
-GeglRandom’s seed.
+GeglRandom's seed.
 
 Operations
 
 Limit allocations in ppm-load to 2GB CVE-2018-10114
 
-Contributors to this release: Piotr Drąg, Øyvind Kolås, Sebastian
+Contributors to this release: Piotr Dr?g, ?yvind Kol?s, Sebastian
 Rasmussen and Michael Natterer.
 
 GEGL-0.3.32 2018-04-13
@@ -1069,7 +1143,7 @@ Various micro-optimizations in display paths, with minuscle performance
 impact.
 
 Contributors to this release: Alexandre Prokoudine, Ell, Jehan, Marco
-Ciampa, Michael Natterer, Øyvind Kolås and Piotr Drąg.
+Ciampa, Michael Natterer, ?yvind Kol?s and Piotr Dr?g.
 
 GEGL-0.3.30 2018-03-19
 
@@ -1133,8 +1207,8 @@ color-overlay, enlarge, inpaint, domain-transform, recursive=transform.
 
 Contributors for this release were: Alan Mortensen, Alexandre
 Prokoudine, Debarshi Ray, Dimitris Spingos, Ell, Felipeek, Inaki
-Larranaga Murgoitio, Jehan, Jordi Mas, Mario Blättermann, Michael
-Natterer, Øyvind Kolås, Piotr Drąg, Rūdolfs Mazurs, and Thomas Manni.
+Larranaga Murgoitio, Jehan, Jordi Mas, Mario Bl?ttermann, Michael
+Natterer, ?yvind Kol?s, Piotr Dr?g, R?dolfs Mazurs, and Thomas Manni.
 
 GEGL-0.3.28 2018-01-23
 
@@ -1209,11 +1283,11 @@ gegL_buffer_copy. Better clone accounting in tile cache.
 
 Operations
 
-  • exp-combine: code cleanup/simplification
+  * exp-combine: code cleanup/simplification
 
-  • libraw: make bounding box handling consistent with rest of code.
+  * libraw: make bounding box handling consistent with rest of code.
 
-  • transform ops: re-enabled multi-threading, reduced some format
+  * transform ops: re-enabled multi-threading, reduced some format
     conversions and added wiggle-room in required/invalidated
     calculations.
 
@@ -1256,8 +1330,8 @@ ppm-load: fix file-loader registration.
 
 Contributors
 
-Debarshi Ray, Ell, Jordi Mas, Øyvind Kolås, Richard Kreckel, Thomas
-Manni, Marco Ciampa, Alexandre Prokoudine and Piotr Drąg.
+Debarshi Ray, Ell, Jordi Mas, ?yvind Kol?s, Richard Kreckel, Thomas
+Manni, Marco Ciampa, Alexandre Prokoudine and Piotr Dr?g.
 
 GEGL-0.3.22 2017-11-12
 
@@ -1304,7 +1378,7 @@ new ops in workshop: spherize, color-to-alpha-plus, shadows-highlights
 With contributions from:
 
 Debarshi Ray, Ell, Jehan, Jordi Mas, Marco Ciampa, Massimo, Nicolas
-Robidoux, Niels De Graef, Øyvind Kolås, Piotr Drąg and Thomas Manni.
+Robidoux, Niels De Graef, ?yvind Kol?s, Piotr Dr?g and Thomas Manni.
 
 GEGL-0.3.20 2017-08-15
 
@@ -1337,7 +1411,7 @@ currently being worked on.
 
 Contributors
 
-Øyvind Kolås, Michael Natterer, Jehan, Dimitris Spingos, Piotr Drąg,
+?yvind Kol?s, Michael Natterer, Jehan, Dimitris Spingos, Piotr Dr?g,
 Alexandre Prokoudine, Eugene Hopkinson, Ell, Thomas Manni, Jordi Mas,
 Edward E, Jan Vesely, Arfrever Frehtes Taifersar Arahesis.
 
@@ -1359,7 +1433,7 @@ of roi in gegl_operation_get_bounding_box
 
 Contributors
 
-Ell, Anton Gorenko, Øyvind Kolås, Piotr Drąg, Mario Blättermann
+Ell, Anton Gorenko, ?yvind Kol?s, Piotr Dr?g, Mario Bl?ttermann
 
 GEGL-0.3.16 2017-05-15
 
@@ -1403,30 +1477,30 @@ the meta-data in the .C files of operations.
 
 Contributors
 
-Daniel Mustieles, Debarshi Ray, Dimitris Spingos (Δημήτρης Σπίγγος),
-Ell, Jan Vesely, Jean-Baptiste Mayer, Marco Ciampa, Mario Blättermann,
-Martin Blanchard, Michael Natterer, nick black, Øyvind Kolås, Piotr
-Drąg, Thomas Manni,
+Daniel Mustieles, Debarshi Ray, Dimitris Spingos (???????? ???????),
+Ell, Jan Vesely, Jean-Baptiste Mayer, Marco Ciampa, Mario Bl?ttermann,
+Martin Blanchard, Michael Natterer, nick black, ?yvind Kol?s, Piotr
+Dr?g, Thomas Manni,
 
 GEGL-0.3.14 2017-02-27
 
 Buffer
 
-  • changed gegl_buffer_set to accept mipmap level scaled rectangles,
+  * changed gegl_buffer_set to accept mipmap level scaled rectangles,
     similar to gegl_buffer_get and gegl_buffer_iterator_new/_add
 
 Operations
 
-  • made mipmap preview rendering capable: gblur-1d/gaussian blur,
+  * made mipmap preview rendering capable: gblur-1d/gaussian blur,
     sinus, transform (rotate, scale, perspective etc), snn-mean
 
-  • noise-perlin: remove unused random seed property
+  * noise-perlin: remove unused random seed property
 
-  • exposure: remove gamma property
+  * exposure: remove gamma property
 
-  • save-pixbuf: allocate less temporary memory
+  * save-pixbuf: allocate less temporary memory
 
-  • load-pixbuf: fix rowstride related crasher
+  * load-pixbuf: fix rowstride related crasher
 
 Translations
 
@@ -1434,61 +1508,61 @@ Slovenian, Russian, Greek, Polish and Catalan translations updated.
 
 Contributors
 
-Alexandre Prokoudine, Debarshi Ray, Dimitris Spingos (Δημήτρης
-Σπίγγος), Jordi Mas, Martin Srebotnjak, Øyvind Kolås
+Alexandre Prokoudine, Debarshi Ray, Dimitris Spingos (????????
+???????), Jordi Mas, Martin Srebotnjak, ?yvind Kol?s
 
 GEGL-0.3.12 2017-02-13
 
 Operations
 
-  • new ops: edge-neon, image-gradient, slic, wavelet-blur,
+  * new ops: edge-neon, image-gradient, slic, wavelet-blur,
     waterpixels, watershed
 
-  • moved from workshop to common: color-warp, component-extract
+  * moved from workshop to common: color-warp, component-extract
 
-  • text: remove now unneeded work-around, ability to control vertical
+  * text: remove now unneeded work-around, ability to control vertical
     positioning, permit <1.0 font-sizes, handle text-color alpha, other
     improvements.
 
-  • lens-distortion: default to transparent background
+  * lens-distortion: default to transparent background
 
-  • crop: bounding box computation simplifications
+  * crop: bounding box computation simplifications
 
-  • noise-rgb: add gamma and distribution properties
+  * noise-rgb: add gamma and distribution properties
 
-  • dither: renamed from color-reduction and improved ui/property
+  * dither: renamed from color-reduction and improved ui/property
     controls.
 
-  • high-pass: do inversion, over and contrast in non-linear RGB
+  * high-pass: do inversion, over and contrast in non-linear RGB
 
-  • noise-rgb: new linear and gaussian properties
+  * noise-rgb: new linear and gaussian properties
 
-  • transform: added a clip-to-input property
+  * transform: added a clip-to-input property
 
-  • raw-load: improvements to handling of Sony’s ARW files
+  * raw-load: improvements to handling of Sony's ARW files
 
-  • exposure: replaced offset with black-level
+  * exposure: replaced offset with black-level
 
-  • moved from common to workshop: bilateral-filter-fast
+  * moved from common to workshop: bilateral-filter-fast
 
-  • new workshop ops: bayer-matrix, linear-sinusoid,
+  * new workshop ops: bayer-matrix, linear-sinusoid,
     shadows-highlights, integral-image, segment-kmeans,
 
-  • removed ops: gaussian-blur-old
+  * removed ops: gaussian-blur-old
 
 Core
 
-  • less locale dependent serializations/parameters
+  * less locale dependent serializations/parameters
 
-  • fix local raw file detection of ARW and CR2 files
+  * fix local raw file detection of ARW and CR2 files
 
-  • gegl_memset_pattern performance improvement
+  * gegl_memset_pattern performance improvement
 
-  • clean up the way we drop references and free memory
+  * clean up the way we drop references and free memory
 
-  • static caching of some frequently used babl formats/types.
+  * static caching of some frequently used babl formats/types.
 
-  • mipmap preview render code fixes for the following subset of
+  * mipmap preview render code fixes for the following subset of
     operations: point operations (filter, and composer subclasses),
     integer translate, crop.
 
@@ -1499,35 +1573,35 @@ translations updated
 
 Contributors
 
-Piotr Drąg, Marco Ciampa, Sergey "Shnatsel" Davidoff, Ell, Øyvind
-Kolås, Anders Jonsson, Thomas Manni, Jordi Mas, Michael Natterer, Peter
-O’Regan, Jehan Pagès, Sebastian Rasmussen, Debarshi Ray, Dimitris
-Spingos (Δημήτρης Σπίγγος), Martin Srebotnjak,Miroslav Talasek.
+Piotr Dr?g, Marco Ciampa, Sergey "Shnatsel" Davidoff, Ell, ?yvind
+Kol?s, Anders Jonsson, Thomas Manni, Jordi Mas, Michael Natterer, Peter
+O'Regan, Jehan Pag?s, Sebastian Rasmussen, Debarshi Ray, Dimitris
+Spingos (???????? ???????), Martin Srebotnjak,Miroslav Talasek.
 
 GEGL-0.3.10 2016-11-06
 
 buffer
 
-  • stop caching tiles in a singly-linked list; use a hash table only
+  * stop caching tiles in a singly-linked list; use a hash table only
 
-  • adjust box filtering threshold of linear/cubic samplers
+  * adjust box filtering threshold of linear/cubic samplers
 
-  • add const qualifier to input rect parameter of
+  * add const qualifier to input rect parameter of
     gegl_tile_backend_set_extent()
 
-  • don’t acquire tile storage lock in NN sampler when not using
+  * don't acquire tile storage lock in NN sampler when not using
     multithreading
 
 operations
 
-  • rgbe-load: add image/x-hdr mimetype
+  * rgbe-load: add image/x-hdr mimetype
 
-  • map-relative: sample from the pixel centers for integer vectors
+  * map-relative: sample from the pixel centers for integer vectors
 
-  • warp: fix and rework the operation, now matches more closely the
+  * warp: fix and rework the operation, now matches more closely the
     iWarp behaviour
 
-  • color-reduction: add arithmetic dithers; inline for loop for each
+  * color-reduction: add arithmetic dithers; inline for loop for each
     different method
 
 binary
@@ -1545,100 +1619,100 @@ Slovenian, Spanish updated
 
 Contributors
 
-Simon Budig, Marco Ciampa, Piotr Drąg, Ell, Øyvind Kolås, Roman
-Lebedev, Daniel Mustieles, Michael Natterer, Jehan Pagès, Martin
-Pelikán, Yolanda Álvarez Pérez, Alexandre Prokoudine, Tiago Santos,
-Dimitris Spingos, Martin Srebotnjak, Cédric Valmary, Милош Поповић.
+Simon Budig, Marco Ciampa, Piotr Dr?g, Ell, ?yvind Kol?s, Roman
+Lebedev, Daniel Mustieles, Michael Natterer, Jehan Pag?s, Martin
+Pelik?n, Yolanda ?lvarez P?rez, Alexandre Prokoudine, Tiago Santos,
+Dimitris Spingos, Martin Srebotnjak, C?dric Valmary, ????? ???????.
 
 GEGL-0.3.8 2016-06-14
 
 Buffer
 
-  • add box filtering downsampling paths to linear and cubic resamplers
+  * add box filtering downsampling paths to linear and cubic resamplers
     to improve default results
 
-  • clear hot tile when removing a tile from the cache
+  * clear hot tile when removing a tile from the cache
 
 operations
 
-  • added: vhsfix (workshop), gegl-gegl (commandline syntax)
+  * added: vhsfix (workshop), gegl-gegl (commandline syntax)
 
-  • exr-save: port from deprecated chanting system
+  * exr-save: port from deprecated chanting system
 
-  • ff-save: increase max output packet size from 200kb to 1mb
+  * ff-save: increase max output packet size from 200kb to 1mb
 
-  • gegl-path: add ability to compute y coordinate for a given x
+  * gegl-path: add ability to compute y coordinate for a given x
 
-  • transform: treat infinite and empty rectangles correctly
+  * transform: treat infinite and empty rectangles correctly
 
-  • webp: port webp-save to GIO for URI handling
+  * webp: port webp-save to GIO for URI handling
 
-  • ops progress:
+  * ops progress:
 
-  • add gegl_operation_progress function to report processing progress
+  * add gegl_operation_progress function to report processing progress
 
-  • use the new function in cartoon and distance-transform ops
+  * use the new function in cartoon and distance-transform ops
 
-  • ops metadata:
+  * ops metadata:
 
-  • remove custom multiline paramspec
+  * remove custom multiline paramspec
 
-  • set multiline ui_meta on more ops
+  * set multiline ui_meta on more ops
 
-  • add reference meta and use it in various ops
+  * add reference meta and use it in various ops
 
 gegl-binary
 
-  • add simple video filtering
+  * add simple video filtering
 
-  • encode audio with video
+  * encode audio with video
 
-  • permit dragging and zooming in more ui states
+  * permit dragging and zooming in more ui states
 
-  • deal correctly with integers in ui
+  * deal correctly with integers in ui
 
-  • show prop editor for operation if op chain passed at commmandline
+  * show prop editor for operation if op chain passed at commmandline
 
 core
 
-  • gegl-chain
+  * gegl-chain
 
-  • implement keyframing of strings
+  * implement keyframing of strings
 
-  • suggest possible ops in warninge/errors
+  * suggest possible ops in warninge/errors
 
-  • gegl-node: relay property change notifies from operation to node
+  * gegl-node: relay property change notifies from operation to node
 
-  • gegl-serialize:
+  * gegl-serialize:
 
-  • improve error handling for parsing of properties
+  * improve error handling for parsing of properties
 
-  • start handling relative coordinates
+  * start handling relative coordinates
 
-  • use path instead of curve
+  * use path instead of curve
 
-  • json: misc improvements and fixes
+  * json: misc improvements and fixes
 
-  • opencl: fix RGB luminance constants
+  * opencl: fix RGB luminance constants
 
-  • docs: fixes, update some info in directory overview
+  * docs: fixes, update some info in directory overview
 
-  • handlers:
+  * handlers:
 
-  • allow registration of operations by MIME type
+  * allow registration of operations by MIME type
 
-  • register MIME types for loaders
+  * register MIME types for loaders
 
-  • guess file types by sniffing content
+  * guess file types by sniffing content
 
-  • build: fix luajit detection
+  * build: fix luajit detection
 
 Contributors
 
-Timm Bäder, Martin Blanchard, Mario Blättermann, Ell, Piotr Drąg,
-Michael Henning, Øyvind Kolås, Hartmut Kuhse, Michael Natterer, Nils
+Timm B?der, Martin Blanchard, Mario Bl?ttermann, Ell, Piotr Dr?g,
+Michael Henning, ?yvind Kol?s, Hartmut Kuhse, Michael Natterer, Nils
 Philippsen, Alexandre Prokoudine, Debarshi Ray, Kristian Rietveld,
-Dimitris Spingos, Martin Srebotnjak, Pino Toscano, Cédric Valmary, Jan
+Dimitris Spingos, Martin Srebotnjak, Pino Toscano, C?dric Valmary, Jan
 Vesely
 
 GEGL-0.3.6 2016-03-12
@@ -1649,104 +1723,104 @@ COW (Copy on Write) handling for gegl_buffer_clear.
 
 operations
 
-  • added: saturation, gaussian-blur-selective
+  * added: saturation, gaussian-blur-selective
 
-  • ff-load/ ff-save: updated to work with ffmpeg-3.0,configuration of
+  * ff-load/ ff-save: updated to work with ffmpeg-3.0,configuration of
     codec/format. misc code cleanup, and meta data improvements, gio
     (url loading) support in more loaders.
 
-  • convolve-generic: optimized paths for common parameters and 3x3
+  * convolve-generic: optimized paths for common parameters and 3x3
     size.
 
-  • removed: dcraw-load
+  * removed: dcraw-load
 
-  • jp2, webp, svg:: make use of GIO for URI handling
+  * jp2, webp, svg:: make use of GIO for URI handling
 
-  • XML: permit serializing a segment/chain of the graph
+  * XML: permit serializing a segment/chain of the graph
 
-  • gegl-binary:
+  * gegl-binary:
 
-  • permit setting properties of commandline passed ops, as well as
+  * permit setting properties of commandline passed ops, as well as
     connecting buffers to aux and other input pads.
 
-  • zoom in/out at cursor position on scroll wheel events.
+  * zoom in/out at cursor position on scroll wheel events.
 
-  • processing: improvements to meta-ops
+  * processing: improvements to meta-ops
 
 Contributors
 
-Øyvind Kolås, Thomas Manni, Michael Natterer, Nils Philippsen, Debarshi
+?yvind Kol?s, Thomas Manni, Michael Natterer, Nils Philippsen, Debarshi
 Ray, Martin Blanchard, Justin Lecher, Massimo Valentini, Jonathan Tait,
-Mukund Sivaraman, Alexandre Prokoudine, Piotr Drąg, Nanley Chery, Colin
+Mukund Sivaraman, Alexandre Prokoudine, Piotr Dr?g, Nanley Chery, Colin
 Waters
 
 GEGL-0.3.4 2015-11-24
 
-  • build: do not install examples in path
+  * build: do not install examples in path
 
-  • ff-save fully store all in-flight codec contexts before closing
+  * ff-save fully store all in-flight codec contexts before closing
     files
 
-  • ff-load improvements to seeking accuracy
+  * ff-load improvements to seeking accuracy
 
-  • transform: make fast paths skip pixel format conversions
+  * transform: make fast paths skip pixel format conversions
 
 Contributors
 
-Øyvind Kolås, Debarshi Ray and Nils Philippsen
+?yvind Kol?s, Debarshi Ray and Nils Philippsen
 
 GEGL 0.3.2 2015-11-22
 
 Operations
 
-  • new operations: libraw based raw loading op, tiff-save and
+  * new operations: libraw based raw loading op, tiff-save and
     tif-load, maze, sepia
 
-  • ff-load and ff-save revived, with support from thegrid.io
+  * ff-load and ff-save revived, with support from thegrid.io
 
-  • apply-lens uses less memory, higher precision computation.
+  * apply-lens uses less memory, higher precision computation.
 
-  • disable automatic threading on many ops where it fails
+  * disable automatic threading on many ops where it fails
 
-  • force more operations to prefer operating on linear RGB data for
+  * force more operations to prefer operating on linear RGB data for
     more accurate/physical processing.
 
 Buffer:
 
-  • implement abyss paremeter on gegl_buffer_copy and gegl_buffer_blit
+  * implement abyss paremeter on gegl_buffer_copy and gegl_buffer_blit
 
-  • Added start of a microraptor gui based image viewer/non destructive
+  * Added start of a microraptor gui based image viewer/non destructive
     editor.
 
-  • Optimizations to scaled blitting (speeds up most GEGL UIs a bit)
+  * Optimizations to scaled blitting (speeds up most GEGL UIs a bit)
 
 Contributiors
 
-Alexandre Prokoudine, André Tupinambá, Claude Paroz, Daniel Mustieles,
+Alexandre Prokoudine, Andr? Tupinamb?, Claude Paroz, Daniel Mustieles,
 Debarshi Ray, Dimitris Spingos, Elle Stone, Jehan, Jordi Mas, Marco
 Ciampa, Martin Blanchard, Martin Srebotnjak, Massimo Valentini, Michael
-Henning, Michael Natterer, Necdet Yücel, Pedro Albuquerque, Piotr Drąg,
+Henning, Michael Natterer, Necdet Y?cel, Pedro Albuquerque, Piotr Dr?g,
 Roman Lebedev, Sven Neummann, Thomas Manni, Vilson Vieira, akash akya
-and Øyvind Kolås.
+and ?yvind Kol?s.
 
 GEGL-0.3.0 2015-06-03
 
-  • Improvements to thread safety and parallelism.
+  * Improvements to thread safety and parallelism.
 
-  • Lower overhead graph travesal due from rewrite of visitors
+  * Lower overhead graph travesal due from rewrite of visitors
 
-  • OpenCL support now enabled by default when detected.
+  * OpenCL support now enabled by default when detected.
 
-  • Experimental multithreading, enable by setting GEGL_THREADS=<number
+  * Experimental multithreading, enable by setting GEGL_THREADS=<number
     of threads> in the environment.
 
-  • Experimental mipmap rendering, which permits transparent rendering
+  * Experimental mipmap rendering, which permits transparent rendering
     of previews on smaller sized versions, enable by setting
     GEGL_MIPMAP_RENDERING=true in the environment.
 
 Operations
 
-  • new operations: alien-map, antialias, apply-lens, bilateral-filter,
+  * new operations: alien-map, antialias, apply-lens, bilateral-filter,
     bump.map, cartoon, channel-mixer, color-enhance, color-exchange,
     color-reduction, color-rotate, convolution-matrix, copy-buffer,
     cubism, deinterlace, diffraction-patterns, distance-transform,
@@ -1763,118 +1837,118 @@ Operations
     scale-size, seamless-clone, sinus, supernova, value-propagate,
     video-degradation
 
-  • reimplementation of gaussian-blur faster and more accurate
+  * reimplementation of gaussian-blur faster and more accurate
 
-  • support for using URIs in image loaders
+  * support for using URIs in image loaders
 
 Buffer
 
-  • New default tile backend, doing disk writes in a separate thread.
+  * New default tile backend, doing disk writes in a separate thread.
 
 Contributors
 
 Albert F, Alexandre Prokoudine, Alexia Death, Akash Akya, Anders
 Jonsson, Andika Triwidada, Andreas Fischer, Angh, Awaw Fumin, Barak
-Itkin, Bruce Cowan, Carlos Zubieta, Cédric Valmary, Chris Leonard,
+Itkin, Bruce Cowan, Carlos Zubieta, C?dric Valmary, Chris Leonard,
 Christian Kirbach, Clayton Walker, Daniel Mustieles, Daniel Nylander,
 Daniel Sabo, Debarshi Ray, Denis Knoepfle, Dimitris Papavasiliou,
 Dimitris Spingos, Djavan Fagundes, Dov Grobgeld, Elle Stone, Enrico
-Nicoletto, Felix Ulber, Florian Klemme, Francisco Vila, Fran Diéguez,
+Nicoletto, Felix Ulber, Florian Klemme, Francisco Vila, Fran Di?guez,
 Georges Basile Stavracas Neto, Hans Lo, Harald Korneliussen, Hartmut
 Kuhse, Inaki Larranaga Murgoitio, Isaac Wagner, Jan Vesely, Jan Vesely,
 Jehan, Jon Nordby, Jordi Mas, Kalev Lember, Kristjan Schmidt, Marco
 Ciampa, Marek Dvoroznak, Maria Mavridou, Martijn van Beers, Martin
-Nordholts, Martin Srebotnjak, Massimo Valentini, Matej Urbančič, Maxime
-Nicco, Michael Henning, Michael Muré, Michael Natterer, Mikael
+Nordholts, Martin Srebotnjak, Massimo Valentini, Matej Urban?i?, Maxime
+Nicco, Michael Henning, Michael Mur?, Michael Natterer, Mikael
 Magnusson, Miroslav Talasek, Muhammet Kara, Mukund Sivaraman, Nana
 Chery, Nick Black, Nicolas Robidoux, Nils Philippsen, Norm Murray,
-Pascal Giessler, Piotr Drąg, Quentin Glidic, Rafael Ferreira, Rasmus,
-RPG, Rūdolfs Mazurs, Samir Ribic, Samuel Pitoiset, sebul, Simon Budig,
-Sven Claussner, Téo Mazars, Thomas Manni, Tim Lunn, Tim Mooney,
+Pascal Giessler, Piotr Dr?g, Quentin Glidic, Rafael Ferreira, Rasmus,
+RPG, R?dolfs Mazurs, Samir Ribic, Samuel Pitoiset, sebul, Simon Budig,
+Sven Claussner, T?o Mazars, Thomas Manni, Tim Lunn, Tim Mooney,
 Ting-Wei Lan, Tom Stellard, Ulf-D. Ehlert, Vadim Rutkovsky, Victor
 Oliveira, Ville Sokk, Vincent Untz, Yongjia Zhang, Yongjia Zhang,
-Øyvind Kolås and 周周.
+?yvind Kol?s and ????.
 
 GEGL-0.2.0 2012-04-02
 
-  • OpenCL support
+  * OpenCL support
 
-  • build improvements.
+  * build improvements.
 
-  • High level API to apply ops directly to buffers with arguments.
+  * High level API to apply ops directly to buffers with arguments.
 
-  • Final bits of translation infrastructure.
+  * Final bits of translation infrastructure.
 
-  • Invalidate regions when disconnecting input pads.
+  * Invalidate regions when disconnecting input pads.
 
 Operations
 
-  • New operation: global-matting
+  * New operation: global-matting
 
-  • Allow transform core to do perspective transforms.
+  * Allow transform core to do perspective transforms.
 
-  • Added string based key/value pairs to operations.
+  * Added string based key/value pairs to operations.
 
-  • Added arguments for dealing with scaled down preview rendering.
+  * Added arguments for dealing with scaled down preview rendering.
 
-  • Added human interaction ranges and non-linear mapping to
+  * Added human interaction ranges and non-linear mapping to
     properties.
 
 Buffer
 
-  • Removed broken lanczos sampler.
+  * Removed broken lanczos sampler.
 
-  • Add gegl_buffer_set_color and gegl_buffer_set_pattern
+  * Add gegl_buffer_set_color and gegl_buffer_set_pattern
 
-  • Added ability to drop cached tiles.
+  * Added ability to drop cached tiles.
 
-  • Added API for handling abyss policy (not implemented yet)
+  * Added API for handling abyss policy (not implemented yet)
 
-  • Avoid iterating global tile cache when flushing/destroying buffers
+  * Avoid iterating global tile cache when flushing/destroying buffers
     that have no tiles in the cache.
 
 Contributors
 
-Øyvind Kolås, Martin Nordholts, Hans Petter Jansson, Mikael Magnusson,
-Victor Oliveira, Nils Philippsen, Kevin Cozens, Michael Muré, Jan
-Rüegg, Michael Natterer, Michael Henning, Massimo Valentini, Alexandre
+?yvind Kol?s, Martin Nordholts, Hans Petter Jansson, Mikael Magnusson,
+Victor Oliveira, Nils Philippsen, Kevin Cozens, Michael Mur?, Jan
+R?egg, Michael Natterer, Michael Henning, Massimo Valentini, Alexandre
 Prokoudine and Jon Nordby.
 
 GEGL-0.1.8 2011-11-18
 
-  • New operations: spread, vignette, map-relative, noise-reduction,
+  * New operations: spread, vignette, map-relative, noise-reduction,
     plasma, fractal-trace, exr-save, lens-correct, emboss, cubism,
     ripple, color-to-alpha, color-rotate, red-eye-removal,
     convolution-matrix, deinterlace, polar-coordinates,
     lens-distortion, pixelise.
 
-  • Split GeglView GTK Widget into separate utility library
+  * Split GeglView GTK Widget into separate utility library
 
-  • build/test improvements.
+  * build/test improvements.
 
 Buffer
 
-  • Added lohalo resampler
+  * Added lohalo resampler
 
-  • API and infrastructure for doing non-affine resamplings.
+  * API and infrastructure for doing non-affine resamplings.
 
 Contributors
 
-Øyvind Kolås, Michael Natterer, Barak Itkin, Nils Philippsen, Mukund
-Sivaraman, Jon Nordby, Emilio Pozuelo Monfort, Étienne Bersac, Martin
-Nordholts, Victor Oliveira, Michael Muré, Michael Schumacher, Adam
+?yvind Kol?s, Michael Natterer, Barak Itkin, Nils Philippsen, Mukund
+Sivaraman, Jon Nordby, Emilio Pozuelo Monfort, ?tienne Bersac, Martin
+Nordholts, Victor Oliveira, Michael Mur?, Michael Schumacher, Adam
 Turcotte, Nicolas Robidoux, Robert Sasu, Massimo Valentini, Joao S. O.
-Bueno, Hans Lo, Zbigniew Chyla, David Evans and Javier Jardón.
+Bueno, Hans Lo, Zbigniew Chyla, David Evans and Javier Jard?n.
 
 GEGL-0.1.6 2011-02-13
 
-  • New operations: max-rgb, pixelise, motion blur.
+  * New operations: max-rgb, pixelise, motion blur.
 
-  • Fixed a bug in matting-levin that made GEGL halt due to errors
+  * Fixed a bug in matting-levin that made GEGL halt due to errors
     detected by babl sanity code, this made 0.1.4 be unusable if you
     had all dependendencies when building.
 
-  • build/test improvements.
+  * build/test improvements.
 
 Buffer
 
@@ -1883,163 +1957,163 @@ tilebackends, for GIMP/Krita/OSM or similar.
 
 Contributors
 
-Tobias Ellinghaus, Øyvind Kolås, Barak Itkin and Martin Nordholts
+Tobias Ellinghaus, ?yvind Kol?s, Barak Itkin and Martin Nordholts
 
 GEGL-0.1.4 2011-01-20
 
 Operations
 
-  • save (chooses delegate save op automatically)
+  * save (chooses delegate save op automatically)
 
-  • rgbe load/save
+  * rgbe load/save
 
-  • jpeg200 load/save
+  * jpeg200 load/save
 
-  • ppm load/save
+  * ppm load/save
 
-  • map-absolute (GIMP cage tool gsoc helper op)
+  * map-absolute (GIMP cage tool gsoc helper op)
 
-  • whirl and pinch
+  * whirl and pinch
 
-  • mirrors
+  * mirrors
 
-  • grid render
+  * grid render
 
-  • fixed imagemagick fallback load op
+  * fixed imagemagick fallback load op
 
-  • fixed pipe based dcraw wrapper
+  * fixed pipe based dcraw wrapper
 
-  • GSoC 2010 ops: exp-combine, reinhard05, fattal02, mantiuk06,
+  * GSoC 2010 ops: exp-combine, reinhard05, fattal02, mantiuk06,
     matting-levin
 
-  • Various source and build improvements.
+  * Various source and build improvements.
 
-  • improvements towards threaded rendering
+  * improvements towards threaded rendering
 
 Buffer
 
-  • refactored away some constant overhead made GeglBufferIterator API
+  * refactored away some constant overhead made GeglBufferIterator API
     public
 
 Contributors
 
-Michael Natterer, Øyvind Kolås, Vincent Untz, Kaja Liiv, Nils
-Philippsen, Étienne Bersac, Martin Nordholts, Debarshi Ray, Danny
+Michael Natterer, ?yvind Kol?s, Vincent Untz, Kaja Liiv, Nils
+Philippsen, ?tienne Bersac, Martin Nordholts, Debarshi Ray, Danny
 Robson, Stuart Axon, Kao, Mukund Sivaraman, Ruben Vermeersch, Barak
-Itkin, Michael Muré, Mikael Magnusson, Patrick Horgan and Andy Gill.
+Itkin, Michael Mur?, Mikael Magnusson, Patrick Horgan and Andy Gill.
 
 GEGL-0.1.2 2010-02-07
 
-  • GeglLookup, configurable floating point lookup tables for lazy
+  * GeglLookup, configurable floating point lookup tables for lazy
     computation.
 
-  • Use GFileIOStream in GeglTileBackendFile.
+  * Use GFileIOStream in GeglTileBackendFile.
 
-  • Optimizations: in-place processing for point filters/composers,
+  * Optimizations: in-place processing for point filters/composers,
     SIMD version of gegl:opacity, avoid making unneccesary sub-buffers,
     removed some manual instrumentation from critical paths, improved
     speed of samplers.
 
-  • Added xml composition/reference image based regression tests.
+  * Added xml composition/reference image based regression tests.
 
-  • Added performance tracking framework.
+  * Added performance tracking framework.
 
-  • Syntactic sugar using varargs for constructing gegl graphs from C.
+  * Syntactic sugar using varargs for constructing gegl graphs from C.
 
-  • Build fixes on cygwin,
+  * Build fixes on cygwin,
 
-  • Gegl# fixes.
+  * Gegl# fixes.
 
-  • Initial, but unstable code towards multithreading.
+  * Initial, but unstable code towards multithreading.
 
-  • Improvements to lua op in workshop.
+  * Improvements to lua op in workshop.
 
-  • Added new resamplers upsize, upsharp, upsmooth, downsize, downsharp
+  * Added new resamplers upsize, upsharp, upsmooth, downsize, downsharp
     and downsmooth.
 
-  • Removed gegl:tonemap and gegl:normal ops.
+  * Removed gegl:tonemap and gegl:normal ops.
 
 Contributors
 
 Martin Nordholts, Sven Neumann, Nils Philippsen, Adam Turcotte,
-Danny Robson, Michael Schumacher, Ruben Vermeersch, Øyvind Kolås,
-Javier Jardón, Yaakov Selkowitz and Michael Natterer, Kaja Liiv
+Danny Robson, Michael Schumacher, Ruben Vermeersch, ?yvind Kol?s,
+Javier Jard?n, Yaakov Selkowitz and Michael Natterer, Kaja Liiv
 and Eric Daoust.
 
 GEGL-0.1.0 2009-07-01
 
-  • Renamed gegl:load-buffer to gegl:buffer-source and gegl:save-buffer
+  * Renamed gegl:load-buffer to gegl:buffer-source and gegl:save-buffer
     to gegl:buffer-sink (but the old names still work)
 
-  • Represent colors using doubles instead of floats (this change is
+  * Represent colors using doubles instead of floats (this change is
     independent from internal processing)
 
-  • Removed the GTK+ UI parts of the gegl binary and turned gegl into a
+  * Removed the GTK+ UI parts of the gegl binary and turned gegl into a
     pure command line tool (which can still visualize stuff with help
     help the SDL based display operation)
 
-  • Consider G_MININT/2, y=G_MININT/2, width=G_MAXINT, height=G_MAXINT
+  * Consider G_MININT/2, y=G_MININT/2, width=G_MAXINT, height=G_MAXINT
     as the only valid region in which processing may occur. Processing
     outside of this region is undefined behaviour.
 
-  • Added support for storing allocation stack traces for GeglBuffers
+  * Added support for storing allocation stack traces for GeglBuffers
     so that debugging buffer leaks becomes much easier
 
-  • Made small changes and cleanups of the public API, e.g.
+  * Made small changes and cleanups of the public API, e.g.
 
-  • Removed gegl_node_adapt_child()
+  * Removed gegl_node_adapt_child()
 
-  • Made GeglConfig an explicit object
+  * Made GeglConfig an explicit object
 
-  • Removed most of the ifdeffed stuff to mask away internal structures
+  * Removed most of the ifdeffed stuff to mask away internal structures
 
-  • Added gegl_rectangle_infinite_plane() and
+  * Added gegl_rectangle_infinite_plane() and
     gegl_rectangle_is_infinite_plane()
 
-  • Added new sampler GeglSamplerSharp
+  * Added new sampler GeglSamplerSharp
 
-  • Added format property to gegl:buffer-sink
+  * Added format property to gegl:buffer-sink
 
-  • Cleaned up and made gegl:introspect work again
+  * Cleaned up and made gegl:introspect work again
 
-  • Add a bunch of test cases using the automake test system (make
+  * Add a bunch of test cases using the automake test system (make
     check) and also port buffer tests to automake
 
-  • General cleanups, bug fixes, increased robustness and improved
+  * General cleanups, bug fixes, increased robustness and improved
     documentation
 
 Contributors
 
-Øyvind Kolås, Sven Neumann, Étienne Bersac, Hubert Figuiere, Martin
+?yvind Kol?s, Sven Neumann, ?tienne Bersac, Hubert Figuiere, Martin
 Nordholts, Nicolas Robidoux, Michael Natterer, Ruben Vermeersch, Kevin
-Cozens, Manish Singh, Gary V. Vaughan, James Legg, Henrik Åkesson,
+Cozens, Manish Singh, Gary V. Vaughan, James Legg, Henrik ?kesson,
 Fryderyk Dziarmagowski, Ozan Caglayan and Tobias Mueller.
 
 GEGL-0.0.22 2008-12-31
 
 GeglOperation
 
-  • operation names are now prefixed, the ops in GEGL use gegl: as
+  * operation names are now prefixed, the ops in GEGL use gegl: as
     prefix.
 
-  • gegl:opacity - combine value and aux mask input when both are
+  * gegl:opacity - combine value and aux mask input when both are
     available.
 
-  • gegl:src-in - deal correctly with extens.
+  * gegl:src-in - deal correctly with extens.
 
-  • gegl:path - new op covering the stroke/fill needs of SVG.
+  * gegl:path - new op covering the stroke/fill needs of SVG.
 
-  • deprecated gegl:shift, the affine family of operations now uses the
+  * deprecated gegl:shift, the affine family of operations now uses the
     same fast code paths for integer translations.
 
 GeglBuffer
 
-  • Profiling motivated speed ups in data reading/writing.
+  * Profiling motivated speed ups in data reading/writing.
 
-  • Remove left-over swapfiles from dead processes at startup. •
+  * Remove left-over swapfiles from dead processes at startup. ?
     GeglNode
 
-  • made gegl_node_add_child and gegl_node_remove_child public API. (#
+  * made gegl_node_add_child and gegl_node_remove_child public API. (#
     507298)
 
 GeglPath
@@ -2051,25 +2125,25 @@ others.).
 
 Contributors:
 
-Hubert Figuiere, Sven Neumann, Øyvind Kolås, Michael Natterer, Kevin
-Cozens, Sam Hocevar, Martin Nordholts, Manish Singh, Étienne Bersac and
+Hubert Figuiere, Sven Neumann, ?yvind Kol?s, Michael Natterer, Kevin
+Cozens, Sam Hocevar, Martin Nordholts, Manish Singh, ?tienne Bersac and
 Michael Schumacher.
 
 GEGL-0.0.20 2008-10-05
 
-  • Build and code clean ups and fixes.
+  * Build and code clean ups and fixes.
 
-  • RAW loader using libopenraw.
+  * RAW loader using libopenraw.
 
 GeglBuffer
 
-  • Linear buffer support, amongst other things enabling GeglBuffer API
+  * Linear buffer support, amongst other things enabling GeglBuffer API
     access to external linear buffers in memory.
 
-  • Reworked samplers using a shared caching neighbourhood
+  * Reworked samplers using a shared caching neighbourhood
     infrastructure.
 
-  • YAFR - a new resampler contributed by Nicolas Robidoux.
+  * YAFR - a new resampler contributed by Nicolas Robidoux.
 
 GeglVector
 
@@ -2077,183 +2151,183 @@ Added SVG parsing capability (no serialisation yet).
 
 GeglOperations
 
-  • Marked user visible strings for translation.
+  * Marked user visible strings for translation.
 
-  • Added a fill operation that renders a path.
+  * Added a fill operation that renders a path.
 
 Contributors
 
-Martin Nordholts, Øyvind Kolås, Sam Hocevar, Manish Singh, Hubert
+Martin Nordholts, ?yvind Kol?s, Sam Hocevar, Manish Singh, Hubert
 Figuiere, Sven Neumann and yahvuu at gmail.com.
 
 GEGL-0.0.18 2008-06-14
 
-  • Configuration both from commandline arguments and at runtime.
+  * Configuration both from commandline arguments and at runtime.
 
 GeglBuffer
 
-  • New raw tiled raster file format, used both as swap and stored
+  * New raw tiled raster file format, used both as swap and stored
     buffers.
 
-  • Sharing between processes through synced swap.
+  * Sharing between processes through synced swap.
 
-  • Babl powered scan iteration infrastructure for efficient access.
+  * Babl powered scan iteration infrastructure for efficient access.
 
-  • Cubic and lanczos samplers re-enabled.
+  * Cubic and lanczos samplers re-enabled.
 
 Operations
 
-  • Use scan iterator for point-filter, point-composer and point-render
+  * Use scan iterator for point-filter, point-composer and point-render
     base classes internally for minimal amount of copies.
 
-  • Optimized variants of some point and compositing operations
+  * Optimized variants of some point and compositing operations
     reimplemented using a new data type /g4float/ that allows writing
     CPU agnostic vectorized code for GCC.
 
-  • New temporal filter base class, for operations operating on color
+  * New temporal filter base class, for operations operating on color
     values from neighbouring frames in a video stream.
 
-  • Autogenerated operation reference installed for use with devhelp.
+  * Autogenerated operation reference installed for use with devhelp.
 
-  • New operations: write-buffer, v4l, color-temperature.
+  * New operations: write-buffer, v4l, color-temperature.
 
 Contributors
 
-Øyvind Kolås, Kevin Cozens, Sven Neumann, Manish Singh, Martin
-Nordholts, Étienne Bersac, Hans Petter Jansson, Jan Heller,
+?yvind Kol?s, Kevin Cozens, Sven Neumann, Manish Singh, Martin
+Nordholts, ?tienne Bersac, Hans Petter Jansson, Jan Heller,
 dmacks@netspace.org, Sven Anders, Hubert Figuiere and Geert Jordaens.
 
 GEGL-0.0.16 2008-02-29
 
-  • Install headers for development of external operation plug-ins.
+  * Install headers for development of external operation plug-ins.
 
-  • Added rowstride argument to gegl_buffer_set ()
+  * Added rowstride argument to gegl_buffer_set ()
 
-  • Made it possible for sink operations to do chunkwise processing
+  * Made it possible for sink operations to do chunkwise processing
     through GeglProcessor. when processed using a GeglProcessor.
 
-  • constification of GeglRectangles and babl formats.
+  * constification of GeglRectangles and babl formats.
 
-  • Build and dist fixes, plugged annoying buffer leaks, GEGL now also
+  * Build and dist fixes, plugged annoying buffer leaks, GEGL now also
     works on OSX
 
 Contributors
 
-Øyvind Kolås, Étienne Bersac, Kevin Cozens, Sven Neumann, Manish Singh,
+?yvind Kol?s, ?tienne Bersac, Kevin Cozens, Sven Neumann, Manish Singh,
 Michael Natterer, Hans Brauer, Deji Akingunola, Bradley Broom and Tor
 Lillqvist.
 
 GEGL-0.0.14 2007-12-20
 
-  • Relicensed under LGPLv3+.
+  * Relicensed under LGPLv3+.
 
-  • Per node caches (faster recomputation when properties of nodes in
+  * Per node caches (faster recomputation when properties of nodes in
     composition change)
 
-  • Sampler framework for interpolation.
+  * Sampler framework for interpolation.
 
-  • Modified API for retrieving scaled buffers gegl_node_blit /
+  * Modified API for retrieving scaled buffers gegl_node_blit /
     gegl_buffer_get.
 
-  • Renamed XML serialization and parsing API to be descendants of
+  * Renamed XML serialization and parsing API to be descendants of
     GeglNode.
 
-  • Progress monitoring for GeglProcessor
+  * Progress monitoring for GeglProcessor
 
-  • New operation base class GeglOperationAreaFilter
+  * New operation base class GeglOperationAreaFilter
 
-  • API reference installed and browsable using devhelp.
+  * API reference installed and browsable using devhelp.
 
-  • New operations: ff-load, mono-mixer, contrast-curve, save-pixbuf,
+  * New operations: ff-load, mono-mixer, contrast-curve, save-pixbuf,
     compositing ops from SVG-1.2 draft, value-invert, convert-format,
     bilateral-filter, snn-mean
 
 Contributors
 
-Étienne Bersac, Kevin Cozens, Manish Singh, Mark Probst, Martin
+?tienne Bersac, Kevin Cozens, Manish Singh, Mark Probst, Martin
 Nordholts, Michael Schumacher, Mukund Sivaraman, Shlomi Fish, Tor
-Lillqvist and Øyvind Kolås
+Lillqvist and ?yvind Kol?s
 
 GEGL-0.0.12 2007-02-18
 
-  • Swapping out of image pyramid.
+  * Swapping out of image pyramid.
 
-  • Speedups to text rendering.
+  * Speedups to text rendering.
 
-  • GEGL compiles on win32
+  * GEGL compiles on win32
 
-  • GEGL_SWAP now specifies swapdir location.
+  * GEGL_SWAP now specifies swapdir location.
 
-  • Small refactorings of public API.
+  * Small refactorings of public API.
 
-  • Changed the XML parser/serializer to not use attributes for node
+  * Changed the XML parser/serializer to not use attributes for node
     properties.
 
-  • Improvements to documentation.
+  * Improvements to documentation.
 
-  • Automagic build environment for operations simplified.
+  * Automagic build environment for operations simplified.
 
-  • Internal API for saving/loading GeglBuffers to/from disk.
+  * Internal API for saving/loading GeglBuffers to/from disk.
 
-  • Ruby, C# and Python bindings added to version control system (not
+  * Ruby, C# and Python bindings added to version control system (not
     included in distributed tarball)
 
 Contributors
 
-Kevin Cozens, Michael Schumacher. Sven Neumann and Øyvind Kolås,
+Kevin Cozens, Michael Schumacher. Sven Neumann and ?yvind Kol?s,
 
 GEGL-0.0.6 2007-01-07
 
-  • hit detection code
+  * hit detection code
 
-  • handling of relative/absolute path names for XML.
+  * handling of relative/absolute path names for XML.
 
-  • merged GeglNode and GeglGraph classes.
+  * merged GeglNode and GeglGraph classes.
 
-  • build fixes for Win32 and FreeBSD
+  * build fixes for Win32 and FreeBSD
 
-  • temporarily disabled custom cairo in test application.
+  * temporarily disabled custom cairo in test application.
 
-  • png and EXR improvements.
+  * png and EXR improvements.
 
 Contributors
 
-Dominik Ernst, Kevin Cozens, Øyvind Kolås and Michael Schumacher.
+Dominik Ernst, Kevin Cozens, ?yvind Kol?s and Michael Schumacher.
 
 GEGL-0.0.4 2006-12-29
 
 This was the first public release of GEGL.
 
-  • 8bit, 16bit integer and 32bit floating point, RGB, CIE Lab, YCbCr
+  * 8bit, 16bit integer and 32bit floating point, RGB, CIE Lab, YCbCr
     and naive CMYK output.
 
-  • Extendable through plug-ins.
+  * Extendable through plug-ins.
 
-  • XML, C and Python interfaces.
+  * XML, C and Python interfaces.
 
-  • Memory efficient evaluation of subregions.
+  * Memory efficient evaluation of subregions.
 
-  • Tiled, sparse, pyramidial and larger than RAM buffers.
+  * Tiled, sparse, pyramidial and larger than RAM buffers.
 
 Operations
 
-  • PNG, JPEG, SVG, EXR, RAW and other image sources.
+  * PNG, JPEG, SVG, EXR, RAW and other image sources.
 
-  • Arithmetic operations, porter duff compositing operations, SVG
+  * Arithmetic operations, porter duff compositing operations, SVG
     blend modes, other blend modes, apply mask.
 
-  • Gaussian blur.
+  * Gaussian blur.
 
-  • Basic color correction tools.
+  * Basic color correction tools.
 
-  • Most processing done with High Dynamic Range routines.
+  * Most processing done with High Dynamic Range routines.
 
-  • Text layouting using pango
+  * Text layouting using pango
 
 Contributors
 
 Dominik Ernst, Kevin Cozens, Manish Singh, Martin Nordholts, Michael
-Natterer. Philip Lafleur, Sven Neumann and Øyvind Kolås.
+Natterer. Philip Lafleur, Sven Neumann and ?yvind Kol?s.
 
 GEGL-0.0.0
 
@@ -2262,5 +2336,5 @@ Contributors:
 Calvin Williamson, Caroline Dahloff Daniel Rogers, Garry R. Osgood, Jay
 Cox and Sven Neumann
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Last updated 2024-02-11 22:11:25 CET
+-----------------------------------------------------------------------
+Last updated 2024-11-03 16:34:04 UTC

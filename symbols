@@ -158,6 +158,8 @@ libgegl-0.4.so.0:gegl_color_get_bytes
 libgegl-0.4.so.0:gegl_color_get_cmyk
 libgegl-0.4.so.0:gegl_color_get_components
 libgegl-0.4.so.0:gegl_color_get_format
+libgegl-0.4.so.0:gegl_color_get_hsla
+libgegl-0.4.so.0:gegl_color_get_hsva
 libgegl-0.4.so.0:gegl_color_get_pixel
 libgegl-0.4.so.0:gegl_color_get_rgba
 libgegl-0.4.so.0:gegl_color_get_rgba_with_space
@@ -166,6 +168,8 @@ libgegl-0.4.so.0:gegl_color_new
 libgegl-0.4.so.0:gegl_color_set_bytes
 libgegl-0.4.so.0:gegl_color_set_cmyk
 libgegl-0.4.so.0:gegl_color_set_components
+libgegl-0.4.so.0:gegl_color_set_hsla
+libgegl-0.4.so.0:gegl_color_set_hsva
 libgegl-0.4.so.0:gegl_color_set_pixel
 libgegl-0.4.so.0:gegl_color_set_rgba
 libgegl-0.4.so.0:gegl_color_set_rgba_with_space
@@ -385,6 +389,8 @@ libgegl-0.4.so.0:gegl_node_get_operation
 libgegl-0.4.so.0:gegl_node_get_output_proxy
 libgegl-0.4.so.0:gegl_node_get_output_visitable
 libgegl-0.4.so.0:gegl_node_get_pad
+libgegl-0.4.so.0:gegl_node_get_pad_description
+libgegl-0.4.so.0:gegl_node_get_pad_label
 libgegl-0.4.so.0:gegl_node_get_pads
 libgegl-0.4.so.0:gegl_node_get_parent
 libgegl-0.4.so.0:gegl_node_get_passthrough
