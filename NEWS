@@ -1,10 +1,30 @@
+GEGL-0.4.54 2025-02-09
+
+Ops:
+
+  • bump_map: fix typo in property nick
+
+  • noise_spread: better performance with no-op values
+
+  • negative_darkroom: more presets, better performance
+
+  • styles: fix regression of opacirt sliders
+
+Contributors to this release, including translators:
+
+Alan Mortensen, Alexander Shopov, Anders Jonsson, Asier Sarasua
+Garmendia, Bartłomiej Piotrowski, Hugo Carvalho, Jehan, JonnyRobbie,
+Martin, Nathan Follens, Nils Philippsen, Rodrigo Lledó, Sam L, Thomas
+Manni, Yuri Chornoivan & Øyvind Kolås
+
 GEGL-0.4.52 2024-12-26
 
 Core:
 
 Fix regression cubic interpolation - it was quadratic rather than
-cubic, this improves all uses of cubic interpolation. Use g_spawn_sync
-rather than system() for launching graphviz' dot.
+cubic,
+
+this improves all uses of cubic interpolation.
 
 Ops:
 
@@ -13,6 +33,17 @@ Ops:
   • newsprint: do processing with perceptual encoding.
 
   • denoise-dct, mantiuk06: pass-through for too small input buffers.
+
+  • inner-glow: adjust parameters, crop result
+
+  • styles: use gegl:load rather than gegl:layer
+
+Contributors to this release, including translators:
+
+Alan Mortensen, Anders Jonsson, Ekaterine Papava, Hugo Carvalho, Jordi
+Mas, Juliano de Souza Camargo, Kolbjørn Stuestøl, Lukas Oberhuber,
+Luming Zh, Marco Ciampa, Martin, Sam L, Thomas Manni, Yuri Chornoivan,
+lillolollo, Øyvind Kolås.
 
 GEGL-0.4.50 2024-11-03
 
@@ -2353,4 +2384,4 @@ Calvin Williamson, Caroline Dahloff Daniel Rogers, Garry R. Osgood, Jay
 Cox and Sven Neumann
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Last updated 2024-12-26 17:28:20 CET
+Last updated 2025-02-09 13:36:03 CET
