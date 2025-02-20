@@ -7,7 +7,7 @@
 #
 Name     : gegl
 Version  : 0.4.54
-Release  : 160
+Release  : 161
 URL      : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.54.tar.xz
 Source0  : https://download.gimp.org/pub/gegl/0.4/gegl-0.4.54.tar.xz
 Summary  : Seamless Cloning Library Based on GEGL
