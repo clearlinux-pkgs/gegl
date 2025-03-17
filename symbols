@@ -66,11 +66,6 @@ libgegl-0.4.so.0:gegl_buffer_introspectable_get
 libgegl-0.4.so.0:gegl_buffer_introspectable_new
 libgegl-0.4.so.0:gegl_buffer_introspectable_set
 libgegl-0.4.so.0:gegl_buffer_is_shared
-libgegl-0.4.so.0:gegl_buffer_iterator2_add
-libgegl-0.4.so.0:gegl_buffer_iterator2_empty_new
-libgegl-0.4.so.0:gegl_buffer_iterator2_new
-libgegl-0.4.so.0:gegl_buffer_iterator2_next
-libgegl-0.4.so.0:gegl_buffer_iterator2_stop
 libgegl-0.4.so.0:gegl_buffer_iterator_add
 libgegl-0.4.so.0:gegl_buffer_iterator_empty_new
 libgegl-0.4.so.0:gegl_buffer_iterator_new
